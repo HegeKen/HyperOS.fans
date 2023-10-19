@@ -1,0 +1,16 @@
+{
+  "name": "hello-world",
+  "private": true,
+  "scripts": {
+    "dev": "nuxi dev",
+    "build": "nuxi build",
+    "generate": "nuxi generate",
+    "start": "nuxi preview"
+  },
+  "devDependencies": {
+    "nuxt": "^3.6.5"
+  },
+  "dependencies": {
+    "mdui": "^2.0.1"
+  }
+}

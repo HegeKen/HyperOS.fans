@@ -1,0 +1,11 @@
+body {
+  font-family: MISans;
+      font-weight: bold;
+}
+.HyperBlue {
+  color: #155ffe;
+}
+.Center{
+  margin:10px;
+  text-align: center;
+}
