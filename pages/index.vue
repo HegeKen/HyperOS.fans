@@ -9,6 +9,8 @@ else {
 }
 </script>
 <template>
+  {{ lang }}
+  {{ locale }}
   <div v-if="lang == 'zh-CN'">
     <title>小米澎湃OS, Xiaomi HyperOS - 即将到来</title>
     <Styles></Styles>
