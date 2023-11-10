@@ -9,6 +9,7 @@
     "start": "nuxi preview"
   },
   "devDependencies": {
+    "@nuxtjs/i18n": "^8.0.0-rc.5",
     "nuxt": "^3.8.1"
   },
   "dependencies": {

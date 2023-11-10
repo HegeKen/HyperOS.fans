@@ -19,6 +19,10 @@ export default defineAppConfig({
           href: "https://data.miuier.com/assets/logo/favicon.ico",
         },
         {
+          rel: "stylesheet",
+          href: "https://at.alicdn.com/t/c/font_2478867_iq2uuq05ql.css",
+        },
+        {
           rel: 'stylesheet',
           href: 'https://cdn-font.hyperos.mi.com/font/css?family=MiSans:100,200,300,400,500,600:Chinese_Simplify,Latin&display=swap'
         }

@@ -1,5 +1,5 @@
 <template>
-    <html class="mdui-theme-dark"></html>
+    <html class="mdui-theme-auto"></html>
     <NuxtPage />
 </template>
 

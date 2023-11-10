@@ -2,36 +2,22 @@
 import '~/assets/hyper.css'
 import 'mdui/mdui.css';
 import 'mdui';
-const locale = useLocale()
-const route = useRoute()
-var lang = route.query.lang
-if (lang == undefined || lang == "") {
-  lang = locale
-} else if (lang == locale) { }
-else {
-}
+const { locale, locales } = useI18n()
+const switchLocalePath = useSwitchLocalePath()
+
+const availableLocales = computed(() => {
+  return (locales.value).filter(i => i.code !== locale.value)
+})
 </script>
 <template>
-  <div v-if="lang == 'zh-CN'">
-    <div class="example-alignment" style="position: relative">
-    <mdui-navigation-rail alignment="start" contained>
-      <mdui-navigation-rail-item icon="watch_later">最近</mdui-navigation-rail-item>
-      <mdui-navigation-rail-item icon="image">图片</mdui-navigation-rail-item>
-      <mdui-navigation-rail-item icon="library_music">乐库</mdui-navigation-rail-item>
+  <div>
+    <mdui-navigation-rail alignment="center">
+      <NuxtLink :to="('/'+locale)"><mdui-navigation-rail-item icon="home">{{ $t('home') }}</mdui-navigation-rail-item></NuxtLink>
+      <NuxtLink :to="('/'+locale+'/devices')"><mdui-navigation-rail-item icon="devices">{{ $t('devices') }}</mdui-navigation-rail-item></NuxtLink>
+      <NuxtLink :to="('/'+locale)+'/source'"><mdui-navigation-rail-item icon="code">{{ $t('code') }}</mdui-navigation-rail-item></NuxtLink>
+      <NuxtLink v-for="locale in availableLocales" :key="locale.code" :to="switchLocalePath(locale.code)"><mdui-navigation-rail-item icon="translate">{{ locale.name }}</mdui-navigation-rail-item></NuxtLink>
     </mdui-navigation-rail>
-    <div><slot></slot></div>
-  </div>
-  </div>
-  <div v-if="lang == 'en-US'">
-    <div class="example-alignment" style="position: relative">
-    <mdui-navigation-rail alignment="start" contained>
-      <mdui-navigation-rail-item icon="watch_later">Recent</mdui-navigation-rail-item>
-      <mdui-navigation-rail-item icon="image">Images</mdui-navigation-rail-item>
-      <mdui-navigation-rail-item icon="library_music">Library</mdui-navigation-rail-item>
-    </mdui-navigation-rail>
-    <div><slot></slot></div>
-  </div>
-  </div>
-  <div v-else>
-  </div>
-</template>
+    <div>
+      <slot></slot>
+    </div>
+  </div></template>

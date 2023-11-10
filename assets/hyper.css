@@ -1,3 +1,6 @@
+body {
+	font-family: MISans;
+}
 @font-face {
 	font-family: Material Icons;
 	font-style: normal;
@@ -5,19 +8,40 @@
 	src: url(https://cdn.w3cbus.com/library/material-icons/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2)
 		format("woff2");
 }
-body {
-	font-family: MISans;
-	font-weight: bold;
+a {
+	color: #155ffe;
+	text-decoration: none;
+}
+a:visited{
+	text-decoration: none;
+	color: #155ffe;
 }
 .mdui-theme-dark {
-  color: white;
-  accent-color: #155ffe;
-  background-color: #000;
+	color: white;
+	accent-color: #155ffe;
+	background-color: #000;
+}
+.mdui-prose a {
+	color: #155ffe!important;
+	text-decoration: none!important;
 }
 .HyperBlue {
 	color: #155ffe;
+	text-decoration: none;
 }
+mdui-chip :hover{
+	color: #155ffe;
+	text-decoration: underline
+}
+mdui-ripple div :surface :hover{
+	padding:10px!important;
+}
+
 .Center {
 	margin: 10px;
 	text-align: center;
+}
+.myiCon {
+	font-family: "iconfont";
+	text-align: right;
 }

@@ -1,35 +1,19 @@
 <script setup>
-const locale = useLocale()
-const route = useRoute()
-var lang = route.query.lang
-if (lang == undefined || lang == "") {
-  lang = locale
-} else if (lang == locale) { }
-else {
-  lang = 'zh-cn'
-}
+const locale = useI18n()
+const lang = locale.locale.value
+const url = "https://data.hyperos.fans/devices.json"
+const { data } = await useFetch(url)
 </script>
+
 <template>
-  <div v-if="lang == 'zh-cn'">
-    <title>小米澎湃OS, Xiaomi HyperOS - 即将到来</title>
-    <Styles></Styles>
-    <div>
-      <div class="Center" style="font-size: 40px;">小米澎湃<span class="HyperBlue">OS</span></div>
-      <div class="Center" style="font-size: 30px;font-weight: lighter;">即将到来.....</div>
-      <div class="Center" style="font-weight: lighter;">...非官方网站...</div>
+  <title v-if="lang == 'zh'">小米澎湃OS, 现已发布 - HyperOS.fans</title>
+  <title v-if="lang == 'en'">Xiaomi HyperOS is here. - HyperOS.fans</title>
+  <title v-else>小米澎湃OS, 现已发布 - HyperOS.fans</title>
+  <Nav>
+  </Nav>
+  <br>
+    <div class="mdui-prose">
+      <h3>{{ $t('sitev') }}<span class="HyperBlue">V0.0.1</span></h3>
+      <h3>{{ $t('supported') }}</h3><span v-for="{ code, name } in data.mi"><NuxtLink :to="('/'+locale.locale.value+'/devices/'+code)" class="HyperBlue">{{ name[lang] }}</NuxtLink>; </span>
     </div>
-  </div>
-  <div v-if="lang == 'en-us'">
-    <title>Xiaomi HyperOS, It's about time</title>
-    <Styles></Styles>
-    <div>
-      <div class="Center" style="font-size: 50px;">Xiaomi Hyper<span class="HyperBlue">OS</span></div>
-      <div class="Center" style="font-size: 30px;font-weight: lighter;">Coming soon.....</div>
-      <div class="Center" style="font-weight: lighter;">...Not a official site...</div>
-    </div>
-  </div>
-  <div v-else>
-    <title>language error</title>
-    
-  </div>
 </template>
