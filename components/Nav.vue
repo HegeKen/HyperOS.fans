@@ -17,7 +17,4 @@ const availableLocales = computed(() => {
       <NuxtLink :to="('/'+locale)+'/source'"><mdui-navigation-rail-item icon="code">{{ $t('code') }}</mdui-navigation-rail-item></NuxtLink>
       <NuxtLink v-for="locale in availableLocales" :key="locale.code" :to="switchLocalePath(locale.code)"><mdui-navigation-rail-item icon="translate">{{ locale.name }}</mdui-navigation-rail-item></NuxtLink>
     </mdui-navigation-rail>
-    <div>
-      <slot></slot>
-    </div>
   </div></template>
