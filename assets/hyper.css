@@ -1,11 +1,23 @@
+@font-face {
+	font-family: Material Icons;
+	font-style: normal;
+	font-weight: 400;
+	src: url(https://cdn.w3cbus.com/library/material-icons/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2)
+		format("woff2");
+}
 body {
-  font-family: MISans;
-      font-weight: bold;
+	font-family: MISans;
+	font-weight: bold;
+}
+.mdui-theme-dark {
+  color: white;
+  accent-color: #155ffe;
+  background-color: #000;
 }
 .HyperBlue {
-  color: #155ffe;
+	color: #155ffe;
 }
-.Center{
-  margin:10px;
-  text-align: center;
+.Center {
+	margin: 10px;
+	text-align: center;
 }

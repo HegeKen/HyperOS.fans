@@ -20,7 +20,7 @@ export default defineAppConfig({
         },
         {
           rel: 'stylesheet',
-          href: 'https://font.sec.miui.com/font/css?family=MiSans:300,450,500,650:Chinese_Simplify,Latin&display=swap'
+          href: 'https://cdn-font.hyperos.mi.com/font/css?family=MiSans:100,200,300,400,500,600:Chinese_Simplify,Latin&display=swap'
         }
       ]
     }

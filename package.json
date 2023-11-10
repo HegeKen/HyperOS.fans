@@ -1,5 +1,6 @@
 {
   "name": "hyperos.fans",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "dev": "nuxi dev",
@@ -8,7 +9,7 @@
     "start": "nuxi preview"
   },
   "devDependencies": {
-    "nuxt": "^3.8.0"
+    "nuxt": "^3.8.1"
   },
   "dependencies": {
     "mdui": "^2.0.1"
