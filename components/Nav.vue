@@ -10,11 +10,13 @@ const availableLocales = computed(() => {
 })
 </script>
 <template>
+  <html class="mdui-theme-auto"></html>
   <div>
     <mdui-navigation-rail alignment="center">
-      <NuxtLink :to="('/'+locale)"><mdui-navigation-rail-item icon="home">{{ $t('home') }}</mdui-navigation-rail-item></NuxtLink>
-      <NuxtLink :to="('/'+locale+'/devices')"><mdui-navigation-rail-item icon="devices">{{ $t('devices') }}</mdui-navigation-rail-item></NuxtLink>
-      <NuxtLink :to="('/'+locale)+'/source'"><mdui-navigation-rail-item icon="code">{{ $t('code') }}</mdui-navigation-rail-item></NuxtLink>
+      <NuxtLink :to="('/' + locale)"><mdui-navigation-rail-item icon="home">{{ $t('home') }}</mdui-navigation-rail-item></NuxtLink>
+      <NuxtLink :to="('/' + locale + '/devices')"><mdui-navigation-rail-item icon="devices">{{ $t('devices') }}</mdui-navigation-rail-item></NuxtLink>
+      <NuxtLink :to="('/' + locale) + '/source'"><mdui-navigation-rail-item icon="code">{{ $t('code') }}</mdui-navigation-rail-item></NuxtLink>
       <NuxtLink v-for="locale in availableLocales" :key="locale.code" :to="switchLocalePath(locale.code)"><mdui-navigation-rail-item icon="translate">{{ locale.name }}</mdui-navigation-rail-item></NuxtLink>
     </mdui-navigation-rail>
-  </div></template>
+  </div>
+</template>

@@ -16,7 +16,10 @@ export default defineI18nConfig(() => ({
       'android':'安卓版本',
       'os':'澎湃OS版本',
       'yes':'是',
-      'no':'否'
+      'no':'否',
+      'hometitle':'小米澎湃OS, 现已发布',
+      'devlist':'小米澎湃OS机型列表',
+      'rompage':'澎湃OS官方刷机包下载'
     },
     en: {
       home: 'Home',
@@ -32,7 +35,10 @@ export default defineI18nConfig(() => ({
       'android':'Android',
       'os':'HyperOS',
       'yes':'Yes',
-      'no':'No'
+      'no':'No',
+      'hometitle':'Xiaomi HyperOS is here.',
+      'devlist':'Device list for Xiaomi HyperOS',
+      'rompage':'Xiaomi HyperOS Official ROMs for'
     }
   }
 }))

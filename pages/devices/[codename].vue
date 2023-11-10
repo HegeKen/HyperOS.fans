@@ -1,16 +1,7 @@
-<script setup>
-const route = useRoute()
-const locale = useI18n()
-const lang = locale.locale.value
-const url = "https://data.hyperos.fans/devices/" + route.params.codename + ".json"
-const { data } = await useFetch(url)
-</script>
-
 <template>
   <br>
-  <title v-if="lang == 'zh'">{{ data.name[lang] }} 澎湃OS官方刷机包下载 - HyperOS.fans</title>
-  <title v-if="lang == 'en'">Xiaomi HyperOS Official ROMs for {{ data.name[lang] }} - HyperOS.fans</title>
-  <title v-else>{{ data.name[lang] }} 澎湃OS官方刷机包下载 - HyperOS.fans</title>
+  <title v-if="lang == 'en'">{{ $t('rompage') }} {{ data.name[lang] }} - HyperOS.fans</title>
+  <title v-else>{{ data.name[lang] }} {{ $t('rompage') }} - HyperOS.fans</title>
   <Nav>
   </Nav>
   <div class="mdui-prose">
@@ -49,7 +40,13 @@ const { data } = await useFetch(url)
           </mdui-collapse-item>
         </mdui-collapse>
       </mdui-list>
-
     </div>
   </div>
 </template>
+<script setup>
+const route = useRoute()
+const locale = useI18n()
+const lang = locale.locale.value
+const url = "https://data.hyperos.fans/devices/" + route.params.codename + ".json"
+const { data } = await useFetch(url)
+</script>
