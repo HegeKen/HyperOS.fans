@@ -27,9 +27,9 @@
                     <tr v-for="{ os, android, recovery, fastboot } in roms">
                       <td>{{ os }}</td>
                       <td>{{ android }}</td>
-                      <td v-if="recovery == ''">未公布</td>
+                      <td v-if="recovery == ''">{{ $t('yet') }}</td>
                       <td v-else><a :href="('https://hugeota.d.miui.com/' + os + '/' + recovery)">{{ recovery }}</a></td>
-                      <td v-if="fastboot == ''">未公布</td>
+                      <td v-if="fastboot == ''">{{ $t('yet') }}</td>
                       <td v-else><a :href="('https://hugeota.d.miui.com/' + os + '/' + fastboot)">{{ fastboot }}</a></td>
                     </tr>
                   </tbody>
