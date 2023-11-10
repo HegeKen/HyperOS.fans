@@ -5,7 +5,7 @@ body {
 	font-family: Material Icons;
 	font-style: normal;
 	font-weight: 400;
-	src: url(https://data.hyperos.fans/assets/Material_Icons.woff2)
+	src: url(https://data.hyperos.fans/assets/fonts/Material_Icons.woff2)
 		format("woff2");
 }
 a {
