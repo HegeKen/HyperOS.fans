@@ -6,12 +6,11 @@ if (lang == undefined || lang == "") {
   lang = locale
 } else if (lang == locale) { }
 else {
+  lang = 'zh-cn'
 }
 </script>
 <template>
-  {{ lang }}
-  {{ locale }}
-  <div v-if="lang == 'zh-CN'">
+  <div v-if="lang == 'zh-cn'">
     <title>小米澎湃OS, Xiaomi HyperOS - 即将到来</title>
     <Styles></Styles>
     <div>
@@ -20,7 +19,7 @@ else {
       <div class="Center" style="font-weight: lighter;">...非官方网站...</div>
     </div>
   </div>
-  <div v-if="lang == 'en-US'">
+  <div v-if="lang == 'en-us'">
     <title>Xiaomi HyperOS, It's about time</title>
     <Styles></Styles>
     <div>
