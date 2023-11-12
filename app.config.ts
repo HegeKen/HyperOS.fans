@@ -11,6 +11,9 @@ export default defineAppConfig({
   app: {
     head: {
       charset: 'utf-8',
+      meta: [
+        { name: "baidu-site-verification", content: "codeva-AXUJixvVZA" },
+      ],
       link: [
         {
           rel: "icon",
