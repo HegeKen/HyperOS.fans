@@ -13,6 +13,7 @@ export default defineAppConfig({
       charset: 'utf-8',
       meta: [
         { name: "baidu-site-verification", content: "codeva-AXUJixvVZA" },
+        { name: 'msvalidate.01', content: 'D0A12F85D732BE57318CA28F52500432' }
       ],
       link: [
         {
