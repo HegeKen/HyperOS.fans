@@ -1,5 +1,5 @@
 body {
-	font-family: MISans;
+	font-family: MISans,Material Icons;
 }
 @font-face {
 	font-family: Material Icons;
@@ -11,6 +11,20 @@ body {
 a {
 	color: #155ffe;
 	text-decoration: none;
+}
+a:-webkit-any-link :hover{
+	text-decoration: none!important;
+}
+.buttom-nav-item {
+	padding:10px;
+	display: grid;
+	text-align: center;
+	color: #000;
+}
+.buttom-nav-icon {
+	display: flex;
+	text-align: center;
+	width:0
 }
 a:visited{
 	text-decoration: none;

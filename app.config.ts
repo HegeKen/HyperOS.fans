@@ -19,6 +19,10 @@ export default defineAppConfig({
           href: "https://data.miuier.com/assets/logo/favicon.ico",
         },
         {
+          rel: "stylesheet",  
+          href: "https://fonts.googleapis.com/icon?family=Material+Icons",
+        },
+        {
           rel: "stylesheet",
           href: "https://at.alicdn.com/t/c/font_2478867_iq2uuq05ql.css",
         },

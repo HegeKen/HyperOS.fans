@@ -20,7 +20,8 @@ export default defineI18nConfig(() => ({
       'hometitle':'小米澎湃OS, 现已发布',
       'devlist':'小米澎湃OS机型列表',
       'rompage':'澎湃OS官方刷机包下载',
-      'yet':'未公布'
+      'yet':'未公布',
+      'disclaimer':'非小米旗下网站'
     },
     en: {
       home: 'Home',
@@ -40,7 +41,8 @@ export default defineI18nConfig(() => ({
       'hometitle':'Xiaomi HyperOS is here.',
       'devlist':'Device list for Xiaomi HyperOS',
       'rompage':'Xiaomi HyperOS Official ROMs for',
-      'yet':'N/A'
+      'yet':'N/A',
+      'disclaimer':'This is NOT a Xiaomi Website'
     }
   }
 }))

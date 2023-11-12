@@ -1,0 +1,14 @@
+<template>
+  {{ route.params.codename }}
+  {{ route.params.version }}
+  {{ lang }}
+  <!-- {{ data["branches"]["roms"][route.params.version] }} -->
+</template>
+<script setup>
+const route = useRoute()
+const locale = useI18n()
+const lang = locale.locale.value
+const url = "https://data.hyperos.fans/devices/" + route.params.codename + ".json"
+const { data } = await useFetch(url)
+
+</script>
