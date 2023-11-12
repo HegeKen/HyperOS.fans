@@ -9,6 +9,7 @@
     </span>
   </mdui-card>
   <Disclamier></Disclamier>
+  <Analystics></Analystics>
 </template>
 
 <script setup>

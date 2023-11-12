@@ -11,7 +11,6 @@ export default defineAppConfig({
   app: {
     head: {
       charset: 'utf-8',
-
       link: [
         {
           rel: "icon",

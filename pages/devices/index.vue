@@ -10,6 +10,7 @@
     </div>
   </mdui-card>
   <Disclamier></Disclamier>
+  <Analystics></Analystics>
 </template>
 <script setup>
 const locale = useI18n()

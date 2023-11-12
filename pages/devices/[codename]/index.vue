@@ -44,6 +44,7 @@
     </mdui-list>
   </div>
   <Disclamier></Disclamier>
+  <Analystics></Analystics>
 </template>
 <script setup>
 const route = useRoute()

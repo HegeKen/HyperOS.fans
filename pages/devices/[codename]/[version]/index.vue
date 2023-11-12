@@ -3,6 +3,7 @@
   {{ route.params.version }}
   {{ lang }}
   <!-- {{ data["branches"]["roms"][route.params.version] }} -->
+  <Analystics></Analystics>
 </template>
 <script setup>
 const route = useRoute()
