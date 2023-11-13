@@ -14,8 +14,7 @@
         <mdui-collapse-item>
           <mdui-list-item slot="header">{{ name[lang] }} <mdui-icon slot="end-icon" class="example-trigger" name="keyboard_arrow_down"></mdui-icon></mdui-list-item>
           <div>
-            <mdui-list-item>
-              <div class="mdui-prose">
+              <div class="mdui-prose" style="width:95vw;">
                 <table>
                   <thead>
                     <th>{{ $t('os') }}</th>
@@ -36,8 +35,6 @@
                   </tbody>
                 </table>
               </div>
-              <br>
-            </mdui-list-item>
           </div>
         </mdui-collapse-item>
       </mdui-collapse>

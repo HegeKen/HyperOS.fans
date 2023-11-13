@@ -12,6 +12,12 @@ a {
 	color: #155ffe;
 	text-decoration: none;
 }
+div .preset{
+	padding:0px!important;
+}
+.mdui-prose table, .mdui-table table{
+	text-align:center!important;
+}
 a:-webkit-any-link :hover{
 	text-decoration: none!important;
 }
