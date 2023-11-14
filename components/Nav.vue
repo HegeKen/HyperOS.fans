@@ -24,6 +24,12 @@ const availableLocales = computed(() => {
           {{ $t('devices') }}
         </div>
       </NuxtLink>
+      <NuxtLink :to="('/' + locale + '/dev')">
+        <div class="buttom-nav-item">
+          <div class="buttom-nav-icom"><mdui-button-icon icon="developer_mode"></mdui-button-icon></div>
+          {{ $t('dev') }}
+        </div>
+      </NuxtLink>
       <a href="https://github.com/HegeKen/">
         <div class="buttom-nav-item">
           <div class="buttom-nav-icom"><mdui-button-icon icon="code"></mdui-button-icon></div>
@@ -36,8 +42,10 @@ const availableLocales = computed(() => {
           {{ locale.name }}
         </div>
       </NuxtLink>
-      <div style="flex-grow: 1"></div>
-      <mdui-fab icon="arrow_upward" href="#top"></mdui-fab>
     </mdui-bottom-app-bar>
+    <mdui-layout placement="buttom" order="1">
+    <div style="flex-grow: 1"></div>
+    <mdui-fab icon="arrow_upward" href="#top"></mdui-fab>
+  </mdui-layout>
   </div>
 </template>
