@@ -16,6 +16,6 @@
   },
   "dependencies": {
     "@nuxtjs/sitemap": "^2.4.0",
-    "mdui": "^2.0.1"
+    "mdui": "^2.0.2"
   }
 }
