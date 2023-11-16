@@ -37,7 +37,8 @@ export default defineI18nConfig(() => ({
       'description':'▍更新说明',
       'attention':'▍升级提示',
       'logs':'▍更新日志',
-      'roms':"▍刷机包"
+      'roms':"▍刷机包",
+      'totop':'返回'
     },
     en: {
       home: 'Home',
@@ -74,7 +75,8 @@ export default defineI18nConfig(() => ({
       'description':'▍Update description',
       'attention':'▍Attentions',
       'logs':'▍Changelogs',
-      'roms':"▍ROMs"
+      'roms':"▍ROMs",
+      'totop':'ToTop'
     }
   }
 }))
