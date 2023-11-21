@@ -19,10 +19,10 @@
   <mdui-card style="width: 99vw;padding-bottom: 20px;align-items: center;margin-top:1vw;margin-right:1vw">
     <h3 style="padding-left:10px;">{{ $t('update') }}</h3>
     <h3 style="padding-left:10px;">{{ $t('uptime') }} {{ home.recent.time }}</h3>
-    <span v-for="({ code, name, rom },index) in home.recent.roms" style="padding-left:10px;">
-      <span v-if="index<home.recent.roms.length-1"><NuxtLink :to="('/' + locale.locale.value + '/devices/' + code)" class="HyperBlue" style="text-indent: 20px;">{{ name[lang] }}</NuxtLink> : {{ rom }};</span>
-      <span v-else><NuxtLink :to="('/' + locale.locale.value + '/devices/' + code)" class="HyperBlue" style="text-indent: 20px;">{{ name[lang] }}</NuxtLink> : {{ rom }}</span>
-    </span>
+    <ol v-for="({ code, name, rom },index) in home.recent.roms" style="padding-left:10px;list-style-type:none;">
+      <li v-if="index<home.recent.roms.length-1"><NuxtLink :to="('/' + locale.locale.value + '/devices/' + code)" class="HyperBlue" style="text-indent: 20px;">{{ name[lang] }}</NuxtLink> : {{ rom }};</li>
+      <li v-else><NuxtLink :to="('/' + locale.locale.value + '/devices/' + code)" class="HyperBlue" style="text-indent: 20px;">{{ name[lang] }}</NuxtLink> : {{ rom }}</li>
+    </ol>
   </mdui-card>
   <Disclamier></Disclamier>
   <Analystics></Analystics>
