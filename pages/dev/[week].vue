@@ -1,4 +1,6 @@
 <template>
+  <title v-if="lang == 'en'"> {{ data.title[lang] }} - HyperOS.fans</title>
+  <title v-else>{{ data.title[lang] }} - HyperOS.fans</title>
   <mdui-card style="width: 99vw;padding-bottom: 20px;align-items: center;margin-top:1vw;margin-right:1vw">
     <div style="padding-left:10px;padding-top:10px">
       <h3 class="HyperBlue">{{ data.title[lang] }}</h3>
