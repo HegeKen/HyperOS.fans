@@ -19,7 +19,7 @@
           {{ $t('dev') }}
         </div>
       </NuxtLink>
-      <a href="https://github.com/HegeKen/">
+      <a href="https://github.com/HegeKen/" target="_blank">
         <div class="buttom-nav-item">
           <div class="buttom-nav-icom"><mdui-button-icon icon="code"></mdui-button-icon></div>
           {{ $t('code') }}

@@ -20,7 +20,7 @@
     <h3 style="padding-left:10px;">{{ $t('update') }}</h3>
     <h3 style="padding-left:10px;">{{ $t('uptime') }} {{ home.recent.time }}</h3>
     <span v-for="({ code, name, rom },index) in home.recent.roms" style="padding-left:10px;">
-      <span v-if="index<home.recent.roms.length-1"><NuxtLink :to="('/' + locale.locale.value + '/devices/' + code)" class="HyperBlue" style="text-indent: 20px;">{{ name[lang] }}</NuxtLink> : {{ roms }};</span>
+      <span v-if="index<home.recent.roms.length-1"><NuxtLink :to="('/' + locale.locale.value + '/devices/' + code)" class="HyperBlue" style="text-indent: 20px;">{{ name[lang] }}</NuxtLink> : {{ rom }};</span>
       <span v-else><NuxtLink :to="('/' + locale.locale.value + '/devices/' + code)" class="HyperBlue" style="text-indent: 20px;">{{ name[lang] }}</NuxtLink> : {{ rom }}</span>
     </span>
   </mdui-card>
