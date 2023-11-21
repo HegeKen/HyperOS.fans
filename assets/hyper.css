@@ -36,6 +36,10 @@ a:visited{
 	text-decoration: none;
 	color: #155ffe;
 }
+code{
+	font-family: Consolas,Courier,Courier New,monospace;
+	background-color: rgba(var(--mdui-color-surface-variant),.28);
+}
 .mdui-theme-dark {
 	color: white;
 	accent-color: #155ffe;

@@ -38,7 +38,17 @@ export default defineI18nConfig(() => ({
       'attention':'▍升级提示',
       'logs':'▍更新日志',
       'roms':"▍刷机包",
-      'totop':'返回'
+      'totop':'返回',
+      'tips':'友情提示',
+      'fix403':'修复403提示',
+      'method1':'方法：',
+      '1step1':'找到hosts文件或者路由器的hosts编辑页面',
+      '1step2':'往hosts文件中添加以下两个解析记录',
+      '1step3':'保存并退出',
+      'method2':'方法二：',
+      '2step1':'在桌面打开',
+      '2step2':'',
+      '2step3':''
     },
     en: {
       home: 'Home',
@@ -76,7 +86,17 @@ export default defineI18nConfig(() => ({
       'attention':'▍Attentions',
       'logs':'▍Changelogs',
       'roms':"▍ROMs",
-      'totop':'ToTop'
+      'totop':'ToTop',
+      'tips':'Tips',
+      'fix403':'Fix 403',
+      'method1':'Method:',
+      '1step1':'Open up the hosts file on your computer or your router settings',
+      '1step2':'And those two lines to the end of the file.',
+      '1step3':'Save the file and exit.',
+      'method2':'',
+      '2step1':'',
+      '2step2':'',
+      '2step3':''
     }
   }
 }))
