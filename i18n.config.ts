@@ -41,7 +41,7 @@ export default defineI18nConfig(() => ({
       'totop':'返回',
       'tips':'友情提示',
       'fix403':'修复403提示',
-      'method1':'方法：',
+      'method1':'方法一：',
       '1step1':'找到hosts文件或者路由器的hosts编辑页面',
       '1step2':'往hosts文件中添加以下两个解析记录',
       '1step3':'保存并退出',
