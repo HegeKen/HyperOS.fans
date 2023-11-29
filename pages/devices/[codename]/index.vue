@@ -8,7 +8,7 @@
     <p style="padding-left:10px;">{{ $t('miui') }} ： <span v-if="data.miui == 'yes'">{{ $t('yes') }} {{ $t('gotomiui') }}<a :href="('https://roms.miuier.com/devices/'+data.device)">{{ data.name[lang] }}({{ data.device }}) {{ $t('miuier') }}</a></span><span v-else>{{ $t('no') }}</span></p>
   </mdui-card>
   <div v-for="{ name, roms, show } in data.branches">
-    <mdui-list v-show="show == 1">
+    <mdui-list v-show="show != 0">
       <mdui-collapse accordion>
         <mdui-collapse-item>
           <mdui-list-item slot="header">{{ name[lang] }} <mdui-icon slot="end-icon" class="example-trigger" name="keyboard_arrow_down"></mdui-icon></mdui-list-item>
