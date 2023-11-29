@@ -3,7 +3,7 @@
   <mdui-card style="width: 99vw;padding-bottom: 20px;align-items: center;margin-top:1vw;margin-right:1vw">
     <div style="padding-left:10px;padding-top:10px">
       <NuxtLink v-for="{ code, name } in data.mi" :to="('/' + lang + '/devices/' + code)" class="HyperBlue" style="margin-right: 5px;">
-      <mdui-chip>{{ name[lang] }}</mdui-chip>
+      <mdui-chip>{{ name[lang] }}({{ code }})</mdui-chip>
     </NuxtLink>
     </div>
   </mdui-card>
