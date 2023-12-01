@@ -10,8 +10,8 @@
   <mdui-card style="width: 99vw;padding-bottom: 20px;align-items: center;margin-top:1vw;margin-right:1vw">
     <h3 style="padding-left:10px;">{{ $t('dev') }}</h3>
     <h3 style="padding-left:10px;">{{ $t('latedev') }}<NuxtLink :to="('/dev/'+latest.week)" style="font-size: 16px;font-weight: lighter;">{{ latest.title[lang]}}</NuxtLink></h3>
-    <h3 style="padding-left:10px;">{{ $t('supported') }}</h3>
-    <span v-for="({ device, name },index) in latest.roms" style="padding-left:10px;">
+    <h3 style="padding-left:10px;" v-show="latest.show == 'yes'">{{ $t('supported') }}</h3>
+    <span v-for="({ device, name },index) in latest.roms" style="padding-left:10px;" v-show="latest.show == 'yes'">
       <span v-if="index<latest.roms.length-1"><NuxtLink :to="('/' + locale.locale.value + '/devices/' + device)" class="HyperBlue" style="text-indent: 20px;">{{ name[lang] }}</NuxtLink>;</span>
       <span v-else><NuxtLink :to="('/' + locale.locale.value + '/devices/' + device)" class="HyperBlue" style="text-indent: 20px;">{{ name[lang] }}</NuxtLink></span>
     </span>
