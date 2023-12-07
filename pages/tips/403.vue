@@ -21,7 +21,7 @@
       <h3>{{ $t('method2') }}</h3>
       <ol>
         <li>点击以下链接进行下载，感谢: <a href="https://www.coolapk.com/u/13562649" target="_blank">忆雨_Micles@酷安</a> 提供脚本</li>
-        <p><a href="/403FixBy忆雨_V1.0.2.1.bat" download="/403FixBy忆雨_V1.0.2.1.bat">403FixBy忆雨_V1.0.2.1.bat</a></p>
+        <p><a href="/403FixBy忆雨_V1.0.5.3.bat" download="/403FixBy忆雨_V1.0.5.3.bat">403FixBy忆雨_V1.0.5.3.bat</a></p>
         <li>下载完成后，双击运行该脚本，并按步骤进行操作。</li>
       </ol>
     </div>
