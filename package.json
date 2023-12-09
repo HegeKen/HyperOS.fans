@@ -12,10 +12,10 @@
     "@nuxtjs/device": "^3.1.1",
     "@nuxtjs/i18n": "^8.0.0-rc.5",
     "nuxt": "^3.8.2",
-    "nuxt-simple-sitemap": "^4.0.1"
+    "nuxt-simple-sitemap": "^4.1.10"
   },
   "dependencies": {
     "@nuxtjs/sitemap": "^2.4.0",
-    "mdui": "^2.0.2"
+    "mdui": "^2.0.3"
   }
 }
