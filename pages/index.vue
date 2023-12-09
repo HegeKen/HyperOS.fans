@@ -24,9 +24,11 @@
       <li v-else><NuxtLink :to="('/' + locale.locale.value + '/devices/' + code)" class="HyperBlue" style="text-indent: 20px;">{{ name[lang] }}</NuxtLink> : {{ rom }}</li>
     </ol>
   </mdui-card>
+  
   <Disclamier></Disclamier>
   <Analystics></Analystics>
   <Nav></Nav>
+  <br /><br /><br />
 </template>
 
 <script setup>
