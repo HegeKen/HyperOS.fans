@@ -66,6 +66,7 @@
   <Disclamier></Disclamier>
   <Nav></Nav>
   <Analystics></Analystics>
+  <br /><br /><br />
 </template>
 <script setup>
 const route = useRoute()
