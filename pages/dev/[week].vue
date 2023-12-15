@@ -56,9 +56,9 @@
             <td style="font-size: 10px;">{{ rom.os }}</td>
             <td>{{ rom.android }}</td>
             <td v-if="rom.recovery == ''">{{ $t('yet') }}</td>
-            <td v-else><a :href="('https://hugeota.d.miui.com/' + rom.os + '/' + rom.recovery)"><span v-if="$device.isDesktopOrTablet">{{ rom.recovery }}</span><span v-else>{{ $t('recovery') }}</span></a></td>
+            <td v-else><a :href="('https://airtel.bigota.d.miui.com/' + rom.os + '/' + rom.recovery)"><span v-if="$device.isDesktopOrTablet">{{ rom.recovery }}</span><span v-else>{{ $t('recovery') }}</span></a></td>
             <td v-if="rom.fastboot == ''">{{ $t('yet') }}</td>
-            <td v-else><a :href="('https://hugeota.d.miui.com/' + rom.os + '/' + rom.fastboot)"><span v-if="$device.isDesktopOrTablet">{{ rom.fastboot }}</span><span v-else>{{ $t('fastboot') }}</span></a></td>
+            <td v-else><a :href="('https://airtel.bigota.d.miui.com/' + rom.os + '/' + rom.fastboot)"><span v-if="$device.isDesktopOrTablet">{{ rom.fastboot }}</span><span v-else>{{ $t('fastboot') }}</span></a></td>
           </tr>
         </tbody>
       </table>
