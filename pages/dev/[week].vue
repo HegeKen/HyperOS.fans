@@ -1,59 +1,65 @@
 <template>
-  <title v-if="lang == 'en'"> {{ data.title[lang] }} - HyperOS.fans</title>
-  <title v-else>{{ data.title[lang] }} - HyperOS.fans</title>
-  <mdui-card style="width: 99vw;padding-bottom: 20px;align-items: center;margin-top:1vw;margin-right:1vw">
-    <div style="padding-left:10px;padding-top:10px">
-      <h3 class="HyperBlue">{{ data.title[lang] }}</h3>
-      <h3>{{ $t('uptime') }} : <span style="font-weight: lighter;">{{ data.update }}</span></h3>
-      <h3>{{ $t('versions') }} : <span style="font-weight: lighter;">{{ data.versions }}</span></h3>
-      <h3>{{ $t('comlink') }} : <span style="font-weight: lighter;"><a :href="('https://www.xiaomi.cn/post/') + data.postId" target="_blank">{{ data.title[lang] }}</a></span></h3>
-    </div>
-  </mdui-card>
-  <mdui-card style="width: 99vw;padding-bottom: 20px;align-items: center;margin-top:1vw;margin-right:1vw">
-    <div style="padding-left:10px;padding-top:10px">
-      <h3>{{ $t('description') }}</h3>
-      <ul v-for="(data) in data.description">
-        <li>{{ data[lang] }}</li>
+    <title v-if="locale.locale.value == 'en'"> {{ data.title[locale.locale.value] }} - HyperOS.fans</title>
+  <title v-else>{{ data.title[locale.locale.value] }} - HyperOS.fans</title>
+  <v-app>
+    <Nav></Nav>
+    <Space></Space>
+    <v-card :title="data.title[locale.locale.value]" elevation="2">
+      <v-card-text>
+        <p><b>{{ $t('uptime') }}</b>{{ data.update }}</p>
+        <p><b>{{ $t('versions') }}</b>{{ data.versions }}</p>
+        <p><b>{{ $t('comlink') }}</b><a :href="('https://www.xiaomi.cn/post/') + data.postId" target="_blank">{{ data.title[locale.locale.value] }}</a></p>
+      </v-card-text>
+    </v-card>
+    <Space></Space>
+    <v-card elevation="2">
+      <v-card-title>{{ $t('description') }}</v-card-title>
+      <v-card-text>
+        <ul style="margin-left:20px;">
+        <li v-for="(data) in data.description">{{ data[locale.locale.value] }}</li>
       </ul>
-    </div>
-  </mdui-card>
-  <mdui-card style="width: 99vw;padding-bottom: 20px;align-items: center;margin-top:1vw;margin-right:1vw">
-    <div style="padding-left:10px;padding-top:10px">
-      <h3>{{ $t('attention') }}</h3>
-      <ul v-for="(data) in data.attention">
-        <li>{{ data[lang] }}</li>
+      </v-card-text>
+    </v-card>
+    <Space></Space>
+    <v-card elevation="2">
+      <v-card-title>{{ $t('attention') }}</v-card-title>
+      <v-card-text>
+        <ul style="margin-left:20px;">
+        <li v-for="(data) in data.attention">{{ data[locale.locale.value] }}</li>
       </ul>
-    </div>
-  </mdui-card>
-  <mdui-card style="width: 99vw;padding-bottom: 20px;align-items: center;margin-top:1vw;margin-right:1vw">
-    <div style="padding-left:10px;padding-top:10px">
-      <h3>{{ $t('logs') }}</h3>
-      <div v-for="(data) in data.logs">
-        <p><b>{{ data.module[lang] }}</b>
+      </v-card-text>
+    </v-card>
+    <Space></Space>
+    <v-card elevation="2">
+      <v-card-title>{{ $t('logs') }}</v-card-title>
+      <v-card-text>
+        <div v-for="(data) in data.logs">
+        <p><b>{{ data.module[locale.locale.value] }}</b>
         <p v-for="(data) in data.log">
-          {{ data[lang] }}
+          {{ data[locale.locale.value] }}
         </p>
         </p>
       </div>
-      <div></div>
-    </div>
-  </mdui-card>
-    <div class="mdui-prose" style="width:95vw;">
-      <div style="padding-left:10px;padding-top:10px">
-        <h3>{{ $t('roms') }}</h3>
-      </div>
-      <table>
+      </v-card-text>
+    </v-card>
+    <Space></Space>
+    <v-card elevation="2">
+      <v-card-title>{{ $t('roms') }}</v-card-title>
+      <v-card-text>
+        <v-table>
         <thead>
-          <th>{{ $t('name') }}</th>
-          <th>{{ $t('os') }}</th>
-          <th>{{ $t('android') }}</th>
-          <th>{{ $t('recovery') }}</th>
-          <th>{{ $t('fastboot') }}</th>
+          <tr>
+          <th class="text-left">{{ $t('name') }}</th>
+          <th class="text-left">{{ $t('os') }}</th>
+          <th class="text-left">{{ $t('android') }}</th>
+          <th class="text-left">{{ $t('recovery') }}</th>
+          <th class="text-left">{{ $t('fastboot') }}</th>
+        </tr>
         </thead>
         <tbody>
           <tr v-for="{ device, name, rom } in data.roms">
-            <td>{{ name[lang] }}({{ device }})</td>
-            <td style="font-size: 10px;">{{ rom.os }}</td>
+            <td>{{ name[locale.locale.value] }}({{ device }})</td>
+            <td>{{ rom.os }}</td>
             <td>{{ rom.android }}</td>
             <td v-if="rom.recovery == ''">{{ $t('yet') }}</td>
             <td v-else><a :href="('https://airtel.bigota.d.miui.com/' + rom.os + '/' + rom.recovery)"><span v-if="$device.isDesktopOrTablet">{{ rom.recovery }}</span><span v-else>{{ $t('recovery') }}</span></a></td>
@@ -61,18 +67,26 @@
             <td v-else><a :href="('https://airtel.bigota.d.miui.com/' + rom.os + '/' + rom.fastboot)"><span v-if="$device.isDesktopOrTablet">{{ rom.fastboot }}</span><span v-else>{{ $t('fastboot') }}</span></a></td>
           </tr>
         </tbody>
-      </table>
-    </div>
-  <Disclamier></Disclamier>
-  <Nav></Nav>
-  <Analystics></Analystics>
-  <br /><br /><br />
+      </v-table>
+      </v-card-text>
+    </v-card>
+    <Footer></Footer>
+  </v-app>
 </template>
+
+
+<script>
+export default {
+  data() {
+    return {
+      drawer: null,
+    }
+  },
+}
+</script>
 <script setup>
 const route = useRoute()
 const locale = useI18n()
-const lang = locale.locale.value
 const url = "https://data.hyperos.fans/dev/" + route.params.week + ".json"
 const { data } = await useFetch(url)
 </script>
-

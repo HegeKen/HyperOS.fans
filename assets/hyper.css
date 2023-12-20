@@ -1,66 +1,21 @@
 body {
 	font-family: MISans;
 }
-@font-face {
-	font-family: Material Icons;
-	font-style: normal;
-	font-weight: 400;
-	src: url(https://data.hyperos.fans/assets/fonts/Material_Icons.woff2)
-		format("woff2");
-}
-a {
-	color: #155ffe;
-	text-decoration: none;
-}
-div .preset{
-	padding:0px!important;
-}
-.mdui-prose table, .mdui-table table{
-	text-align:center!important;
-}
-a:-webkit-any-link :hover{
-	text-decoration: none!important;
-}
-.buttom-nav-item {
-	padding:10px;
-	display: grid;
-	text-align: center;
-	color: #000;
-}
-.buttom-nav-icon {
-	display: flex;
-	text-align: center;
-	width:0
-}
-a:visited{
-	text-decoration: none;
-	color: #155ffe;
-}
-code{
-	font-family: Consolas,Courier,Courier New,monospace;
+.v-code{
+	font-family: 'monospace', 'Consolas', 'Courier','Courier New';
 	background-color: rgba(var(--mdui-color-surface-variant),.28);
 }
-.mdui-theme-dark {
-	color: white;
-	accent-color: #155ffe;
-	background-color: #000;
-}
-.mdui-prose a {
-	color: #155ffe!important;
-	text-decoration: none!important;
-}
 .HyperBlue {
-	color: #155ffe;
+	color: #2655ff!important;
 	text-decoration: none;
 }
 mdui-chip :hover{
-	color: #155ffe;
+	color: #2655ff;
 	text-decoration: underline
 }
 mdui-ripple div :surface :hover{
 	padding:10px!important;
 }
-
 .Center {
 	margin: 10px;
 	text-align: center;
@@ -68,4 +23,38 @@ mdui-ripple div :surface :hover{
 .myiCon {
 	font-family: "iconfont";
 	text-align: right;
+}
+/* .v-toolbar-title{
+	font-size: larger!important;
+	font-weight: bolder!important;
+} */
+.v-main{
+	height: 100vh;
+}
+.v-tab--selected{
+	color: #2655ff;
+}
+.v-slide-group-item--active{
+	color: 103,80,164;
+}
+a{
+	color: #2655ff;
+	text-decoration: none;
+}
+.NavLinks{
+	text-decoration: none;
+	font-weight: lighter!important;
+	color:black;
+}
+.NavLinks a{
+	text-decoration: none;
+	font-weight: lighter!important;
+	color:black;
+}
+b{
+	font-weight: light;
+}
+.mcard{
+	width:98vw;
+	margin-left: 1vw;
 }

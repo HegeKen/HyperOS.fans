@@ -1,85 +1,84 @@
 <template>
   <div v-if="$device.isDesktopOrTablet">
-    <mdui-bottom-app-bar>
-      <NuxtLink :to="('/' + locale)">
-        <div class="buttom-nav-item">
-          <div class="buttom-nav-icom"><mdui-button-icon icon="home"></mdui-button-icon></div>
-          {{ $t('home') }}
-        </div>
-      </NuxtLink>
-      <NuxtLink :to="('/' + locale + '/devices')">
-        <div class="buttom-nav-item">
-          <div class="buttom-nav-icom"><mdui-button-icon icon="devices"></mdui-button-icon></div>
-          {{ $t('devices') }}
-        </div>
-      </NuxtLink>
-      <NuxtLink :to="('/' + locale + '/dev')">
-        <div class="buttom-nav-item">
-          <div class="buttom-nav-icom"><mdui-button-icon icon="developer_mode"></mdui-button-icon></div>
-          {{ $t('dev') }}
-        </div>
-      </NuxtLink>
-      <a href="https://github.com/HegeKen/" target="_blank">
-        <div class="buttom-nav-item">
-          <div class="buttom-nav-icom"><mdui-button-icon icon="code"></mdui-button-icon></div>
-          {{ $t('code') }}
-        </div>
-      </a>
-      <NuxtLink v-for="locale in availableLocales" :key="locale.code" :to="switchLocalePath(locale.code)">
-        <div class="buttom-nav-item">
-          <div class="buttom-nav-icom"><mdui-button-icon icon="translate"></mdui-button-icon></div>
-          {{ locale.name }}
-        </div>
-      </NuxtLink>
-      <div style="flex-grow: 1"></div>
-      <mdui-fab icon="arrow_upward" href="#top"></mdui-fab>
-    </mdui-bottom-app-bar>
+    <v-card class="mcard">
+      <v-app-bar color="white" :elevation="2" rounded>
+          <v-app-bar-title>
+            <b>Hyper<span class="HyperBlue">OS</span>.fans</b>
+            </v-app-bar-title>
+        <v-tabs v-model="tab" centered stacked class="HyperBlue NavLinks">
+          <nuxt-link v-for="(item, i) in items" :key="i" :value="item" :to="('/' + locale + '/' + item.path)">
+            <v-tab>
+              <v-icon :icon="item.icon"></v-icon>
+              <span v-text="item[locale]" class="text-capitalize"></span>
+            </v-tab></nuxt-link>
+          <NuxtLink v-for="locale in availableLocales" :key="locale.code" :to="switchLocalePath(locale.code)" color="#2655ff"><v-tab value="translate">
+              <v-icon icon="mdi-translate"></v-icon>
+              <span class="text-capitalize">{{ $t('lang') }}</span>
+            </v-tab></NuxtLink>
+          <a href="#top" color="#2655ff"><v-tab value="totop">
+              <v-icon icon="mdi-arrow-up"></v-icon>
+              <span class="text-capitalize">{{ $t('top') }}</span>
+            </v-tab></a>
+        </v-tabs>
+      </v-app-bar>
+      <br /><br />
+    </v-card>
+    <Space></Space>
+    <Space></Space>
+    <!-- PC Nav -->
   </div>
   <div v-else>
-    <mdui-bottom-app-bar>
-      <NuxtLink :to="('/' + locale)">
-        <div class="buttom-nav-item">
-          <div class="buttom-nav-icom"><mdui-button-icon icon="home"></mdui-button-icon></div>
-          {{ $t('home') }}
-        </div>
-      </NuxtLink>
-      <NuxtLink :to="('/' + locale + '/devices')">
-        <div class="buttom-nav-item">
-          <div class="buttom-nav-icom"><mdui-button-icon icon="devices"></mdui-button-icon></div>
-          {{ $t('devices') }}
-        </div>
-      </NuxtLink>
-      <NuxtLink :to="('/' + locale + '/dev')">
-        <div class="buttom-nav-item">
-          <div class="buttom-nav-icom"><mdui-button-icon icon="developer_mode"></mdui-button-icon></div>
-          {{ $t('dev') }}
-        </div>
-      </NuxtLink>
-      <a href="#top">
-        <div class="buttom-nav-item">
-          <div class="buttom-nav-icom"><mdui-button-icon icon="arrow_upward"></mdui-button-icon></div>
-          {{ $t('totop') }}
-        </div>
-      </a>
-      <NuxtLink v-for="locale in availableLocales" :key="locale.code" :to="switchLocalePath(locale.code)">
-        <div class="buttom-nav-item">
-          <div class="buttom-nav-icom"><mdui-button-icon icon="translate"></mdui-button-icon></div>
-          {{ locale.name }}
-        </div>
-      </NuxtLink>
-    </mdui-bottom-app-bar>
+    <v-app-bar elevation="2" rounded>
+      <v-btn icon="mdi-menu" @click.stop="drawer = !drawer"></v-btn>
+      <v-app-bar-title><b>Hyper<span class="HyperBlue">OS</span>.fans</b></v-app-bar-title>
+    </v-app-bar>
+    <v-navigation-drawer v-model="drawer">
+      <v-list>
+        <NuxtLink v-for="(item, i) in items" :key="i" :value="item" :to="('/' + locale + '/' + item.path)">
+          <v-list-item class="NavLinks text-capitalize" style="color:black">
+            <template v-slot:prepend>
+              <v-icon :icon="item.icon"></v-icon>
+            </template>
+            <v-list-item-title v-text="item[locale]"></v-list-item-title>
+          </v-list-item>
+        </NuxtLink>
+
+        <NuxtLink class="text-capitalize NavLinks" v-for="locale in availableLocales" :key="locale.code" :to="switchLocalePath(locale.code)"><v-list-item value="translate">
+            <template v-slot:prepend>
+              <v-icon icon="mdi-translate"></v-icon>
+            </template>
+            <v-list-item-title>{{ $t('lang') }}</v-list-item-title>
+          </v-list-item></NuxtLink>
+      </v-list>
+    </v-navigation-drawer>
+    <br /><br /><br />
+    <!-- Mobile Nav -->
   </div>
 </template>
 
-
+<script>
+export default {
+  data() {
+    return {
+      items: [
+        { zh: '首页', en: 'Home', path: '', icon: 'mdi-home' },
+        { zh: '开发版', en: 'DEV', path: 'dev', icon: 'mdi-dev-to' },
+        { zh: '机型列表', en: 'Devices', path: 'devices', icon: 'mdi-devices' },
+        { zh: '源码', en: 'Source', path: 'source', icon: 'mdi-code-json' },
+        { zh: '站点日志', en: 'Sitelog', path: 'sitelog', icon: 'mdi-update' },
+      ],
+      drawer: null,
+      tab: null,
+      rail: true
+    }
+  },
+}
+</script>
 <script setup>
-import '~/assets/hyper.css'
-import 'mdui/mdui.css';
-import 'mdui';
-import 'mdui/jq.js';
 const { locale, locales } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
 const availableLocales = computed(() => {
   return (locales.value).filter(i => i.code !== locale.value)
 })
+
 </script>

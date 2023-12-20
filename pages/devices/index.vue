@@ -1,19 +1,58 @@
 <template>
   <title>{{ $t('devlist') }} - HyperOS.fans</title>
-  <mdui-card style="width: 99vw;padding-bottom: 20px;align-items: center;margin-top:1vw;margin-right:1vw">
-    <div style="padding-left:10px;padding-top:10px">
-      <NuxtLink v-for="{ code, name } in data.mi" :to="('/' + lang + '/devices/' + code)" class="HyperBlue" style="margin-right: 5px;">
-      <mdui-chip>{{ name[lang] }}({{ code }})</mdui-chip>
-    </NuxtLink>
-    </div>
-  </mdui-card>
-  <Disclamier></Disclamier>
-  <Nav></Nav>
-  <Analystics></Analystics>
+		<v-app>
+			<Nav></Nav>
+			<v-expansion-panels variant="accordion" v-model="panel">
+				<v-expansion-panel v-for="alldevices in data">
+					<v-expansion-panel-title>{{
+						alldevices[locale]
+					}}</v-expansion-panel-title>
+				<v-expansion-panel-text v-if="$device.isDesktopOrTablet" class="d-flex">
+					<v-container fluid>
+							<v-row dense>
+								<v-col v-for="devices in alldevices.devices">
+									<v-card class="mx-auto" max-width="250" :href="('/'+locale+'/devices/'+devices.code)">
+										<v-img
+											:src="'https://data.hyperos.fans/assets/images/' +devices.code +'.png'"
+											class="align-end"
+											height="200px"
+											style="margin-top:10px;"
+										>
+										</v-img>
+										<v-card-title>{{ devices.name[locale] }}</v-card-title>
+										<v-btn class="HyperBlue" style="margin-bottom:10px" variant="text" prepend-icon="mdi-download">{{ $t('download') }}</v-btn>
+									</v-card>
+								</v-col>
+							</v-row>
+						</v-container>
+					</v-expansion-panel-text>
+			<v-expansion-panel-text v-else>
+					<v-container fluid>
+						<nuxt-link v-for="devices in alldevices.devices" :to="('/'+locale+'/devices/'+devices.code)">
+							<v-chip style="margin-top:5px;margin-right:5px;">
+								<span class="HyperBlue">{{devices.name[locale]}}</span>
+							</v-chip>
+						</nuxt-link>
+						</v-container>
+					</v-expansion-panel-text>
+					</v-expansion-panel>
+			</v-expansion-panels>
+			<Footer></Footer>
+		</v-app>
 </template>
+
+<script>
+export default {
+	data() {
+		return {
+			panel: [],
+			drawer: null,
+		};
+	},
+};
+</script>
 <script setup>
-const locale = useI18n()
-const lang = locale.locale.value
-const url = "https://data.hyperos.fans/devices.json"
-const { data } = await useFetch(url)
+const { locale, locales } = useI18n();
+const url = "https://data.hyperos.fans/devices.json";
+const { data } = await useFetch(url);
 </script>

@@ -1,42 +1,84 @@
 <template>
   <title>{{ $t('hometitle') }} - HyperOS.fans</title>
-  <mdui-card style="width: 99vw;padding-bottom: 20px;align-items: center;margin-top:1vw;margin-right:1vw">
-    <h3 style="padding-left:10px;">{{ $t('sitev') }}<span class="HyperBlue">{{ home.siteVer }}</span></h3>
-    <h3 style="padding-left:10px;">{{ $t('supported') }}</h3><span v-for="({ code, name },index) in device.mi" style="padding-left:10px;text-indent: 20px;">
-      <span v-if="index<device.mi.length-1"><NuxtLink :to="('/' + locale.locale.value + '/devices/' + code)" style="text-indent: 20px;" class="HyperBlue">{{ name[lang] }}</NuxtLink>;</span>
-      <span v-else><NuxtLink :to="('/' + locale.locale.value + '/devices/' + code)" class="HyperBlue" style="text-indent: 20px;">{{ name[lang] }}</NuxtLink></span>
-    </span>
-  </mdui-card>
-  <mdui-card style="width: 99vw;padding-bottom: 20px;align-items: center;margin-top:1vw;margin-right:1vw">
-    <h3 style="padding-left:10px;">{{ $t('dev') }}</h3>
-    <h3 style="padding-left:10px;">{{ $t('latedev') }}<NuxtLink :to="('/dev/'+latest.week)" style="font-size: 16px;font-weight: lighter;">{{ latest.title[lang]}}</NuxtLink></h3>
-    <h3 style="padding-left:10px;" v-show="latest.show == 'yes'">{{ $t('supported') }}</h3>
-    <span v-for="({ device, name },index) in latest.roms" style="padding-left:10px;" v-show="latest.show == 'yes'">
-      <span v-if="index<latest.roms.length-1"><NuxtLink :to="('/' + locale.locale.value + '/devices/' + device)" class="HyperBlue" style="text-indent: 20px;">{{ name[lang] }}</NuxtLink>;</span>
-      <span v-else><NuxtLink :to="('/' + locale.locale.value + '/devices/' + device)" class="HyperBlue" style="text-indent: 20px;">{{ name[lang] }}</NuxtLink></span>
-    </span>
-  </mdui-card>
-  <mdui-card style="width: 99vw;padding-bottom: 20px;align-items: center;margin-top:1vw;margin-right:1vw">
-    <h3 style="padding-left:10px;">{{ $t('update') }}</h3>
-    <h3 style="padding-left:10px;">{{ $t('uptime') }} {{ home.recent.time }}</h3>
-    <ol v-for="({ code, name, rom },index) in home.recent.roms" style="padding-left:10px;list-style-type:none;">
-      <li v-if="index<home.recent.roms.length-1"><NuxtLink :to="('/' + locale.locale.value + '/devices/' + code)" class="HyperBlue" style="text-indent: 20px;">{{ name[lang] }}</NuxtLink> : {{ rom }};</li>
-      <li v-else><NuxtLink :to="('/' + locale.locale.value + '/devices/' + code)" class="HyperBlue" style="text-indent: 20px;">{{ name[lang] }}</NuxtLink> : {{ rom }}</li>
-    </ol>
-  </mdui-card>
-  
-  <Disclamier></Disclamier>
-  <Analystics></Analystics>
-  <Nav></Nav>
-  <br /><br /><br />
+  <v-app>
+    <Nav></Nav>
+    <v-card elevation="2" style="width:98vw;" class="mcard">
+      <v-card-item>
+        <v-card-title class="HyperBlue">
+          {{ $t('sitev') }} {{ sitelog.logs[0].siteVer }}
+        </v-card-title>
+      </v-card-item>
+      <v-card-text>
+        <div><b>{{ $t('time') }}</b> {{ sitelog.logs[0].date }}</div>
+        <div><b>{{ $t('log') }}</b>
+          <ol style="margin-left:20px;">
+            <li v-for="(log) in sitelog.logs[0]['log']">{{ log[locale] }}</li>
+          </ol>
+        </div>
+      </v-card-text>
+    </v-card>
+    <Space></Space>
+    <v-card elevation="2" class="mcard">
+      <v-card-title class="HyperBlue">
+        {{ $t('dev') }}
+      </v-card-title>
+      <v-card-text>
+        <div><b>{{ $t('latedev') }}</b>
+          <NuxtLink :to="('/'+locale + '/dev/' + latest.week)" class="HyperBlue">{{ latest.title[locale] }}</NuxtLink>
+        </div>
+        <div>
+          <b>{{ $t('supported') }}</b>
+          <span v-for="({ device, name }, index) in latest.roms" style="padding-left:10px;" v-show="latest.show == 'yes'">
+            <span v-if="index < latest.roms.length - 1">
+              <NuxtLink :to="('/' + locale + '/devices/' + device)" class="HyperBlue" style="text-indent: 20px;">{{ name[locale] }}</NuxtLink>&nbsp;;
+            </span>
+            <span v-else>
+              <NuxtLink :to="('/' + locale + '/devices/' + device)" class="HyperBlue" style="text-indent: 20px;">{{ name[locale] }}</NuxtLink>
+            </span>
+          </span>
+        </div>
+      </v-card-text>
+    </v-card>
+    <Space></Space>
+    <v-card elevation="2" class="mcard">
+      <v-card-title class="HyperBlue">
+        {{ $t('update') }}
+      </v-card-title>
+      <v-card-text>
+        <div><b>{{ $t('uptime') }} </b> <span>{{ home.recent.time }}</span>
+        </div>
+        <div>
+          <ol style="margin-left:20px;">
+            <li v-for="({ code, name, rom }, index) in home.recent.roms">
+              <span v-if="index < home.recent.roms.length - 1"><NuxtLink :to="('/' + locale + '/devices/' + code)" class="HyperBlue" style="text-indent: 20px;">{{ name[locale] }}</NuxtLink> : {{ rom }};</span>
+              <span v-else><NuxtLink :to="('/' + locale + '/devices/' + code)" class="HyperBlue" style="text-indent: 20px;">{{ name[locale] }}</NuxtLink> : {{ rom }}</span>
+            </li>
+          </ol>
+        </div>
+      </v-card-text>
+    </v-card>
+    <Space></Space>
+    <Footer></Footer>
+  </v-app>
 </template>
 
+
+<script>
+export default {
+  data() {
+    return {
+      drawer: null,
+    }
+  },
+}
+</script>
 <script setup>
-const locale = useI18n()
-const lang = locale.locale.value
+const { locale, locales } = useI18n()
 const devices = "https://data.hyperos.fans/devices.json"
 const index = "https://data.hyperos.fans/index.json"
-const { data:device } = await useFetch(devices)
-const { data:home } = await useFetch(index)
-const { data:latest } = await useFetch('https://data.hyperos.fans/dev/'+home.value.latest+'.json')
+const site = "https://data.hyperos.fans/sitelog.json"
+const { data: device } = await useFetch(devices)
+const { data: home } = await useFetch(index)
+const { data: sitelog } = await useFetch(site)
+const { data: latest } = await useFetch('https://data.hyperos.fans/dev/' + home.value.latest + '.json')
 </script>

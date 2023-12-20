@@ -1,9 +1,24 @@
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+
 export default defineNuxtConfig({
+  build: {
+    transpile: ['vuetify'],
+  },
+  css: [
+    'assets/hyper.css',
+    'vuetify/lib/styles/main.sass',
+    '@mdi/font/css/materialdesignicons.min.css',
+  ],
   modules: [
     'nuxt-simple-sitemap',
     '@nuxtjs/i18n',
-    '@nuxtjs/device'
-    
+    '@nuxtjs/device',
+    (_options, nuxt) => {
+      nuxt.hooks.hook('vite:extendConfig', (config) => {
+        // @ts-expect-error
+        config.plugins.push(vuetify({ autoImport: true }))
+      })
+    },
   ],
   i18n: {
     locales: [
@@ -26,10 +41,7 @@ export default defineNuxtConfig({
     // experimentWarning: false // hide experimental warning message (disabled by default for tests)
     vue: {
       template: {
-        compilerOptions: {
-          // 所有以 mdui- 开头的标签名都是 mdui 组件
-          isCustomElement: (tag) => tag.startsWith('mdui-')
-        }
+        transformAssetUrls,
       }
     },
   },

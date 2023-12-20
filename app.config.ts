@@ -1,11 +1,10 @@
 export default defineAppConfig({
   title: 'HyperOS.fans',
-  css: ['mdui.css', '~/assets/main.css'],
   ssr: true,
   target: "static",
   components: true,
   loading: {
-    color: "#155ffe",
+    color: "#2655ff",
     height: "5px",
   },
   app: {

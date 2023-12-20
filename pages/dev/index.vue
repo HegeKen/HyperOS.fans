@@ -1,24 +1,42 @@
 <template>
-  <title>{{ $t('devtitle') }} - HyperOS.fans</title>
-  <mdui-card style="width: 99vw;padding-bottom: 20px;align-items: center;margin-top:1vw;margin-right:1vw">
-    <h3 style="padding-left:10px;">
-      <span v-for="{ bigVer, latest, weeks } in data.HyperOS" style="padding-left:10px">{{ bigVer }}
-        <div style="padding:10px"></div>
-        <NuxtLink v-for="(week) in weeks" :to="('/' + lang + '/dev/' + week)" class="HyperBlue" style="margin-right: 5px;">
-      <mdui-chip v-if="week == latest"><mdui-icon name='fiber_new'></mdui-icon> &nbsp {{ $t('num') }}{{ week }}{{ $t('week') }}</mdui-chip>
-      <mdui-chip v-else>{{ $t('num') }}{{ week }}{{ $t('week') }}</mdui-chip>
-    </NuxtLink>
-      </span>
+    <title>{{ $t('devtitle') }} - HyperOS.fans</title>
+  <v-app>
+    <Nav></Nav>
+    <space></space>
+    <v-card v-for="os in data.HyperOS" elevation="2">
+      <v-card-title>{{ os.bigVer }}</v-card-title>
+      <v-card-item style="padding:0px;">
+        <v-container fluid>
+						<!-- <nuxt-link v-for="dev in os.weeks" :to="('/'+locale+'/dev/'+dev)">
+							<v-chip style="margin-top:5px;margin-right:5px;">
+								<span class="HyperBlue">{{dev}}</span>
+							</v-chip>
+						</nuxt-link> -->
 
-    </h3>
-  </mdui-card>
-  <Disclamier></Disclamier>
-  <Nav></Nav>
-  <Analystics></Analystics>
+            <NuxtLink v-for="dev in os.weeks" :to="('/' + locale + '/dev/' + dev)" class="HyperBlue" style="margin-right: 5px;">
+      <v-chip v-if="dev == os.latest"><v-icon icon='mdi-new-box'></v-icon> &nbsp {{ $t('num') }}{{ dev }}{{ $t('week') }}</v-chip>
+      <v-chip v-else>{{ $t('num') }}{{ dev }}{{ $t('week') }}</v-chip>
+    </NuxtLink>
+						</v-container>
+      </v-card-item>
+    </v-card>
+    <Space></Space>
+    <Footer></Footer>
+  </v-app>
 </template>
+
+
+<script>
+export default {
+  data() {
+    return {
+      drawer: null,
+    }
+  },
+}
+</script>
 <script setup>
-const locale = useI18n()
-const lang = locale.locale.value
+const { locale, locales } = useI18n()
 const url = "https://data.hyperos.fans/dev.json"
 const { data } = await useFetch(url)
 </script>
