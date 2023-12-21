@@ -11,7 +11,7 @@
 					<v-container fluid>
 							<v-row dense>
 								<v-col v-for="devices in alldevices.devices">
-									<v-card class="mx-auto" max-width="250" :href="('/'+locale+'/devices/'+devices.code)">
+									<v-card class="mx-auto" max-width="400" :href="('/'+locale+'/devices/'+devices.code)">
 										<v-img
 											:src="'https://data.hyperos.fans/assets/images/' +devices.code +'.png'"
 											class="align-end"
@@ -20,6 +20,7 @@
 										>
 										</v-img>
 										<v-card-title>{{ devices.name[locale] }}</v-card-title>
+										<v-card-subtitle>{{ devices.code }}</v-card-subtitle>
 										<v-btn class="HyperBlue" style="margin-bottom:10px" variant="text" prepend-icon="mdi-download">{{ $t('download') }}</v-btn>
 									</v-card>
 								</v-col>
@@ -30,7 +31,7 @@
 					<v-container fluid>
 						<nuxt-link v-for="devices in alldevices.devices" :to="('/'+locale+'/devices/'+devices.code)">
 							<v-chip style="margin-top:5px;margin-right:5px;">
-								<span class="HyperBlue">{{devices.name[locale]}}</span>
+								<span class="HyperBlue">{{devices.name[locale]}}({{devices.code}})</span>
 							</v-chip>
 						</nuxt-link>
 						</v-container>
