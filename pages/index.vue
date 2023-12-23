@@ -2,7 +2,7 @@
   <title>{{ $t('hometitle') }} - HyperOS.fans</title>
   <v-app>
     <Nav></Nav>
-    <v-card elevation="2" style="width:98vw;" class="mcard">
+    <v-card elevation="2">
       <v-card-item>
         <v-card-title class="HyperBlue">
           {{ $t('sitev') }} {{ sitelog.logs[0].siteVer }}
@@ -18,7 +18,7 @@
       </v-card-text>
     </v-card>
     <Space></Space>
-    <v-card elevation="2" class="mcard">
+    <v-card elevation="2">
       <v-card-title class="HyperBlue">
         {{ $t('dev') }}
       </v-card-title>
@@ -40,7 +40,7 @@
       </v-card-text>
     </v-card>
     <Space></Space>
-    <v-card elevation="2" class="mcard">
+    <v-card elevation="2">
       <v-card-title class="HyperBlue">
         {{ $t('update') }}
       </v-card-title>
