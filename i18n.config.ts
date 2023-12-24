@@ -58,12 +58,14 @@ export default defineI18nConfig(() => ({
       'fix403':'修复403提示',
       'method1':'方法一：',
       '1step1':'找到hosts文件或者路由器的hosts编辑页面',
+      '1step2-1':'或者',
       '1step2':'往hosts文件中添加以下两个解析记录',
       '1step3':'保存并退出',
       'method2':'方法二：',
-      '2step1':'在桌面打开',
-      '2step2':'',
-      '2step3':''
+      '2step1-1':'点击以下链接进行下载，感谢: ',
+      '2step1-2':' 提供脚本',
+      '2step2-1':'下载后，解压该文件，双击运行',
+      '2step2-2':'脚本，并按步骤进行操作。',
     },
     en: {
       'home': 'Home',
@@ -119,12 +121,14 @@ export default defineI18nConfig(() => ({
       'fix403':'Fix 403',
       'method1':'Method:',
       '1step1':'Open up the hosts file on your computer or your router settings',
+      '1step2-1':'Or',
       '1step2':'And those two lines to the end of the file.',
       '1step3':'Save the file and exit.',
-      'method2':'',
-      '2step1':'',
-      '2step2':'',
-      '2step3':''
+      'method2':'Method 2: ',
+      '2step1-1':'Click on the link below to download script, thanks for : ',
+      '2step1-2':' for the script.',
+      '2step2-1':'After download, unzip it , double click',
+      '2step2-2':'and run the script, and follow the instructions.',
     }
   }
 }))

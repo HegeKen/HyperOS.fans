@@ -14,7 +14,10 @@
         <li>
           {{ $t('1step2') }}
           <p><v-code>183.136.207.132 bigota.d.miui.com<br />
-                   183.136.207.132 hugeota.d.miui.com</v-code></p>
+                     183.136.207.132 hugeota.d.miui.com</v-code></p>
+          {{ $t('1step2-1') }}   
+          <p><v-code>47.74.196.250 bigota.d.miui.com<br />
+                     47.74.196.250 hugeota.d.miui.com</v-code></p> 
         </li>
         <li>{{ $t('1step3') }}</li>
       </ol>
@@ -25,9 +28,9 @@
     <v-card-title>{{ $t('method2') }}</v-card-title>
     <div>
       <ol style="padding-left:40px;">
-        <li>点击以下链接进行下载，感谢: <a href="https://www.coolapk.com/u/13562649" target="_blank">忆雨_Micles@酷安</a> 提供脚本</li>
+        <li>{{ $t('2step1-1') }} <a href="https://www.coolapk.com/u/13562649" target="_blank">忆雨_Micles@酷安</a>{{ $t('2step1-2') }}</li>
         <p><a href="/403FixBy忆雨_V2.0.3.zip" download="/403FixBy忆雨_V2.0.3.zip">403FixBy忆雨_V2.0.3.zip</a></p>
-        <li>下载完成后，双击运行该脚本，并按步骤进行操作。</li>
+        <li>{{ $t('2step2-1') }}<v-code>403FixBy忆雨_V2.0.3.bat</v-code>{{ $t('2step2-2') }}</li>
       </ol>
     </div>
   </v-card>
