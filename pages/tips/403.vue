@@ -26,7 +26,7 @@
     <div>
       <ol style="padding-left:40px;">
         <li>点击以下链接进行下载，感谢: <a href="https://www.coolapk.com/u/13562649" target="_blank">忆雨_Micles@酷安</a> 提供脚本</li>
-        <p><a href="/403FixBy忆雨_V2.0.2.bat" download="/403FixBy忆雨_V2.0.2.bat">403FixBy忆雨_V2.0.2.bat</a></p>
+        <p><a href="/403FixBy忆雨_V2.0.3.zip" download="/403FixBy忆雨_V2.0.3.zip">403FixBy忆雨_V2.0.3.zip</a></p>
         <li>下载完成后，双击运行该脚本，并按步骤进行操作。</li>
       </ol>
     </div>
