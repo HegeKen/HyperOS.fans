@@ -16,7 +16,7 @@
 				<p style="padding-left:10px;">{{ $t('tips') }} ： <span>
 						<NuxtLink :to="('/' + locale.locale.value + '/tips/403')">{{ $t('fix403') }}</NuxtLink>
 					</span></p>
-				<p style="padding-left:10px;">{{ $t('miui') }} ： <span v-if="data.miui == 'yes'">{{ $t('yes') }} {{ $t('gotomiui') }}<a :href="('https://roms.miuier.com/devices/' + data.device)">{{ data.name[locale.locale.value] }}({{ data.device }}) {{ $t('miuier') }}</a></span><span v-else>{{ $t('no') }}</span></p>
+				<p style="padding-left:10px;">{{ $t('miui') }} ： <span v-if="data.miui == 'yes'">{{ $t('yes') }} {{ $t('gotomiui') }}<a v-if="locale.locale.value == 'zh'" :href="('https://roms.miuier.com/mobile/zh-cn/devices/' + data.device)">{{ data.name[locale.locale.value] }}({{ data.device }}) {{ $t('miuier') }}</a><a v-else :href="('https://roms.miuier.com/mobile/en-us/devices/' + data.device)">{{ data.name[locale.locale.value] }}({{ data.device }}) {{ $t('miuier') }}</a></span><span v-else>{{ $t('no') }}</span></p>
 			</v-card-text>
 		</v-card>
 
