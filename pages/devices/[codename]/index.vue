@@ -32,14 +32,16 @@
 							<tr>
 								<th class="text-left">{{ $t('os') }}</th>
 								<th class="text-left">{{ $t('android') }}</th>
+								<th class="text-left">{{ $t('release') }}</th>
 								<th class="text-left">{{ $t('recovery') }}</th>
 								<th class="text-left">{{ $t('fastboot') }}</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr v-for="{ os, android, recovery, fastboot } in branche.roms">
+							<tr v-for="{ os, android, release, recovery, fastboot } in branche.roms">
 								<td>{{ os }}</td>
 								<td>{{ android }}</td>
+								<td>{{ release }}</td>
 								<td v-if="recovery == ''">{{ $t('yet') }}</td>
 								<td v-else><a :href="('https://airtel.bigota.d.miui.com/' + os + '/' + recovery)"><span v-if="$device.isDesktopOrTablet">{{ recovery }}</span><span v-else>{{ $t('recovery') }}</span></a></td>
 								<td v-if="fastboot == ''">{{ $t('yet') }}</td>
