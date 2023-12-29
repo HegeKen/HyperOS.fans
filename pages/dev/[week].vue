@@ -43,7 +43,7 @@
       </v-card-text>
     </v-card>
     <Space></Space>
-    <v-card elevation="2">
+    <v-card elevation="2" v-show="data.show=='yes'">
       <v-card-title>{{ $t('roms') }}</v-card-title>
       <v-card-text>
         <v-table>

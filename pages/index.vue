@@ -27,7 +27,7 @@
           <NuxtLink :to="('/'+locale + '/dev/' + latest.week)" class="HyperBlue">{{ latest.title[locale] }}</NuxtLink>
         </div>
         <div>
-          <b>{{ $t('supported') }}</b>
+          <b v-show="latest.show == 'yes'">{{ $t('supported') }}</b>
           <span v-for="({ device, name }, index) in latest.roms" style="padding-left:10px;" v-show="latest.show == 'yes'">
             <span v-if="index < latest.roms.length - 1">
               <NuxtLink :to="('/' + locale + '/devices/' + device)" class="HyperBlue" style="text-indent: 20px;">{{ name[locale] }}</NuxtLink>&nbsp;;
