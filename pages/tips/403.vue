@@ -41,8 +41,8 @@
     <div>
       <ol style="padding-left:40px;">
         <li>{{ $t('2step1-1') }} <a href="https://www.coolapk.com/u/13562649" target="_blank">忆雨_Micles@酷安</a>{{ $t('2step1-2') }}</li>
-        <p><a href="/403FixBy忆雨_V2.3.0.zip" download="/403FixBy忆雨_V2.3.0.zip">403FixBy忆雨_V2.3.0.zip</a></p>
-        <li>{{ $t('2step2-1') }}<v-code>403FixBy忆雨_V2.3.0.bat</v-code>{{ $t('2step2-2') }}</li>
+        <p><a href="/403FixBy忆雨_V2.3.1.zip" download="/403FixBy忆雨_V2.3.1.zip">403FixBy忆雨_V2.3.1.zip</a></p>
+        <li>{{ $t('2step2-1') }}<v-code>403FixBy忆雨_V2.3.1.bat</v-code>{{ $t('2step2-2') }}</li>
       </ol>
     </div>
   </v-card>
