@@ -46,6 +46,11 @@ a{
 	font-weight: lighter!important;
 	color:black;
 }
+.NavLinks .v-btn--stacked.v-btn--size-default{
+	padding-right:13px;
+	padding-left:13px;
+	min-width:auto;
+}
 .NavLinks a{
 	text-decoration: none;
 	font-weight: lighter!important;
