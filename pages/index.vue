@@ -40,7 +40,7 @@
       </v-card-text>
     </v-card>
     <Space></Space>
-    <v-card elevation="2">
+    <v-card elevation="2" v-show="home.recent.roms.length > 0">
       <v-card-title class="HyperBlue">
         {{ $t('update') }}
       </v-card-title>

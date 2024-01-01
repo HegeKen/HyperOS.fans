@@ -70,6 +70,7 @@
       </v-table>
       </v-card-text>
     </v-card>
+    <br />
     <Footer></Footer>
   </v-app>
 </template>
