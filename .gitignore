@@ -3,3 +3,4 @@ node_modules
 /.nuxt
 dist
 /.output
+/public/data/dev/624.json
