@@ -13,7 +13,7 @@
 								<v-col v-for="devices in alldevices.devices">
 									<v-card class="mx-auto" max-width="400" :href="('/'+locale+'/devices/'+devices.code)">
 										<v-img
-											:src="'https://data.hyperos.fans/assets/images/' +devices.code +'.png'"
+											:src="'https://data.hyperos.fans/assets/images/' +devices.image"
 											class="align-end"
 											height="200px"
 											style="margin-top:10px;"
