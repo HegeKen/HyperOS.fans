@@ -50,8 +50,8 @@
         <div>
           <ol style="margin-left:20px;">
             <li v-for="({ code, name, rom }, index) in home.recent.roms">
-              <span v-if="index < home.recent.roms.length - 1"><NuxtLink :to="('/' + locale + '/devices/' + code)" class="HyperBlue" style="text-indent: 20px;">{{ name[locale] }}</NuxtLink> : {{ rom }};</span>
-              <span v-else><NuxtLink :to="('/' + locale + '/devices/' + code)" class="HyperBlue" style="text-indent: 20px;">{{ name[locale] }}</NuxtLink> : {{ rom }}</span>
+              <span v-if="index < home.recent.roms.length - 1"><NuxtLink :to="('/' + locale + '/devices/' + code)" class="HyperBlue" style="text-indent: 20px;">{{ name[locale] }}({{ code }})</NuxtLink> : {{ rom }};</span>
+              <span v-else><NuxtLink :to="('/' + locale + '/devices/' + code)" class="HyperBlue" style="text-indent: 20px;">{{ name[locale] }}({{ code }})</NuxtLink> : {{ rom }}</span>
             </li>
           </ol>
         </div>
