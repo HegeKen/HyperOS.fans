@@ -19,7 +19,7 @@ export default defineAppConfig({
         {
           rel: "icon",
           type: "image/x-icon",
-          href: "https://data.miuier.com/assets/logo/favicon.ico",
+          href: "https://www.hyperos.fans/favicon.ico",
         },
         {
           rel: "stylesheet",
