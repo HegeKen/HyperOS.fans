@@ -21,7 +21,7 @@ export default defineI18nConfig(() => ({
       'os':'澎湃OS',
       'sources':'数据源',
       'source-code':'源代码',
-      'yes':'是',
+      'yes':'支持',
       'data':'数据',
       'no':'否',
       'coolapk':'酷安',

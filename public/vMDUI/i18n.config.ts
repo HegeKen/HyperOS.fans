@@ -15,7 +15,7 @@ export default defineI18nConfig(() => ({
       'fastboot':'线刷包',
       'android':'安卓版本',
       'os':'澎湃OS版本',
-      'yes':'是',
+      'yes':'支持',
       'no':'否',
       'hometitle':'小米澎湃OS, 现已发布',
       'devlist':'小米澎湃OS机型列表',
