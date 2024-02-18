@@ -1,14 +1,14 @@
 <template>
-    <title v-if="locale.locale.value == 'en'"> {{ data.title[locale.locale.value] }} - HyperOS.fans</title>
-  <title v-else>{{ data.title[locale.locale.value] }} - HyperOS.fans</title>
+    <title v-if="locale == 'en'"> {{ data.title[locale] }} - HyperOS.fans</title>
+  <title v-else>{{ data.title[locale] }} - HyperOS.fans</title>
   <v-app>
     <Nav></Nav>
     <Space></Space>
-    <v-card :title="data.title[locale.locale.value]" elevation="2">
+    <v-card :title="data.title[locale]" elevation="2">
       <v-card-text>
         <p><b>{{ $t('uptime') }}</b>{{ data.update }}</p>
         <p><b>{{ $t('versions') }}</b>{{ data.versions }}</p>
-        <p><b>{{ $t('comlink') }}</b><a :href="('https://www.xiaomi.cn/post/') + data.postId" target="_blank">{{ data.title[locale.locale.value] }}</a></p>
+        <p><b>{{ $t('comlink') }}</b><a :href="('https://www.xiaomi.cn/post/') + data.postId" target="_blank">{{ data.title[locale] }}</a></p>
       </v-card-text>
     </v-card>
     <Space></Space>
@@ -16,7 +16,7 @@
       <v-card-title>{{ $t('description') }}</v-card-title>
       <v-card-text>
         <ul style="margin-left:20px;">
-        <li v-for="(data) in data.description">{{ data[locale.locale.value] }}</li>
+        <li v-for="(data) in data.description">{{ data[locale] }}</li>
       </ul>
       </v-card-text>
     </v-card>
@@ -25,7 +25,7 @@
       <v-card-title>{{ $t('attention') }}</v-card-title>
       <v-card-text>
         <ul style="margin-left:20px;">
-        <li v-for="(data) in data.attention">{{ data[locale.locale.value] }}</li>
+        <li v-for="(data) in data.attention">{{ data[locale] }}</li>
       </ul>
       </v-card-text>
     </v-card>
@@ -34,9 +34,9 @@
       <v-card-title>{{ $t('logs') }}</v-card-title>
       <v-card-text>
         <div v-for="(data) in data.logs">
-        <p><b>{{ data.module[locale.locale.value] }}</b>
+        <p><b>{{ data.module[locale] }}</b>
         <p v-for="(data) in data.log">
-          {{ data[locale.locale.value] }}
+          {{ data[locale] }}
         </p>
         </p>
       </div>
@@ -57,7 +57,7 @@
         </thead>
         <tbody>
           <tr v-for="{ device, name, rom } in data.roms">
-            <td>{{ name[locale.locale.value] }}({{ device }})</td>
+            <td>{{ name[locale] }}({{ device }})</td>
             <td>{{ rom.os }}</td>
             <td>{{ rom.android }}</td>
             <td v-if="rom.recovery == ''">{{ $t('yet') }}</td>
@@ -84,7 +84,7 @@ export default {
 </script>
 <script setup>
 const route = useRoute()
-const locale = useI18n()
+const {locale} = useI18n();
 const url = "https://data.hyperos.fans/dev/" + route.params.week + ".json"
 const { data } = await useFetch(url)
 </script>

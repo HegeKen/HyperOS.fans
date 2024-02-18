@@ -1,17 +1,17 @@
 <template>
-  <title v-if="lang == 'en'">{{ $t('rompage') }} {{ data.name[lang] }} - HyperOS.fans</title>
-  <title v-else>{{ data.name[lang] }} {{ $t('rompage') }} - HyperOS.fans</title>
+  <title v-if="locale == 'en'">{{ $t('rompage') }} {{ data.name[locale] }} - HyperOS.fans</title>
+  <title v-else>{{ data.name[locale] }} {{ $t('rompage') }} - HyperOS.fans</title>
   <mdui-card style="width: 99vw;height: 170px;align-items: center;margin-top:1vw;margin-right:1vw">
-    <p style="padding-left:10px;">{{ $t('name') }} ： <span>{{ data.name[lang] }}</span></p>
+    <p style="padding-left:10px;">{{ $t('name') }} ： <span>{{ data.name[locale] }}</span></p>
     <p style="padding-left:10px;">{{ $t('codename') }} ： <span>{{ data.device }}</span></p>
-    <p style="padding-left:10px;">{{ $t('tips') }} ： <span><NuxtLink :to="('/'+lang+'/tips/403')">{{ $t('fix403') }}</NuxtLink></span></p>
-    <p style="padding-left:10px;">{{ $t('miui') }} ： <span v-if="data.miui == 'yes'">{{ $t('yes') }} {{ $t('gotomiui') }}<a :href="('https://roms.miuier.com/devices/'+data.device)">{{ data.name[lang] }}({{ data.device }}) {{ $t('miuier') }}</a></span><span v-else>{{ $t('no') }}</span></p>
+    <p style="padding-left:10px;">{{ $t('tips') }} ： <span><NuxtLink :to="('/'+locale+'/tips/403')">{{ $t('fix403') }}</NuxtLink></span></p>
+    <p style="padding-left:10px;">{{ $t('miui') }} ： <span v-if="data.miui == 'yes'">{{ $t('yes') }} {{ $t('gotomiui') }}<a :href="('https://roms.miuier.com/devices/'+data.device)">{{ data.name[locale] }}({{ data.device }}) {{ $t('miuier') }}</a></span><span v-else>{{ $t('no') }}</span></p>
   </mdui-card>
   <div v-for="{ name, roms, show } in data.branches">
     <mdui-list v-show="show != 0">
       <mdui-collapse accordion>
         <mdui-collapse-item>
-          <mdui-list-item slot="header">{{ name[lang] }} <mdui-icon slot="end-icon" class="example-trigger" name="keyboard_arrow_down"></mdui-icon></mdui-list-item>
+          <mdui-list-item slot="header">{{ name[locale] }} <mdui-icon slot="end-icon" class="example-trigger" name="keyboard_arrow_down"></mdui-icon></mdui-list-item>
           <div>
               <div class="mdui-prose" style="width:95vw;">
                 <table>
@@ -45,8 +45,7 @@
 </template>
 <script setup>
 const route = useRoute()
-const locale = useI18n()
-const lang = locale.locale.value
+const {locale} = useI18n();
 const url = "https://data.hyperos.fans/devices/" + route.params.codename + ".json"
 const { data } = await useFetch(url)
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <title v-if="lang == 'en'">{{ $t('fix403') }} - HyperOS.fans</title>
+  <title v-if="locale == 'en'">{{ $t('fix403') }} - HyperOS.fans</title>
   <title v-else> {{ $t('fix403') }} - HyperOS.fans</title>
   <mdui-card style="width: 99vw;align-items: center;margin-top:1vw;margin-right:1vw">
     <div style="padding-left:10px;">
@@ -16,7 +16,7 @@
       </ol>
     </div>
   </mdui-card>
-  <mdui-card style="width: 99vw;align-items: center;margin-top:1vw;margin-right:1vw;" v-show="lang=='zh'">
+  <mdui-card style="width: 99vw;align-items: center;margin-top:1vw;margin-right:1vw;" v-show="locale=='zh'">
     <div style="padding-left:10px;">
       <h3>{{ $t('method2') }}</h3>
       <ol>
@@ -32,6 +32,5 @@
 </template>
 
 <script setup>
-const locale = useI18n()
-const lang = locale.locale.value
+const {locale} = useI18n();
 </script>

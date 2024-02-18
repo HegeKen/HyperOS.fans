@@ -1,5 +1,5 @@
 <template>
-  <title v-if="lang == 'en'">{{ $t('fix403') }} - HyperOS.fans</title>
+  <title v-if="locale == 'en'">{{ $t('fix403') }} - HyperOS.fans</title>
   <title v-else> {{ $t('fix403') }} - HyperOS.fans</title>
   <v-app>
     <Nav></Nav>
@@ -52,6 +52,5 @@
 </template>
 
 <script setup>
-const locale = useI18n()
-const lang = locale.locale.value
+const {locale} = useI18n();
 </script>

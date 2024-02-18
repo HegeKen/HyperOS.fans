@@ -68,6 +68,9 @@ export default defineI18nConfig(() => ({
       '2step1-2':' 提供脚本',
       '2step2-1':'下载后，解压该文件，双击运行',
       '2step2-2':'脚本，并按步骤进行操作。',
+      'bllock':'Bootloader',
+      'unlock':'所有线刷都以解锁Bootloader为前提，并且解锁Bootloader时会清除数据，请提前做好备份工作',
+      'unlockurl':'点击前往申请'
     },
     en: {
       'home': 'Home',
@@ -133,6 +136,9 @@ export default defineI18nConfig(() => ({
       '2step1-2':' for the script.',
       '2step2-1':'After download, unzip it , double click',
       '2step2-2':'and run the script, and follow the instructions.',
+      'bllock':'Bootloader',
+      'unlock':'You need to unlock the bootloader if you want to flash a rom into your phone via fastboot method, and your data could be deleted as you choose, please make sure you have backed up your personal data.',
+      'unlockurl':'Apply for Bootloader Unlock here.'
     }
   }
 }))

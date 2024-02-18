@@ -47,7 +47,7 @@
             <template v-slot:prepend>
               <v-icon icon="mdi-translate"></v-icon>
             </template>
-            <v-list-item-title>{{ $t('lang') }}</v-list-item-title>
+            <v-list-item-title>{{ $t('locale') }}</v-list-item-title>
           </v-list-item></NuxtLink>
       </v-list>
     </v-navigation-drawer>
