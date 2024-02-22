@@ -25,7 +25,7 @@
 							<a href="https://new.c.mi.com/global/embedded/app/bl/lock">{{ $t('unlockurl') }}</a>
 						</span>
 					</p>
-				<p style="padding-left:10px;">{{ $t('miui') }} ： <span v-if="data.miui == 'yes'">{{ $t('yes') }} {{ $t('gotomiui') }}<a v-if="locale == 'zh'" :href="('https://roms.miuier.com/mobile/zh-cn/devices/' + data.device)">{{ data.name[locale] }}({{ data.device }}) {{ $t('miuier') }}</a><a v-else :href="('https://roms.miuier.com/mobile/en-us/devices/' + data.device)">{{ data.name[locale] }}({{ data.device }}) {{ $t('miuier') }}</a></span><span v-else>{{ $t('no') }}</span></p>
+				<p style="padding-left:10px;">{{ $t('miui') }} ： <span v-if="data.miui == 'yes'">{{ $t('yes') }} {{ $t('gotomiui') }}<a v-if="locale == 'zh'" :href="('https://roms.miuier.com/zh-cn/devices/' + data.device)">{{ data.name[locale] }}({{ data.device }}) {{ $t('miuier') }}</a><a v-else :href="('https://roms.miuier.com/en-us/devices/' + data.device)">{{ data.name[locale] }}({{ data.device }}) {{ $t('miuier') }}</a></span><span v-else>{{ $t('no') }}</span></p>
 			</v-card-text>
 		</v-card>
 
