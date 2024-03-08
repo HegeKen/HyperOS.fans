@@ -20,6 +20,9 @@ export default defineNuxtConfig({
       })
     },
   ],
+  device: {
+    refreshOnResize: true
+  },
   i18n: {
     locales: [
       {
