@@ -13,12 +13,12 @@
     "@nuxtjs/i18n": "^8.0.1",
     "nuxt": "^3.10.3",
     "nuxt-simple-sitemap": "^4.4.1",
-    "sass": "^1.71.0",
-    "vite-plugin-vuetify": "^2.0.2",
-    "vuetify": "^3.5.8"
+    "sass": "^1.72.0",
+    "vite-plugin-vuetify": "^2.0.3",
+    "vuetify": "^3.5.9"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
-    "@nuxtjs/sitemap": "^5.1.1"
+    "@nuxtjs/sitemap": "^5.1.2"
   }
 }
