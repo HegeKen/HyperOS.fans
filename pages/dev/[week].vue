@@ -56,7 +56,7 @@
         </tr>
         </thead>
         <tbody>
-          <tr v-for="{ device, name, rom } in data.roms">
+          <tr v-for="{ device, name, rom } in data.roms" v-show="rom.recovery != ''">
             <td>{{ name[locale] }}({{ device }})</td>
             <td>{{ rom.os }}</td>
             <td>{{ rom.android }}</td>
