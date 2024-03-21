@@ -1,6 +1,6 @@
 {
   "name": "hyperos.fans",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "scripts": {
     "dev": "nuxi dev",
@@ -11,11 +11,11 @@
   "devDependencies": {
     "@nuxtjs/device": "^3.1.1",
     "@nuxtjs/i18n": "^8.2.0",
-    "nuxt": "^3.11.0",
+    "nuxt": "^3.11.1",
     "nuxt-simple-sitemap": "^4.4.1",
     "sass": "^1.72.0",
     "vite-plugin-vuetify": "^2.0.3",
-    "vuetify": "^3.5.9"
+    "vuetify": "^3.5.11"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
