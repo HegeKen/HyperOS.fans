@@ -28,11 +28,11 @@
         </div>
         <div>
           <b v-show="latest.show == 'yes'">{{ $t('supported') }}</b>
-          <span v-for="({ device, name }, index) in latest.roms" style="padding-left:10px;" v-show="latest.show == 'yes'">
-            <span v-if="index < latest.roms.length - 1">
+          <span v-for="({ device, name, rom }, index) in latest.roms" style="padding-left:10px;" v-show="latest.show == 'yes'">
+            <span v-if="index < latest.roms.length - 1" v-show="rom.recovery != ''">
               <NuxtLink :to="('/' + locale + '/devices/' + device)" class="HyperBlue" style="text-indent: 20px;">{{ name[locale] }}</NuxtLink>&nbsp;;
             </span>
-            <span v-else>
+            <span v-else v-show="rom.recovery != ''">
               <NuxtLink :to="('/' + locale + '/devices/' + device)" class="HyperBlue" style="text-indent: 20px;">{{ name[locale] }}</NuxtLink>
             </span>
           </span>
