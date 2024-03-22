@@ -70,7 +70,10 @@ export default defineI18nConfig(() => ({
       '2step2-2':'脚本，并按步骤进行操作。',
       'bllock':'Bootloader',
       'unlock':'所有线刷都以解锁Bootloader为前提，并且解锁Bootloader时会清除数据，请提前做好备份工作',
-      'unlockurl':'点击前往申请'
+      'unlockurl':'点击前往申请',
+      'suspended': '▍撤包的ROMs：',
+      'note': '注意：',
+      'suspendednote': '撤包版本存在极大可能性使得您的设备死机、重启、变砖，请不要轻易尝试，也不要轻易因为别人安装后正常的情况选择安装，因此带来的问题，我站不负任何责任',
     },
     en: {
       'home': 'Home',
@@ -138,7 +141,10 @@ export default defineI18nConfig(() => ({
       '2step2-2':'and run the script, and follow the instructions.',
       'bllock':'Bootloader',
       'unlock':'You need to unlock the bootloader if you want to flash a rom into your phone via fastboot method, and your data could be deleted as you choose, please make sure you have backed up your personal data.',
-      'unlockurl':'Apply for Bootloader Unlock here.'
+      'unlockurl':'Apply for Bootloader Unlock here.',
+      'suspended': '▍Suspended ROMs：',
+      'note': 'Notes : ',
+      'suspendednote': 'Suspended ROMs may affect your device to be end up in boot loop or bricked, so don\'t try it with ease and becuase of some one is using that version is fine , any problem caused by it is under your choice of act and is your responsibility, and we are not responsible for it',
     }
   }
 }))
