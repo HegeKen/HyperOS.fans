@@ -19,7 +19,7 @@ useHead({
     {
       rel: "apple-touch-icon-precomposed",
       sizes: "150x150",
-      href: "apple-touch-icon.png"
+      href: "/apple-touch-icon.png"
 
     }
   ]
