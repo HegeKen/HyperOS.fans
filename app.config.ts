@@ -22,6 +22,12 @@ export default defineAppConfig({
         {
           rel: 'stylesheet',
           href: 'https://cdn-font.hyperos.mi.com/font/css?family=MiSans:100,200,300,400,500,600:Chinese_Simplify,Latin&display=swap'
+        },
+        {
+          rel: "apple-touch-icon-precomposed",
+          sizes: "150x150",
+          href: "/apple-touch-icon.png"
+
         }
       ]
     }

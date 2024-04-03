@@ -1,0 +1,3 @@
+Sitemap: https://hyperos.fans/sitemap.xml
+User-agent: *
+Disallow:
