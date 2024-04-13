@@ -1,6 +1,5 @@
 <template>
   <div v-if="$device.isDesktopOrTablet">
-    <v-card>
       <v-app-bar color="white" :elevation="2" rounded>
           <v-app-bar-title>
             <b>Hyper<span class="HyperBlue">OS</span>.fans</b>
@@ -22,7 +21,6 @@
         </v-tabs>
       </v-app-bar>
       <br /><br />
-    </v-card>
     <Space></Space>
     <Space></Space>
     <!-- PC Nav -->
