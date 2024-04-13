@@ -1,15 +1,16 @@
 <template>
+  <html :lang ="locale" ></html>
   <div v-if="$device.isDesktopOrTablet">
       <v-app-bar color="white" :elevation="2" rounded>
           <v-app-bar-title>
             <b>Hyper<span class="HyperBlue">OS</span>.fans</b>
             </v-app-bar-title>
-        <v-tabs v-model="tab" centered stacked class="HyperBlue NavLinks">
-          <nuxt-link v-for="(item, i) in items" :key="i" :value="item" :to="('/' + locale + '/' + item.path)">
+        <v-tabs v-model="tab" stacked class="HyperBlue NavLinks">
+          <NuxtLink v-for="(item, i) in items" :key="i" :value="item" :to="('/' + locale + '/' + item.path)">
             <v-tab>
               <v-icon :icon="item.icon"></v-icon>
               <span v-text="item[locale]" class="text-capitalize"></span>
-            </v-tab></nuxt-link>
+            </v-tab></NuxtLink>
           <NuxtLink v-for="locale in availableLocales" :key="locale.code" :to="switchLocalePath(locale.code)" color="#2655ff"><v-tab value="translate">
               <v-icon icon="mdi-translate"></v-icon>
               <span class="text-capitalize">{{ $t('lang') }}</span>

@@ -20,6 +20,9 @@ mdui-ripple div :surface :hover{
 	margin: 10px;
 	text-align: center;
 }
+.v-slide-group-item--active{
+	text-underline-offset: none;}
+.v-tab--selected{text-underline-offset: none;}
 .myiCon {
 	font-family: "iconfont";
 	text-align: right;
@@ -31,15 +34,12 @@ mdui-ripple div :surface :hover{
 .v-main{
 	height: 100vh;
 }
-.v-tab--selected{
-	color: #2655ff;
-}
-.v-slide-group-item--active{
-	color: 103,80,164;
-}
 a{
 	color: #2655ff;
 	text-decoration: none;
+}
+.v-slide-group-item{
+	--active:none!important;
 }
 .NavLinks{
 	text-decoration: none;
