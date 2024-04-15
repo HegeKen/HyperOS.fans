@@ -10,12 +10,11 @@ export default defineNuxtConfig({
     '@mdi/font/css/materialdesignicons.min.css',
   ],
   modules: [
-    'nuxt-simple-sitemap',
+    '@nuxtjs/sitemap',
     '@nuxtjs/i18n',
     '@nuxtjs/device',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
-        // @ts-expect-error
         config.plugins.push(vuetify({ autoImport: true }))
       })
     },
