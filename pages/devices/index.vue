@@ -11,7 +11,7 @@
 					<v-container fluid>
 							<v-row dense>
 								<v-col v-for="devices in alldevices.devices">
-									<v-card class="mx-auto" max-width="400" :href="('/'+locale+'/devices/'+devices.code)">
+									<v-card class="mx-auto" max-width="600" :href="('/'+locale+'/devices/'+devices.code)">
 										<v-img
 											:src="'https://hegeken.gitee.io/hyperdata/images/' +devices.image"
 											class="align-end"
