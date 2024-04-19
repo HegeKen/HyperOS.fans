@@ -13,7 +13,7 @@
 								<v-col v-for="devices in alldevices.devices">
 									<v-card class="mx-auto" max-width="400" :href="('/'+locale+'/devices/'+devices.code)">
 										<v-img
-											:src="'https://hegeken.gitee.io/hyperdata/assets/images/' +devices.image"
+											:src="'https://hegeken.gitee.io/hos-images/assets/images/' +devices.image"
 											class="align-end"
 											height="200px"
 											style="margin-top:10px;"
