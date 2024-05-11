@@ -1,6 +1,6 @@
 <template>
-  <title v-if="locale == 'en'"> {{ data.title[locale] }} - HyperOS.fans</title>
-  <title v-else>{{ data.title[locale] }} - HyperOS.fans</title>
+  <title v-if="locale == 'en'">HyperOS {{ data.title[locale] }} - HyperOS.fans</title>
+  <title v-else>HyperOS {{ data.title[locale] }} - HyperOS.fans</title>
   <v-app>
     <Nav></Nav>
     <Space></Space>
