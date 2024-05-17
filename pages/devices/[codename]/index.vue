@@ -46,15 +46,26 @@
 								<th class="text-left">{{ $t('fastboot') }}</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody v-if="branche.idtag == 'ADPC' || branche.idtag == 'ADPG'">
+							<tr v-for="{ os, android, release, recovery, fastboot,origin } in branche.roms">
+								<td>{{ os }}</td>
+								<td>{{ android }}</td>
+								<td>{{ release }}</td>
+								<td v-if="recovery == ''">{{ $t('yet') }}</td>
+								<td v-else><a :href="('https://cdnorg.d.miui.com/' + os + '/' + recovery)"><span v-if="$device.isDesktopOrTablet">{{ recovery }}</span><span v-else>{{ $t('recovery') }}</span></a></td>
+								<td v-if="origin == ''">{{ $t('yet') }}</td>
+								<td v-else><a :href=origin><span v-if="$device.isDesktopOrTablet">{{ fastboot }}</span><span v-else>{{ $t('fastboot') }}</span></a></td>
+							</tr>
+						</tbody>
+						<tbody v-else>
 							<tr v-for="{ os, android, release, recovery, fastboot } in branche.roms">
 								<td>{{ os }}</td>
 								<td>{{ android }}</td>
 								<td>{{ release }}</td>
 								<td v-if="recovery == ''">{{ $t('yet') }}</td>
-								<td v-else><a :href="('https://bn.d.miui.com/' + os + '/' + recovery)"><span v-if="$device.isDesktopOrTablet">{{ recovery }}</span><span v-else>{{ $t('recovery') }}</span></a></td>
+								<td v-else><a :href="('https://cdnorg.d.miui.com/' + os + '/' + recovery)"><span v-if="$device.isDesktopOrTablet">{{ recovery }}</span><span v-else>{{ $t('recovery') }}</span></a></td>
 								<td v-if="fastboot == ''">{{ $t('yet') }}</td>
-								<td v-else><a :href="('https://bn.d.miui.com/' + os + '/' + fastboot)"><span v-if="$device.isDesktopOrTablet">{{ fastboot }}</span><span v-else>{{ $t('fastboot') }}</span></a></td>
+								<td v-else><a :href="('https://cdnorg.d.miui.com/' + os + '/' + fastboot)"><span v-if="$device.isDesktopOrTablet">{{ fastboot }}</span><span v-else>{{ $t('fastboot') }}</span></a></td>
 							</tr>
 						</tbody>
 					</v-table>
