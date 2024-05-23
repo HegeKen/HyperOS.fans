@@ -9,7 +9,7 @@
       <h3>1. {{ $t('sources') }}</h3>
       <Space></Space>
       <ul style="margin-left:20px;">  
-        <li><a href="https://xiaomifirmwareupdater.com/">XiaomiFirmwareUpdater.com</a></li>
+        <li><a href="https://xmfirmwareupdater.com/">XMFirmwareUpdater.com</a></li>
         <li><a href="https://mifirmware.com/">MiFirmware.com</a></li>
         <li><a href="https://new.c.mi.com">{{ $t('gcom') }}</a></li>
         <li><a href="https://coolapk.com">{{ $t('coolapk') }}</a></li>
