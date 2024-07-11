@@ -27,9 +27,9 @@
                       <td>{{ os }}</td>
                       <td>{{ android }}</td>
                       <td v-if="recovery == ''">{{ $t('yet') }}</td>
-                      <td v-else><a :href="('https://bn.d.miui.com/' + os + '/' + recovery)"><span v-if="$device.isDesktopOrTablet">{{ recovery }}</span><span v-else>{{ $t('recovery') }}</span></a></td>
+                      <td v-else><a :href="('https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/' + os + '/' + recovery)"><span v-if="$device.isDesktopOrTablet">{{ recovery }}</span><span v-else>{{ $t('recovery') }}</span></a></td>
                       <td v-if="fastboot == ''">{{ $t('yet') }}</td>
-                      <td v-else><a :href="('https://bn.d.miui.com/' + os + '/' + fastboot)"><span v-if="$device.isDesktopOrTablet">{{ fastboot }}</span><span v-else>{{ $t('fastboot') }}</span></a></td>
+                      <td v-else><a :href="('https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/' + os + '/' + fastboot)"><span v-if="$device.isDesktopOrTablet">{{ fastboot }}</span><span v-else>{{ $t('fastboot') }}</span></a></td>
                     </tr>
                   </tbody>
                 </table>

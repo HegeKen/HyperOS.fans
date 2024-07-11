@@ -61,7 +61,7 @@
               <td>{{ rom.os }}</td>
               <td>{{ rom.android }}</td>
               <td v-if="rom.recovery == ''">{{ $t('yet') }}</td>
-              <td v-else><a :href="('https://bn.d.miui.com/' + rom.os + '/' + rom.recovery)"><span v-if="$device.isDesktopOrTablet">{{ rom.recovery }}</span><span v-else>{{ $t('recovery') }}</span></a></td>
+              <td v-else><a :href="('https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/' + rom.os + '/' + rom.recovery)"><span v-if="$device.isDesktopOrTablet">{{ rom.recovery }}</span><span v-else>{{ $t('recovery') }}</span></a></td>
             </tr>
           </tbody>
         </v-table>
@@ -87,7 +87,7 @@
               <td>{{ rom.os }}</td>
               <td>{{ rom.android }}</td>
               <td v-if="rom.recovery == ''">{{ $t('yet') }}</td>
-              <td v-else><a :href="('https://bn.d.miui.com/' + rom.os + '/' + rom.recovery)"><span v-if="$device.isDesktopOrTablet">{{ rom.recovery }}</span><span v-else>{{ $t('recovery') }}</span></a></td>
+              <td v-else><a :href="('https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/' + rom.os + '/' + rom.recovery)"><span v-if="$device.isDesktopOrTablet">{{ rom.recovery }}</span><span v-else>{{ $t('recovery') }}</span></a></td>
             </tr>
           </tbody>
         </v-table>
