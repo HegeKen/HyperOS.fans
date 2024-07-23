@@ -5,12 +5,20 @@ useHead({
     { name: 'baidu-site-verification', content: 'codeva-AXUJixvVZA' },
     { name: 'msvalidate.01', content: 'D0A12F85D732BE57318CA28F52500432' }
   ],
-  script: [{ innerHTML: 'var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?c9e1b96ca1ad298ed068716ea5702f9c";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();' }],
+  script: [
+    { innerHTML: 'var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?c9e1b96ca1ad298ed068716ea5702f9c";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();' },
+    {
+			body: true,
+			defer: true,
+			src: "https://static.cloudflareinsights.com/beacon.min.js",
+			"data-cf-beacon": '{"token":"b16f78ed4ae9456f9427b9d562e70ea5"}',
+		},
+  ],
   link: [
     {
       rel: "icon",
       type: "image/x-icon",
-      href: "https://cf.hyperos.fans/favicon.ico",
+      href: "https://data.hyperos.fans/favicon.ico",
     },
     {
       rel: "stylesheet",
@@ -20,7 +28,6 @@ useHead({
       rel: "apple-touch-icon-precomposed",
       sizes: "150x150",
       href: "/apple-touch-icon.png"
-
     }
   ]
 });
