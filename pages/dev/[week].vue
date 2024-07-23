@@ -113,6 +113,6 @@ export default {
 <script setup>
 const route = useRoute()
 const { locale } = useI18n();
-const url = "https://data.hyperos.fans/dev/" + route.params.week + ".json"
+const url = "https://data.hyperos.fans/dev/" + route.params.week.toLowerCase() + ".json"
 const { data } = await useFetch(url)
 </script>
