@@ -91,20 +91,21 @@ async function contactForm() {
   // HyperOSForm["d"] = route.query.code
   // HyperOSForm["v"] = HyperOSForm["v"] + route.params.version.replace("OS1", "V816")
   // HyperOSForm["r"] = route.query.region
-  const { hello } = await $fetch(check_url, {
+  const data = await $fetch(check_url, {
     method: 'POST',
     headers : {
-      "user-agent": "Dalvik/2.1.0 (Linux; U; Android 13; MI 9 Build/TKQ1.220829.002)",
+      "user-agent": "Dalvik/2.1.0 (Linux; U; Android 14; 23049RAD8C Build/UKQ1.230804.001)",
       "Connection": "Keep-Alive",
       "Content-Type": "application/x-www-form-urlencoded",
       "Cache-Control": "no-cache",
       "Host": "update.miui.com",
       "Accept-Encoding": "gzip",
-      "Content-Length": "795",
+      "Content-Length": "873",
       "Cookie": "serviceToken=;"
     },
+    mode:'no-cors',
     body: MiEncrypt(HyperOSForm)
   })
-  return { hello }
+  return data
 }
 </script>
