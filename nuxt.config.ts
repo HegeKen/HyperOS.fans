@@ -4,11 +4,13 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
+
   css: [
     'assets/hyper.css',
     'vuetify/lib/styles/main.sass',
     '@mdi/font/css/materialdesignicons.min.css',
   ],
+
   modules: [
     '@nuxtjs/sitemap',
     '@nuxtjs/i18n',
@@ -19,9 +21,11 @@ export default defineNuxtConfig({
       })
     },
   ],
+
   device: {
     refreshOnResize: true
   },
+
   i18n: {
     locales: [
       {
@@ -37,6 +41,7 @@ export default defineNuxtConfig({
     defaultLocale: 'zh',
     vueI18n: './i18n.config.ts' // if you are using custom path, default 
   },
+
   vite: {
     /* options for vite */
     // ssr: true // enable unstable server-side rendering for development (false by default)
@@ -47,7 +52,10 @@ export default defineNuxtConfig({
       }
     },
   },
+
   site: {
     url: 'https://www.hyperos.fans',
-  }
+  },
+
+  compatibilityDate: '2024-07-31'
 })
