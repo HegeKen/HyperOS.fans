@@ -3,7 +3,7 @@
   <title v-else>{{ data.title[locale] }} - HyperOS.fans</title>
   <mdui-card style="width: 99vw;padding-bottom: 20px;align-items: center;margin-top:1vw;margin-right:1vw">
     <div style="padding-left:10px;padding-top:10px">
-      <h3 class="HyperBlue">{{ data.title[locale] }}</h3>
+      <h3 class="text-HyperBlue">{{ data.title[locale] }}</h3>
       <h3>{{ $t('uptime') }} : <span style="font-weight: lighter;">{{ data.update }}</span></h3>
       <h3>{{ $t('versions') }} : <span style="font-weight: lighter;">{{ data.versions }}</span></h3>
       <h3>{{ $t('comlink') }} : <span style="font-weight: lighter;"><a :href="('https://www.xiaomi.cn/post/') + data.postId" target="_blank">{{ data.title[locale] }}</a></span></h3>

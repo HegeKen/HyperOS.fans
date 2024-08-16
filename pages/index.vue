@@ -4,7 +4,7 @@
     <Nav></Nav>
     <v-card elevation="2">
       <v-card-item>
-        <v-card-title class="HyperBlue">
+        <v-card-title class="text-HyperBlue">
           {{ $t('sitev') }} {{ sitelog.logs[0].siteVer }}
         </v-card-title>
       </v-card-item>
@@ -19,21 +19,21 @@
     </v-card>
     <Space></Space>
     <v-card elevation="2">
-      <v-card-title class="HyperBlue">
+      <v-card-title class="text-HyperBlue">
         {{ $t('dev') }}
       </v-card-title>
       <v-card-text>
         <div><b>{{ $t('latedev') }}</b>
-          <NuxtLink :to="('/'+locale + '/dev/' + latest.week)" class="HyperBlue">{{ latest.title[locale] }}</NuxtLink>
+          <NuxtLink :to="('/'+locale + '/dev/' + latest.week)" class="text-HyperBlue">{{ latest.title[locale] }}</NuxtLink>
         </div>
         <div>
           <b v-show="latest.show == 'yes'">{{ $t('supported') }}</b>
           <span v-for="({ device, name, rom }, index) in latest.roms" style="padding-left:10px;" v-show="latest.show == 'yes'">
             <span v-if="index < latest.roms.length - 1" v-show="rom.recovery != ''">
-              <NuxtLink :to="('/' + locale + '/devices/' + device)" class="HyperBlue" style="text-indent: 20px;">{{ name[locale] }}</NuxtLink>&nbsp;;
+              <NuxtLink :to="('/' + locale + '/devices/' + device)" class="text-HyperBlue" style="text-indent: 20px;">{{ name[locale] }}</NuxtLink>&nbsp;;
             </span>
             <span v-else v-show="rom.recovery != ''">
-              <NuxtLink :to="('/' + locale + '/devices/' + device)" class="HyperBlue" style="text-indent: 20px;">{{ name[locale] }}</NuxtLink>
+              <NuxtLink :to="('/' + locale + '/devices/' + device)" class="text-HyperBlue" style="text-indent: 20px;">{{ name[locale] }}</NuxtLink>
             </span>
           </span>
         </div>
@@ -41,7 +41,7 @@
     </v-card>
     <Space></Space>
     <v-card elevation="2" v-show="home.recent.roms.length > 0">
-      <v-card-title class="HyperBlue">
+      <v-card-title class="text-HyperBlue">
         {{ $t('update') }}
       </v-card-title>
       <v-card-text>
@@ -50,8 +50,8 @@
         <div>
           <ol style="margin-left:20px;">
             <li v-for="({ code, name, rom }, index) in home.recent.roms">
-              <span v-if="index < home.recent.roms.length - 1"><NuxtLink :to="('/' + locale + '/devices/' + code)" class="HyperBlue" style="text-indent: 20px;">{{ name[locale] }}({{ code }})</NuxtLink> : {{ rom }};</span>
-              <span v-else><NuxtLink :to="('/' + locale + '/devices/' + code)" class="HyperBlue" style="text-indent: 20px;">{{ name[locale] }}({{ code }})</NuxtLink> : {{ rom }}</span>
+              <span v-if="index < home.recent.roms.length - 1"><NuxtLink :to="('/' + locale + '/devices/' + code)" class="text-HyperBlue" style="text-indent: 20px;">{{ name[locale] }}({{ code }})</NuxtLink> : {{ rom }};</span>
+              <span v-else><NuxtLink :to="('/' + locale + '/devices/' + code)" class="text-HyperBlue" style="text-indent: 20px;">{{ name[locale] }}({{ code }})</NuxtLink> : {{ rom }}</span>
             </li>
           </ol>
         </div>

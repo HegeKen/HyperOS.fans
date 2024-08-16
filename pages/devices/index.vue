@@ -21,7 +21,7 @@
 										</v-img>
 										<v-card-title>{{ devices.name[locale] }}</v-card-title>
 										<v-card-subtitle>{{ devices.code }}</v-card-subtitle>
-										<v-btn class="HyperBlue" style="margin-bottom:10px" variant="text" prepend-icon="mdi-download">{{ $t('download') }}</v-btn>
+										<v-btn class="text-HyperBlue" style="margin-bottom:10px" variant="text" prepend-icon="mdi-download">{{ $t('download') }}</v-btn>
 									</v-card>
 								</v-col>
 							</v-row>
@@ -31,13 +31,14 @@
 					<v-container fluid>
 						<nuxt-link v-for="devices in alldevices.devices" :to="('/'+locale+'/devices/'+devices.code)">
 							<v-chip style="margin-top:5px;margin-right:5px;">
-								<span class="HyperBlue">{{devices.name[locale]}}({{devices.code}})</span>
+								<span class="text-HyperBlue">{{devices.name[locale]}}({{devices.code}})</span>
 							</v-chip>
 						</nuxt-link>
 						</v-container>
 					</v-expansion-panel-text>
 					</v-expansion-panel>
 			</v-expansion-panels>
+			<Space></Space>
 			<Footer></Footer>
 		</v-app>
 </template>

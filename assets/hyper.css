@@ -5,10 +5,6 @@ body {
 	font-family: 'monospace', 'Consolas', 'Courier','Courier New';
 	background-color: rgba(var(--mdui-color-surface-variant),.28);
 }
-.HyperBlue {
-	color: #2655ff!important;
-	text-decoration: none;
-}
 mdui-chip :hover{
 	color: #2655ff;
 	text-decoration: underline
@@ -33,10 +29,6 @@ mdui-ripple div :surface :hover{
 	font-family: "iconfont";
 	text-align: right;
 }
-/* .v-toolbar-title{
-	font-size: larger!important;
-	font-weight: bolder!important;
-} */
 .v-main{
 	height: 100vh;
 }
@@ -49,14 +41,18 @@ a{
 }
 .NavLinks{
 	text-decoration: none;
-	font-weight: lighter!important;
-	color:black;
+	/* font-weight: lighter!important; */
 }
 .NavLinks a{
 	text-decoration: none;
-	font-weight: lighter!important;
-	color:black;
+	/* font-weight: lighter!important; */
 }
 b{
 	font-weight: light;
+}
+.v-footer{
+	padding-top:0!important;
+}
+.v-col{
+	padding-top:0!important;
 }

@@ -2,7 +2,6 @@
   <title>{{ $t('source') }} - HyperOS.fans</title>
 <v-app>
   <Nav></Nav>
-  <Space></Space>
   <v-card elevation="2">
     <v-card-title>{{ $t('source') }}</v-card-title>
     <v-card-text>

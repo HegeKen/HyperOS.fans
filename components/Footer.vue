@@ -6,16 +6,16 @@
   <div v-else class="NavLinks">
     <br /><br /><br />
     <v-bottom-navigation horizontal style="padding-bottom: 80px;">
-      <NuxtLink v-for="(item) in items" :to="('/'+locale+'/'+item.path)">
+      <NuxtLink v-for="(item) in items" :to="('/' + locale + '/' + item.path)">
         <v-btn>
-          <v-icon>{{ item.icon }}</v-icon>
-          <span class="text-capitalize">{{ item[locale] }}</span>
+          <v-icon class="text-tab_text">{{ item.icon }}</v-icon>
+          <span class="text-capitalize text-tab_text">{{ item[locale] }}</span>
         </v-btn>
       </NuxtLink>
       <a href="#top">
         <v-btn>
-          <v-icon>mdi-arrow-up</v-icon>
-          <span class="text-capitalize">{{ $t('top') }}</span>
+          <v-icon class="text-tab_text">mdi-arrow-up</v-icon>
+          <span class="text-capitalize text-tab_text">{{ $t('top') }}</span>
         </v-btn>
       </a>
     </v-bottom-navigation>
@@ -39,5 +39,10 @@ export default {
 }
 </script>
 <script setup>
+import { useTheme } from 'vuetify'
+const theme = useTheme()
+function toggleTheme() {
+  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+}
 const { locale, locales } = useI18n()
 </script>

@@ -6,7 +6,7 @@
     <v-timeline-item v-for="(elog) in sitelog.logs" dot-color="#2655ff" fill-dot :icon='elog.icon' >
       <v-card elevation="2">
       <v-card-item>
-        <v-card-title class="HyperBlue">
+        <v-card-title class="text-HyperBlue">
           {{ $t('sitev') }} {{ elog.siteVer }}
         </v-card-title>
       </v-card-item>
@@ -22,6 +22,7 @@
     <Space></Space>
     </v-timeline-item>
   </v-timeline>
+  <Space></Space>
     <Footer></Footer>
   </v-app>
 </template>

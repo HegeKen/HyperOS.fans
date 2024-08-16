@@ -12,10 +12,19 @@ export default defineNuxtPlugin(nuxtApp => {
         light: {
           dark: false,
           colors: {
-            primary: '#2655ff',
-            secondary: '#2655ff',
+            tab: '#ffffff',
+            HyperBlue: '#2655ff',
+            tab_text: '#000000',
           }
         },
+        dark: {
+          dark: true,
+          colors: {
+            tab: '#000000',
+            HyperBlue: '#2655ff',
+            tab_text: '#ffffff',
+          }
+        }
       },
     },
   })
