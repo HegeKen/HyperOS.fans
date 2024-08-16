@@ -20,6 +20,12 @@ mdui-ripple div :surface :hover{
 	margin: 10px;
 	text-align: center;
 }
+.v-tab__slider{
+	height:0px!important;
+}
+.v-tab--active{
+	text-underline-offset: none;
+}
 .v-slide-group-item--active{
 	text-underline-offset: none;}
 .v-tab--selected{text-underline-offset: none;}
