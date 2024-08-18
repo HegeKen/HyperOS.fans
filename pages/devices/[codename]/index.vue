@@ -11,13 +11,13 @@
 		<v-card>
 			<v-card-title>{{ $t('devinfo') }}</v-card-title>
 			<v-card-text>
-				<p style="padding-left:10px;">{{ $t('name') }} ： <span>{{ data.name[locale] }}</span></p>
-				<p style="padding-left:10px;">{{ $t('codename') }} ： <span>{{ data.device }}</span></p>
-				<p style="padding-left:10px;">{{ $t('tips') }} ： <span>{{ $t('fixed') }}
-						<!-- <NuxtLink :to="('/' + locale + '/tips/403')">{{ $t('fix403') }}</NuxtLink> -->
-					</span></p>
+				<p style="padding-left:10px;"><b>{{ $t('name') }}</b><span>{{ data.name[locale] }}</span></p>
+				<p style="padding-left:10px;"><b>{{ $t('codename') }}</b><span>{{ data.device }}</span></p>
+				<!-- <p style="padding-left:10px;">{{ $t('tips') }} ： <span>{{ $t('fixed') }}
+						<NuxtLink :to="('/' + locale + '/tips/403')">{{ $t('fix403') }}</NuxtLink>
+					</span></p> -->
 					<p style="padding-left:10px;">
-						{{ $t('bllock') }} ： <span>{{ $t('unlock') }}</span>
+						<b>{{ $t('bllock') }}</b><span>{{ $t('unlock') }}</span>
 						<span v-if="locale == 'zh'">
 							<a href="https://web.vip.miui.com/page/info/mio/mio/testDetails?type=BL_BLOCK&id=-1">{{ $t('unlockurl') }}</a>
 						</span>
@@ -25,7 +25,7 @@
 							<a href="https://new.c.mi.com/global/embedded/app/bl/lock">{{ $t('unlockurl') }}</a>
 						</span>
 					</p>
-				<p style="padding-left:10px;">{{ $t('miui') }} ： <span v-if="data.miui == 'yes'">{{ $t('yes') }} {{ $t('gotomiui') }}<a v-if="locale == 'zh'" :href="('https://roms.miuier.com/zh-cn/devices/' + data.device)">{{ data.name[locale] }}({{ data.device }}) {{ $t('miuier') }}</a><a v-else :href="('https://roms.miuier.com/en-us/devices/' + data.device)">{{ data.name[locale] }}({{ data.device }}) {{ $t('miuier') }}</a></span><span v-else>{{ $t('no') }}</span></p>
+				<p style="padding-left:10px;"><b>{{ $t('miui') }}</b><span v-if="data.miui == 'yes'">{{ $t('yes') }} {{ $t('gotomiui') }}<a v-if="locale == 'zh'" :href="('https://roms.miuier.com/zh-cn/devices/' + data.device)">{{ data.name[locale] }}({{ data.device }}) {{ $t('miuier') }}</a><a v-else :href="('https://roms.miuier.com/en-us/devices/' + data.device)">{{ data.name[locale] }}({{ data.device }}) {{ $t('miuier') }}</a></span><span v-else>{{ $t('no') }}</span></p>
 			</v-card-text>
 		</v-card>
 
@@ -35,6 +35,12 @@
 				<v-expansion-panel-title>
 					{{ branche.name[locale] }}
 				</v-expansion-panel-title>
+				<v-expansion-panel-text>
+						<p><b>{{ $t('brand') }}</b>{{ branche.brand }}</p>
+						<p><b>{{ $t('codename') }}</b>{{ branche.branchCode }}</p>
+						<p><b>{{ $t('devicename') }}</b>{{ branche.device[locale] }}</p>
+						<p><b>{{ $t('region') }}</b>{{ $t(branche.region) }}</p>
+				</v-expansion-panel-text>
 				<v-expansion-panel-text>
 					<v-table>
 						<thead>
