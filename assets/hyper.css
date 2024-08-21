@@ -49,5 +49,5 @@ b{
 	font-weight: light;
 }
 .v-card-text{
-	font-size: 16px;
+	font-size: 16px!important;
 }
