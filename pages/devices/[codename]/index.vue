@@ -17,7 +17,7 @@
 						<NuxtLink :to="('/' + locale + '/tips/403')">{{ $t('fix403') }}</NuxtLink>
 					</span></p> -->
 					<p style="padding-left:10px;">
-						<b>{{ $t('bllock') }}</b><span>{{ $t('unlock') }}</span>
+						<b>{{ $t('bllock') }}</b><span>{{ $t('unlock') }} , </span>
 						<span v-if="locale == 'zh'">
 							<a href="https://web.vip.miui.com/page/info/mio/mio/testDetails?type=BL_BLOCK&id=-1">{{ $t('unlockurl') }}</a>
 						</span>
@@ -36,10 +36,10 @@
 					{{ branche.name[locale] }}
 				</v-expansion-panel-title>
 				<v-expansion-panel-text>
-						<p><b>{{ $t('brand') }}</b>{{ branche.brand }}</p>
-						<p><b>{{ $t('codename') }}</b>{{ branche.branchCode }}</p>
-						<p><b>{{ $t('devicename') }}</b>{{ branche.device[locale] }}</p>
-						<p><b>{{ $t('region') }}</b>{{ $t(branche.region) }}</p>
+						<p>{{ $t('brand') }}{{ branche.brand }}</p>
+						<p>{{ $t('codename') }}{{ branche.branchCode }}</p>
+						<p>{{ $t('devicename') }}{{ branche.device[locale] }}</p>
+						<p>{{ $t('region') }}{{ $t(branche.region) }}</p>
 				</v-expansion-panel-text>
 				<v-expansion-panel-text>
 					<v-table>

@@ -41,12 +41,13 @@ a{
 }
 .NavLinks{
 	text-decoration: none;
-	/* font-weight: lighter!important; */
 }
 .NavLinks a{
 	text-decoration: none;
-	/* font-weight: lighter!important; */
 }
 b{
 	font-weight: light;
+}
+.v-card-text{
+	font-size: 16px;
 }
