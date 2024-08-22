@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@nuxtjs/device": "^3.1.1",
-    "@nuxtjs/i18n": "^8.3.3",
+    "@nuxtjs/i18n": "^8.5.0",
     "nuxt": "^3.12.4",
     "sass": "^1.77.8",
     "vite-plugin-vuetify": "^2.0.4",
@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
-    "@nuxtjs/sitemap": "^6.0.0-beta.2",
+    "@nuxtjs/sitemap": "^6.0.0-beta.4",
     "crypto-js": "^4.2.0"
   }
 }
