@@ -18,7 +18,7 @@
       </v-card-text>
     </v-card>
     <Space></Space>
-    <v-card elevation="2">
+    <!-- <v-card elevation="2">
       <v-card-title class="text-HyperBlue">
         {{ $t('dev') }}
       </v-card-title>
@@ -39,7 +39,7 @@
         </div>
       </v-card-text>
     </v-card>
-    <Space></Space>
+    <Space></Space> -->
     <v-card elevation="2" v-show="home.recent.roms.length > 0">
       <v-card-title class="text-HyperBlue">
         {{ $t('update') }}
@@ -74,11 +74,8 @@ export default {
 </script>
 <script setup>
 const { locale, locales } = useI18n()
-const devs = "https://data.hyperos.fans/dev.json"
 const index = "https://data.hyperos.fans/index.json"
 const site = "https://data.hyperos.fans/sitelog.json"
-const { data: dev } = await useFetch(devs)
 const { data: home } = await useFetch(index)
 const { data: sitelog } = await useFetch(site)
-const { data: latest } = await useFetch('https://data.hyperos.fans/dev/' + dev.value.HyperOS[0]['latest'] + '.json')
 </script>
