@@ -12,13 +12,13 @@
     "@nuxtjs/device": "^3.2.4",
     "@nuxtjs/i18n": "^8.5.5",
     "nuxt": "^3.13.2",
-    "sass": "^1.79.3",
+    "sass": "^1.79.4",
     "vite-plugin-vuetify": "^2.0.4",
     "vuetify": "^3.7.2"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
-    "@nuxtjs/sitemap": "^6.1.0",
+    "@nuxtjs/sitemap": "^6.1.1",
     "crypto-js": "^4.2.0"
   }
 }
