@@ -87,6 +87,12 @@ export default defineI18nConfig(() => ({
       'jp': '日本',
       'kr': '韩国',
       'tr': '土耳其',
+      'lm': '小米澎湃 OS 拉丁美洲',
+      'mx': '墨西哥',
+      'th': '泰国',
+      'cl': '智利',
+      'gt': '瓜地马拉',
+      'za': '南非',
       'suspendednote': '撤包版本存在极大可能性使得您的设备死机、重启、变砖，请不要轻易尝试，也不要轻易因为别人安装后正常的情况选择安装，因此带来的问题，我站不负任何责任',
     },
     en: {
@@ -172,6 +178,12 @@ export default defineI18nConfig(() => ({
       'jp': 'Japan',
       'kr': 'South Korea',
       'tr': 'Turkey',
+      'lm': 'Latina America',
+      'mx': 'Mexico',
+      'th': 'Thailand',
+      'cl': 'Chili',
+      'gt': 'Guatemala',
+      'za': 'South Africa',
       'suspendednote': 'Suspended ROMs may affect your device to be end up in boot loop or bricked, so don\'t try it with ease and becuase of some one is using that version is fine , any problem caused by it is under your choice of act and is your responsibility, and we are not responsible for it',
     }
   }
