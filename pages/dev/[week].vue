@@ -50,7 +50,7 @@
           <thead>
             <tr>
               <th class="text-left">{{ $t('name') }}</th>
-              <th class="text-left">{{ $t('os') }}</th>
+              <th class="text-left">{{ $t('hyperos') }}</th>
               <th class="text-left">{{ $t('android') }}</th>
               <th class="text-left">{{ $t('recovery') }}</th>
             </tr>
@@ -76,7 +76,7 @@
           <thead>
             <tr>
               <th class="text-left">{{ $t('name') }}</th>
-              <th class="text-left">{{ $t('os') }}</th>
+              <th class="text-left">{{ $t('hyperos') }}</th>
               <th class="text-left">{{ $t('android') }}</th>
               <th class="text-left">{{ $t('recovery') }}</th>
             </tr>

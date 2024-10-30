@@ -13,9 +13,6 @@
 			<v-card-text>
 				<p style="padding-left:10px;"><b>{{ $t('name') }}</b><span>{{ data.name[locale] }}</span></p>
 				<p style="padding-left:10px;"><b>{{ $t('codename') }}</b><span>{{ data.device }}</span></p>
-				<!-- <p style="padding-left:10px;">{{ $t('tips') }} ： <span>{{ $t('fixed') }}
-						<NuxtLink :to="('/' + locale + '/tips/403')">{{ $t('fix403') }}</NuxtLink>
-					</span></p> -->
 					<p style="padding-left:10px;">
 						<b>{{ $t('bllock') }}</b><span>{{ $t('unlock') }} , </span>
 						<span v-if="locale == 'zh'">
@@ -45,33 +42,30 @@
 					<v-table>
 						<thead>
 							<tr>
-								<th class="text-left">{{ $t('os') }}</th>
-								<th class="text-left">{{ $t('android') }}</th>
-								<th class="text-left">{{ $t('release') }}</th>
-								<th class="text-left">{{ $t('recovery') }}</th>
-								<th class="text-left">{{ $t('fastboot') }}</th>
+								<th class="text-left" v-for="menu in branche.table">{{ $t(menu) }}</th>
 							</tr>
+							
 						</thead>
-						<tbody v-if="branche.idtag == 'ADPC' || branche.idtag == 'ADPG'">
-							<tr v-for="{ os, android, release, recovery, fastboot, originrec, originfb } in branche.roms">
-								<td>{{ os }}</td>
-								<td>{{ android }}</td>
-								<td>{{ release }}</td>
-								<td v-if="recovery == ''">{{ $t('yet') }}</td>
-								<td v-else><a :href=originrec><span v-if="$device.isDesktopOrTablet">{{ recovery }}</span><span v-else>{{ $t('recovery') }}</span></a></td>
-								<td v-if="origin == ''">{{ $t('yet') }}</td>
-								<td v-else><a :href=originfb><span v-if="$device.isDesktopOrTablet">{{ fastboot }}</span><span v-else>{{ $t('fastboot') }}</span></a></td>
-							</tr>
-						</tbody>
-						<tbody v-else>
-							<tr v-for="{ os, android, release, recovery, fastboot } in branche.roms">
-								<td>{{ os }}</td>
-								<td>{{ android }}</td>
-								<td>{{ release }}</td>
-								<td v-if="recovery == ''">{{ $t('yet') }}</td>
-								<td v-else><a :href="('https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/' + os + '/' + recovery)"><span v-if="$device.isDesktopOrTablet">{{ recovery }}</span><span v-else>{{ $t('recovery') }}</span></a></td>
-								<td v-if="fastboot == ''">{{ $t('yet') }}</td>
-								<td v-else><a :href="('https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/' + os + '/' + fastboot)"><span v-if="$device.isDesktopOrTablet">{{ fastboot }}</span><span v-else>{{ $t('fastboot') }}</span></a></td>
+						<tbody>
+							<tr v-for="(rom, ver) in branche.roms">
+								<td v-for="i in branche.table.length">
+									<span v-if="branche.table[i-1] == 'os' || branche.table[i-1] == 'android' || branche.table[i-1] == 'release'">
+										{{ rom[branche.table[i-1]] }}
+									</span>
+									<span v-else-if="rom[branche.table[i-1]] ==''">{{ $t('yet') }}</span>
+									<span v-else-if="branche.table[i-1] == 'originrec' || branche.table[i-1] == 'originfb'">
+										<a :href="(rom[branche.table[i-1]])">
+											<span v-if="$device.isDesktopOrTablet">{{ rom[branche.table[i-1]] }}</span>
+											<span v-else>{{ $t('getitdown') }}</span>
+										</a>
+									</span>
+									<span v-else>
+										<a :href="('https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/' + ver + '/' + rom[branche.table[i-1]])">
+											<span v-if="$device.isDesktopOrTablet">{{ rom[branche.table[i-1]] }}</span>
+											<span v-else>{{ $t('getitdown') }}</span>
+										</a>
+									</span>
+								</td>
 							</tr>
 						</tbody>
 					</v-table>

@@ -1,53 +1,66 @@
 body {
 	font-family: MISans;
 }
-.v-code{
-	font-family: 'monospace', 'Consolas', 'Courier','Courier New';
-	background-color: rgba(var(--mdui-color-surface-variant),.28);
+.v-code {
+	font-family: "monospace", "Consolas", "Courier", "Courier New";
+	background-color: rgba(var(--mdui-color-surface-variant), 0.28);
 }
-mdui-chip :hover{
+mdui-chip :hover {
 	color: #2655ff;
-	text-decoration: underline
+	text-decoration: underline;
 }
-mdui-ripple div :surface :hover{
-	padding:10px!important;
+mdui-ripple div :surface :hover {
+	padding: 10px !important;
 }
 .Center {
 	margin: 10px;
 	text-align: center;
 }
-.v-tab__slider{
-	height:0px!important;
+.v-tab__slider {
+	height: 0px !important;
 }
-.v-tab--active{
+.v-tab--active {
 	text-underline-offset: none;
 }
-.v-slide-group-item--active{
-	text-underline-offset: none;}
-.v-tab--selected{text-underline-offset: none;}
+.v-slide-group-item--active {
+	text-underline-offset: none;
+}
+.v-tab--selected {
+	text-underline-offset: none;
+}
 .myiCon {
 	font-family: "iconfont";
 	text-align: right;
 }
-.v-main{
+.v-main {
 	height: 100vh;
 }
-a{
+a {
 	color: #2655ff;
 	text-decoration: none;
 }
-.v-slide-group-item{
-	--active:none!important;
+.v-slide-group-item {
+	--active: none !important;
 }
-.NavLinks{
+.NavLinks {
 	text-decoration: none;
 }
-.NavLinks a{
+.NavLinks a {
 	text-decoration: none;
 }
-b{
+b {
 	font-weight: light;
 }
-.v-card-text{
-	font-size: 16px!important;
+.v-card-text {
+	font-size: 16px !important;
+}
+.list-table-menu:not(:first-child) {
+	display: none;
+}
+.developing {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	text-align: center;
 }

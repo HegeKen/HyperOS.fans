@@ -1,24 +1,25 @@
 <template>
-  <title>{{ $t('hometitle') }} - HyperOS.fans</title>
   <v-app>
-    <Nav></Nav>
-    <v-card elevation="2">
-      <v-card-item>
-        <v-card-title class="text-HyperBlue">
-          {{ $t('sitev') }} {{ sitelog.logs[0].siteVer }}
-        </v-card-title>
-      </v-card-item>
-      <v-card-text>
-        <div><b>{{ $t('time') }}</b> {{ sitelog.logs[0].date }}</div>
-        <div><b>{{ $t('log') }}</b>
-          <ol style="margin-left:20px;">
-            <li v-for="(log) in sitelog.logs[0]['log']">{{ log[locale] }}</li>
-          </ol>
-        </div>
-      </v-card-text>
-    </v-card>
-    <Space></Space>
-    <!-- <v-card elevation="2">
+    <span v-if="home.recent.developing == 'no'">
+      <title>{{ $t('hometitle') }} - HyperOS.fans</title>
+      <Nav></Nav>
+      <v-card elevation="2">
+        <v-card-item>
+          <v-card-title class="text-HyperBlue">
+            {{ $t('sitev') }} {{ sitelog.logs[0].siteVer }}
+          </v-card-title>
+        </v-card-item>
+        <v-card-text>
+          <div><b>{{ $t('time') }}</b> {{ sitelog.logs[0].date }}</div>
+          <div><b>{{ $t('log') }}</b>
+            <ol style="margin-left:20px;">
+              <li v-for="(log) in sitelog.logs[0]['log']">{{ log[locale] }}</li>
+            </ol>
+          </div>
+        </v-card-text>
+      </v-card>
+      <Space></Space>
+      <!-- <v-card elevation="2">
       <v-card-title class="text-HyperBlue">
         {{ $t('dev') }}
       </v-card-title>
@@ -40,25 +41,34 @@
       </v-card-text>
     </v-card>
     <Space></Space> -->
-    <v-card elevation="2" v-show="home.recent.roms.length > 0">
-      <v-card-title class="text-HyperBlue">
-        {{ $t('update') }}
-      </v-card-title>
-      <v-card-text>
-        <div><b>{{ $t('uptime') }} </b> <span>{{ home.recent.time }}</span>
-        </div>
-        <div>
-          <ol style="margin-left:20px;">
-            <li v-for="({ code, name, rom }, index) in home.recent.roms">
-              <span v-if="index < home.recent.roms.length - 1"><NuxtLink :to="('/' + locale + '/devices/' + code)" class="text-HyperBlue" style="text-indent: 20px;">{{ name[locale] }}({{ code }})</NuxtLink> : {{ rom }};</span>
-              <span v-else><NuxtLink :to="('/' + locale + '/devices/' + code)" class="text-HyperBlue" style="text-indent: 20px;">{{ name[locale] }}({{ code }})</NuxtLink> : {{ rom }}</span>
-            </li>
-          </ol>
-        </div>
-      </v-card-text>
-    </v-card>
-    <Space></Space>
-    <Footer></Footer>
+      <v-card elevation="2" v-show="home.recent.roms.length > 0">
+        <v-card-title class="text-HyperBlue">
+          {{ $t('update') }}
+        </v-card-title>
+        <v-card-text>
+          <div><b>{{ $t('uptime') }} </b> <span>{{ home.recent.time }}</span>
+          </div>
+          <div>
+            <ol style="margin-left:20px;">
+              <li v-for="({ code, name, rom }, index) in home.recent.roms">
+                <span v-if="index < home.recent.roms.length - 1">
+                  <NuxtLink :to="('/' + locale + '/devices/' + code)" class="text-HyperBlue" style="text-indent: 20px;">{{ name[locale] }}({{ code }})</NuxtLink> : {{ rom }};
+                </span>
+                <span v-else>
+                  <NuxtLink :to="('/' + locale + '/devices/' + code)" class="text-HyperBlue" style="text-indent: 20px;">{{ name[locale] }}({{ code }})</NuxtLink> : {{ rom }}
+                </span>
+              </li>
+            </ol>
+          </div>
+        </v-card-text>
+      </v-card>
+      <Space></Space>
+      <Footer></Footer>
+    </span>
+    <span v-else>
+      <title>{{ $t('dev_title') }} - HyperOS.fans</title>
+      <div class="developing">{{ $t('developing') }}</div> 
+    </span>
   </v-app>
 </template>
 
