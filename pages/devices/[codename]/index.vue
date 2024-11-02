@@ -22,6 +22,11 @@
 							<a href="https://new.c.mi.com/global/embedded/app/bl/lock">{{ $t('unlockurl') }}</a>
 						</span>
 					</p>
+					<p v-if="data.merged == 'no'" style="padding-left:10px;">
+					</p>
+					<p v-else style="padding-left:10px;">
+						<span><b>{{ $t('merged') }}</b>{{ data.notice[locale] }} , <a :href="('/'+locale+'/devices/'+data.merged)">{{ $t('checkit') }} {{ data.merged_with[locale] }}</a></span>
+					</p>
 				<p style="padding-left:10px;"><b>{{ $t('miui') }}</b><span v-if="data.miui == 'yes'">{{ $t('yes') }} {{ $t('gotomiui') }}<a v-if="locale == 'zh'" :href="('https://roms.miuier.com/zh-cn/devices/' + data.device)">{{ data.name[locale] }}({{ data.device }}) {{ $t('miuier') }}</a><a v-else :href="('https://roms.miuier.com/en-us/devices/' + data.device)">{{ data.name[locale] }}({{ data.device }}) {{ $t('miuier') }}</a></span><span v-else>{{ $t('no') }}</span></p>
 			</v-card-text>
 		</v-card>
