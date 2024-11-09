@@ -17,14 +17,13 @@ export default defineNuxtConfig({
     '@nuxtjs/device',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
+        if (!config.plugins) {
+          config.plugins = []
+        }
         config.plugins.push(vuetify({ autoImport: true }))
       })
     },
   ],
-
-  device: {
-    refreshOnResize: true
-  },
 
   i18n: {
     locales: [

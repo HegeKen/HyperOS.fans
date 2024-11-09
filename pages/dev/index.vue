@@ -3,12 +3,10 @@
   <v-app>
     <Nav></Nav>
     <v-card v-for="os in data.HyperOS" elevation="2">
-      <v-card-title>{{ os.bigVer }}</v-card-title>
       <v-card-item style="padding:0px;">
         <v-container fluid>
           <NuxtLink v-for="dev in os.weeks" :to="('/' + locale + '/dev/' + dev)" class="text-HyperBlue" style="margin-right: 5px;">
-            <v-chip v-if="dev == os.latest" style="margin-top:5px;margin-right:5px;"><v-icon icon='mdi-new-box'></v-icon> &nbsp {{ $t('num') }}{{ dev }}{{ $t('week') }}</v-chip>
-            <v-chip v-else style="margin-top:5px;margin-right:5px;">{{ $t('num') }}{{ dev }}{{ $t('week') }}</v-chip>
+            <v-chip style="margin-top:5px;margin-right:5px;">{{ $t('num') }}{{ dev }}{{ $t('week') }}</v-chip>
           </NuxtLink>
         </v-container>
       </v-card-item>
