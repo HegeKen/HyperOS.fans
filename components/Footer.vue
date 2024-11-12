@@ -19,6 +19,8 @@
         </v-btn>
       </a>
     </v-bottom-navigation>
+    <Space></Space>
+    <Space></Space>
     <!-- Mobile Disclaimer -->
   </div>
 </template>

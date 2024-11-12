@@ -1,4 +1,4 @@
-export default defineAppConfig({
+export default({
   title: 'HyperOS.fans',
   ssr: true,
   target: "static",

@@ -1,6 +1,6 @@
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
-export default defineNuxtConfig({
+export default({
   build: {
     transpile: ['vuetify'],
   },
@@ -15,11 +15,8 @@ export default defineNuxtConfig({
     '@nuxtjs/sitemap',
     '@nuxtjs/i18n',
     '@nuxtjs/device',
-    (_options, nuxt) => {
-      nuxt.hooks.hook('vite:extendConfig', (config) => {
-        if (!config.plugins) {
-          config.plugins = []
-        }
+    (options: any, nuxt: any) => {
+      nuxt.hooks.hook('vite:extendConfig', (config: any) => {
         config.plugins.push(vuetify({ autoImport: true }))
       })
     },
