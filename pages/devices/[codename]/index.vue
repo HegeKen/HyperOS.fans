@@ -9,7 +9,7 @@
 		<Nav></Nav>
 		<Space></Space>
 		<v-card>
-			<v-card-title>{{ $t('devinfo') }}</v-card-title>
+			<v-card-title class="devinfo">{{ $t('devinfo') }}</v-card-title>
 			<v-card-text>
 				<p style="padding-left:10px;"><b>{{ $t('name') }}</b><span>{{ data.name[locale] }}</span></p>
 				<p style="padding-left:10px;"><b>{{ $t('codename') }}</b><span>{{ data.device }}</span></p>

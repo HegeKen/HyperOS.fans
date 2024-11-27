@@ -64,3 +64,7 @@ b {
 	height: 100vh;
 	text-align: center;
 }
+.devinfo{
+	margin-left: 10px;
+	font-weight: bold!important;
+}

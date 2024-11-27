@@ -23,7 +23,7 @@ const route = useRoute();
 const { locale } = useI18n();
 const miui_key = CryptoJS.enc.Utf8.parse("miuiotavalided11");
 const miui_iv = CryptoJS.enc.Utf8.parse('0102030405060708');
-const check_url = "https://update.miui.com/updates/miotaV3.php";
+const check_url = "https://update.intl.miui.com/updates/miotaV3.php";
 
 
 let HyperOSForm = {
