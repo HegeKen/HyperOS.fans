@@ -10,17 +10,17 @@
 				<v-expansion-panel-text v-if="$device.isDesktopOrTablet" class="d-flex">
 					<v-container fluid>
 							<v-row dense>
-								<v-col v-for="devices in alldevices.devices">
-									<v-card class="mx-auto" max-width="600" :href="('/'+locale+'/devices/'+devices.code)">
+								<v-col v-for="devices in alldevices['devices']">
+									<v-card class="mx-auto" max-width="600" :href="('/'+locale+'/devices/'+devices['code'])">
 										<v-img
-											:src="'https://data.hyperos.fans/assets/images/' +devices.image"
+											:src="'https://data.hyperos.fans/assets/images/' +devices['image']"
 											class="align-end"
 											height="200px"
 											style="margin-top:10px;"
 										>
 										</v-img>
-										<v-card-title>{{ devices.name[locale] }}</v-card-title>
-										<v-card-subtitle>{{ devices.code }}</v-card-subtitle>
+										<v-card-title>{{ devices['name'][locale] }}</v-card-title>
+										<v-card-subtitle>{{ devices['code'] }}</v-card-subtitle>
 										<v-btn class="text-HyperBlue" style="margin-bottom:10px" variant="text" prepend-icon="mdi-download">{{ $t('download') }}</v-btn>
 									</v-card>
 								</v-col>
@@ -29,9 +29,9 @@
 					</v-expansion-panel-text>
 			<v-expansion-panel-text v-else>
 					<v-container fluid>
-						<nuxt-link v-for="devices in alldevices.devices" :to="('/'+locale+'/devices/'+devices.code)">
+						<nuxt-link v-for="devices in alldevices['devices']" :to="('/'+locale+'/devices/'+devices['code'])">
 							<v-chip style="margin-top:5px;margin-right:5px;">
-								<span class="text-HyperBlue">{{devices.name[locale]}}({{devices.code}})</span>
+								<span class="text-HyperBlue">{{devices['name'][locale]}}({{devices['code']}})</span>
 							</v-chip>
 						</nuxt-link>
 						</v-container>

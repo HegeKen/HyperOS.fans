@@ -3,15 +3,15 @@
   <v-app>
     <Nav></Nav>
     <v-timeline align="start" size="large" side="end">
-    <v-timeline-item v-for="(elog) in sitelog.logs" dot-color="#2655ff" fill-dot :icon='elog.icon' >
+    <v-timeline-item v-for="(elog) in sitelog['logs']" dot-color="#2655ff" fill-dot :icon="elog['icon']">
       <v-card elevation="2">
       <v-card-item>
         <v-card-title class="text-HyperBlue">
-          {{ $t('sitev') }} {{ elog.siteVer }}
+          {{ $t('sitev') }} {{ elog['siteVer'] }}
         </v-card-title>
       </v-card-item>
       <v-card-text>
-        <div><b>{{ $t('time') }}</b> {{ elog.date }}</div>
+        <div><b>{{ $t('time') }}</b> {{ elog['date'] }}</div>
         <div><b>{{ $t('log') }}</b>
           <ol style="margin-left:20px;">
             <li v-for="(log) in elog['log']">{{ log[locale] }}</li>
