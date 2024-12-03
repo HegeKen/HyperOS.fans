@@ -6,12 +6,12 @@
   <div v-else class="NavLinks">
     <br /><br /><br />
     <v-bottom-navigation horizontal style="padding-bottom: 80px;">
-      <NuxtLink v-for="(item) in items" :to="('/' + locale + '/' + item['path'])">
+      <a v-for="(item) in items" :href="('/' + locale + '/' + item['path'])">
         <v-btn>
           <v-icon class="text-tab_text">{{ item['icon'] }}</v-icon>
           <span class="text-capitalize text-tab_text">{{ item[locale] }}</span>
         </v-btn>
-      </NuxtLink>
+      </a>
       <a href="#top">
         <v-btn>
           <v-icon class="text-tab_text">mdi-arrow-up</v-icon>

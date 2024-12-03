@@ -29,11 +29,11 @@
 					</v-expansion-panel-text>
 			<v-expansion-panel-text v-else>
 					<v-container fluid>
-						<nuxt-link v-for="devices in alldevices['devices']" :to="('/'+locale+'/devices/'+devices['code'])">
+						<a v-for="devices in alldevices['devices']" :href="('/'+locale+'/devices/'+devices['code'])">
 							<v-chip style="margin-top:5px;margin-right:5px;">
 								<span class="text-HyperBlue">{{devices['name'][locale]}}({{devices['code']}})</span>
 							</v-chip>
-						</nuxt-link>
+						</a>
 						</v-container>
 					</v-expansion-panel-text>
 					</v-expansion-panel>

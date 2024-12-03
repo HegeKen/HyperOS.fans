@@ -8,12 +8,12 @@
         <b>Hyper<span class="text-HyperBlue">OS</span>.fans</b>
       </v-app-bar-title>
       <v-tabs v-model="tab" stacked class="text-HyperBlue NavLinks">
-        <NuxtLink v-for="(item, i) in items" :key="i" :value="item" :to="('/' + locale + '/' + item['path'])">
+        <a v-for="(item, i) in items" :key="i" :value="item" :href="('/' + locale + '/' + item['path'])">
           <v-tab>
             <v-icon :icon="item['icon']" class="text-tab_text"></v-icon>
             <span v-text="item[locale]" class="text-capitalize text-tab_text"></span>
           </v-tab>
-        </NuxtLink>
+        </a>
         <NuxtLink v-for="locale in availableLocales" :key="locale['code']" :to="switchLocalePath(locale['code'])" color="#2655ff"><v-tab value="translate">
             <v-icon icon="mdi-translate" class="text-tab_text"></v-icon>
             <span class="text-capitalize text-tab_text">{{ $t('lang') }}</span>
@@ -40,21 +40,21 @@
     </v-app-bar>
     <v-navigation-drawer v-model="drawer">
       <v-list>
-        <NuxtLink v-for="(item, i) in items" :key="i" :value="item" :to="('/' + locale + '/' + item['path'])">
+        <a v-for="(item, i) in items" :key="i" :value="item" :href="('/' + locale + '/' + item['path'])">
           <v-list-item class="NavLinks text-capitalize text-tab_text" style="color:black">
             <template v-slot:prepend>
               <v-icon :icon="item['icon']"></v-icon>
             </template>
             <v-list-item-title v-text="item[locale]"></v-list-item-title>
           </v-list-item>
-        </NuxtLink>
+        </a>
 
-        <NuxtLink class="text-capitalize NavLinks" v-for="locale in availableLocales" :key="locale['code']" :to="switchLocalePath(locale['code'])"><v-list-item value="translate">
+        <a class="text-capitalize NavLinks" v-for="locale in availableLocales" :key="locale['code']" :href="switchLocalePath(locale['code'])"><v-list-item value="translate">
             <template v-slot:prepend>
               <v-icon icon="mdi-translate text-tab_text"></v-icon>
             </template>
             <v-list-item-title class="text-tab_text">{{ $t('lang') }}</v-list-item-title>
-          </v-list-item></NuxtLink>
+          </v-list-item></a>
         <v-list-item class="NavLinks text-capitalize text-tab_text" @click="toggleTheme">
           <template v-slot:prepend>
             <v-icon icon="mdi-theme-light-dark" class="text-tab_text"></v-icon>

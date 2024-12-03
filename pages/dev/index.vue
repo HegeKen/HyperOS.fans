@@ -5,9 +5,9 @@
     <v-card v-for="os in data['HyperOS']" elevation="2">
       <v-card-item style="padding:0px;">
         <v-container fluid>
-          <NuxtLink v-for="dev in os['weeks']" :to="('/' + locale + '/dev/' + dev)" class="text-HyperBlue" style="margin-right: 5px;">
+          <a v-for="dev in os['weeks']" :href="('/' + locale + '/dev/' + dev)" class="text-HyperBlue" style="margin-right: 5px;">
             <v-chip style="margin-top:5px;margin-right:5px;">{{ $t('num') }}{{ dev }}{{ $t('week') }}</v-chip>
-          </NuxtLink>
+          </a>
         </v-container>
       </v-card-item>
     </v-card>

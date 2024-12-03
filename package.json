@@ -12,7 +12,7 @@
     "@nuxtjs/device": "^3.2.4",
     "@nuxtjs/i18n": "^9.1.0",
     "nuxt": "^3.14.1592",
-    "sass": "^1.81.0",
+    "sass": "^1.81.1",
     "vite-plugin-vuetify": "^2.0.4",
     "vuetify": "^3.7.4"
   },
