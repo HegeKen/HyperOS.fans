@@ -83,6 +83,13 @@ export default {
 }
 </script>
 <script setup>
+let url = useRequestURL()
+const route = useRoute()
+let domain = url.hostname
+if (domain == "https://www.hyperos.fans") {
+  url = 'https://hyperos.fans' + route.path
+  await navigateTo(url, { external: true })
+}
 const { locale, locales } = useI18n()
 const index = "https://data.hyperos.fans/index.json"
 const site = "https://data.hyperos.fans/sitelog.json"

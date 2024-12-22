@@ -100,7 +100,6 @@ const availableLocales = computed(() => {
 let url = useRequestURL()
 const route = useRoute()
 let domain = url.hostname
-console.log(domain)
 if (domain == "https://www.hyperos.fans") {
   url = 'https://hyperos.fans' + route.path
   await navigateTo(url, { external: true })
