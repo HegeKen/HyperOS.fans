@@ -50,8 +50,7 @@ export default({
   },
 
   site: {
-    url: 'https://www.hyperos.fans',
+    url: 'https://hyperos.fans',
   },
-
   compatibilityDate: '2024-07-31'
 })
