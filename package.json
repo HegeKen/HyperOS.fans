@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
-    "@nuxtjs/sitemap": "^7.2.4",
+    "@nuxtjs/sitemap": "^7.2.5",
     "crypto-js": "^4.2.0",
     "vite": "^6.1.0"
   }
