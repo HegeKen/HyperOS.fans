@@ -12,7 +12,7 @@
     "@nuxtjs/device": "^3.2.4",
     "@nuxtjs/i18n": "^9.5.3",
     "nuxt": "^3.16.2",
-    "sass": "^1.86.3",
+    "sass": "^1.87.0",
     "vite-plugin-vuetify": "^2.1.1",
     "vuetify": "^3.8.2"
   },
@@ -20,6 +20,6 @@
     "@mdi/font": "^7.4.47",
     "@nuxtjs/sitemap": "^7.2.10",
     "crypto-js": "^4.2.0",
-    "vite": "^6.3.1"
+    "vite": "^6.3.2"
   }
 }
