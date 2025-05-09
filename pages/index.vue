@@ -6,16 +6,27 @@
       <v-card elevation="2">
         <v-card-item>
           <v-card-title class="text-HyperBlue">
-            {{ $t('sitev') }} {{sitelog['logs'][0]['siteVer']}}
+            {{ $t('sitev') }} {{ sitelog['logs'][0]['siteVer'] }}
           </v-card-title>
         </v-card-item>
         <v-card-text>
-          <div><b>{{ $t('time') }}</b> {{sitelog['logs'][0]['date']}}</div>
+          <div><b>{{ $t('time') }}</b> {{ sitelog['logs'][0]['date'] }}</div>
           <div><b>{{ $t('log') }}</b>
             <ol style="margin-left:20px;">
               <li v-for="(log) in sitelog['logs'][0]['log']">{{ log[locale] }}</li>
             </ol>
           </div>
+        </v-card-text>
+      </v-card>
+      <Space></Space>
+      <v-card elevation="2" class="MIUI" href="https://roms.miuier.com">
+        <v-card-item>
+          <v-card-title>
+            {{ $t('miuiroms') }}
+          </v-card-title>
+        </v-card-item>
+        <v-card-text>
+          <div><b>{{ $t('href') }}</b> <a href="https://roms.miuier.com" class="MIUI">{{ $t('miuisite') }}</a> </div>
         </v-card-text>
       </v-card>
       <Space></Space>
@@ -67,7 +78,7 @@
     </span>
     <span v-else>
       <title>{{ $t('dev_title') }} - HyperOS.fans</title>
-      <div class="developing">{{ $t('developing') }}</div> 
+      <div class="developing">{{ $t('developing') }}</div>
     </span>
   </v-app>
 </template>

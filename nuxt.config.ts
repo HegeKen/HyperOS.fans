@@ -1,6 +1,6 @@
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
-export default({
+export default ({
   build: {
     transpile: ['vuetify'],
   },
@@ -52,5 +52,12 @@ export default({
   site: {
     url: 'https://hyperos.fans',
   },
-  compatibilityDate: '2024-07-31'
-})
+
+  compatibilityDate: '2024-07-31',
+
+  devtools: {
+    timeline: {
+      enabled: true
+    }
+  }
+});

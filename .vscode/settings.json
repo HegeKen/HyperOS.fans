@@ -2,6 +2,8 @@
 	"Codegeex.Comment.LanguagePreference": "中文",
 	"Codegeex.SidebarUI.LanguagePreference": "中文",
 	"Codegeex.CommitMessageStyle": "Auto",
+	"editor.formatOnSave": true,
+	"prettier.tabWidth": 2,
 	"files.defaultLanguage": "plaintext",
 	"files.associations": {
 		"*.txt": "plaintext"
