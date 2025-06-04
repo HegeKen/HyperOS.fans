@@ -10,11 +10,11 @@
   },
   "devDependencies": {
     "@nuxtjs/device": "^3.2.4",
-    "@nuxtjs/i18n": "^9.5.4",
-    "nuxt": "^3.17.4",
-    "sass": "^1.89.0",
+    "@nuxtjs/i18n": "^9.5.5",
+    "nuxt": "^3.17.5",
+    "sass": "^1.89.1",
     "vite-plugin-vuetify": "^2.1.1",
-    "vuetify": "^3.8.6"
+    "vuetify": "^3.8.7"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
