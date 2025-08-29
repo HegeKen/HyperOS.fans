@@ -12,9 +12,9 @@
     "@nuxtjs/device": "^3.2.4",
     "@nuxtjs/i18n": "^10.0.6",
     "nuxt": "^4.0.3",
-    "sass": "^1.90.0",
+    "sass": "^1.91.0",
     "vite-plugin-vuetify": "^2.1.2",
-    "vuetify": "^3.9.5"
+    "vuetify": "^3.9.6"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
