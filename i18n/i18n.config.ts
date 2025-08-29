@@ -151,7 +151,8 @@ export default defineI18nConfig(() => ({
 			top: "Go to top",
 			lang: "中文",
 			no: "No",
-			hometitle: "Xiaomi HyperOS3 , the first batch released to testing!",
+			hometitle:
+				"Xiaomi HyperOS3, the first batch has been released for testing! Welcome!",
 			devlist: "Device list for Xiaomi HyperOS",
 			rompage: "Xiaomi HyperOS Official ROMs for",
 			getitdown: "Download",
