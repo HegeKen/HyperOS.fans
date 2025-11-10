@@ -10,9 +10,9 @@
   },
   "devDependencies": {
     "@nuxtjs/device": "^3.2.4",
-    "@nuxtjs/i18n": "^10.1.2",
-    "nuxt": "^4.2.0",
-    "sass": "^1.93.2",
+    "@nuxtjs/i18n": "^10.2.0",
+    "nuxt": "^4.2.1",
+    "sass": "^1.93.3",
     "vite-plugin-vuetify": "^2.1.2",
     "vuetify": "^3.10.7"
   },
