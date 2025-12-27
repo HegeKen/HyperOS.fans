@@ -9,17 +9,17 @@
     "start": "nuxi preview"
   },
   "devDependencies": {
-    "@nuxtjs/device": "^3.2.4",
+    "@nuxtjs/device": "^4.0.0",
     "@nuxtjs/i18n": "^10.2.1",
-    "nuxt": "^4.2.1",
-    "sass": "^1.94.2",
+    "nuxt": "^4.2.2",
+    "sass": "^1.97.1",
     "vite-plugin-vuetify": "^2.1.2",
-    "vuetify": "^3.11.0"
+    "vuetify": "^3.11.5"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
-    "@nuxtjs/sitemap": "^7.4.7",
+    "@nuxtjs/sitemap": "^7.5.0",
     "crypto-js": "^4.2.0",
-    "vite": "^7.1.4"
+    "vite": "^7.3.0"
   }
 }
