@@ -14,7 +14,7 @@ useHead({
     },
     {
       rel: 'stylesheet',
-      href: 'https://cdn-font.hyperos.mi.com/font/css?family=MiSans:100,200,300,400,500,600:Chinese_Simplify,Latin&display=swap'
+      href: 'https://cdn-font.hyperos.mi.com/font/css?family=MiSans_VF:VF:Chinese_Simplify,Latin&display=swap'
     }
   ],
   script: [

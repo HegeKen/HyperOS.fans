@@ -8,11 +8,11 @@ useHead({
   script: [
     { innerHTML: 'var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?c9e1b96ca1ad298ed068716ea5702f9c";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();' },
     {
-			body: true,
-			defer: true,
-			src: "https://static.cloudflareinsights.com/beacon.min.js",
-			"data-cf-beacon": '{"token":"b16f78ed4ae9456f9427b9d562e70ea5"}',
-		},
+      body: true,
+      defer: true,
+      src: "https://static.cloudflareinsights.com/beacon.min.js",
+      "data-cf-beacon": '{"token":"b16f78ed4ae9456f9427b9d562e70ea5"}',
+    },
   ],
   link: [
     {
@@ -22,7 +22,7 @@ useHead({
     },
     {
       rel: "stylesheet",
-      href: "https://cdn-font.hyperos.mi.com/font/css?family=MiSans:100,200,300,400,450,500,600,650,700,900:Chinese_Simplify,Latin&display=swap",
+      href: "https://cdn-font.hyperos.mi.com/font/css?family=MiSans_VF:VF:Chinese_Simplify,Latin&display=swap",
     },
     {
       rel: "apple-touch-icon-precomposed",
