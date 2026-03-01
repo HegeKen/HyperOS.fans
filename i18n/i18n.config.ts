@@ -146,7 +146,7 @@ export default defineI18nConfig(() => ({
 			comm: "Xiaomi Community China",
 			gcom: "Mi Community Global",
 			coolapk: "CoolAPK",
-			download: "Download ROM",
+			download: "DOWNLOAD ROM",
 			source: "Source codes and data sources",
 			top: "Go to top",
 			lang: "中文",
