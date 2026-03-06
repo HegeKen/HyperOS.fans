@@ -94,6 +94,7 @@ export default {
 }
 </script>
 <script setup>
+import { useTheme } from 'vuetify'
 let url = useRequestURL()
 const route = useRoute()
 let domain = url.hostname
@@ -106,4 +107,8 @@ const index = "https://data.hyperos.fans/index.json"
 const site = "https://data.hyperos.fans/sitelog.json"
 const { data: home } = await useFetch(index)
 const { data: sitelog } = await useFetch(site)
+const theme = useTheme();
+function toggleTheme() {
+  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+}
 </script>

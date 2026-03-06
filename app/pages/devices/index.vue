@@ -49,7 +49,12 @@ export default {
 };
 </script>
 <script setup>
+import { useTheme } from 'vuetify'
 const { locale, locales } = useI18n();
 const url = "https://data.hyperos.fans/devices.json";
 const { data } = await useFetch(url);
+const theme = useTheme();
+function toggleTheme() {
+	theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+}
 </script>

@@ -41,19 +41,19 @@
     <v-navigation-drawer v-model="drawer">
       <v-list>
         <a v-for="(item, i) in items" :key="i" :value="item" :href="('/' + locale + '/' + item['path'])">
-          <v-list-item class="NavLinks text-capitalize text-tab_text" style="color:black">
+          <v-list-item class="NavLinks text-capitalize text-tab_text">
             <template v-slot:prepend>
-              <v-icon :icon="item['icon']"></v-icon>
+              <v-icon :icon="item['icon']" class="text-tab_text"></v-icon>
             </template>
-            <v-list-item-title v-text="item[locale]"></v-list-item-title>
+            <v-list-item-title v-text="item[locale]" class="text-tab_text"></v-list-item-title>
           </v-list-item>
         </a>
 
         <a class="text-capitalize NavLinks" v-for="locale in availableLocales" :key="locale['code']" :href="switchLocalePath(locale['code'])"><v-list-item value="translate">
             <template v-slot:prepend>
-              <v-icon icon="mdi-translate text-tab_text"></v-icon>
+              <v-icon icon="mdi-translate" class="text-tab_text"></v-icon>
             </template>
-            <v-list-item-title class="text-tab_text">{{ $t('lang') }}</v-list-item-title>
+            <v-list-item-title :v-text="$t('lang')" class="text-tab_text">{{ $t('lang') }}</v-list-item-title>
           </v-list-item></a>
         <v-list-item class="NavLinks text-capitalize text-tab_text" @click="toggleTheme">
           <template v-slot:prepend>
@@ -88,14 +88,15 @@ export default {
 </script>
 <script setup>
 import { useTheme } from 'vuetify'
-const theme = useTheme()
-function toggleTheme() {
-  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
-}
 const { locale, locales } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
 const availableLocales = computed(() => {
   return (locales.value).filter(i => i.code !== locale.value)
+})
+useHead({
+  htmlAttrs: {
+    lang: locale
+  }
 })
 let url = useRequestURL()
 const route = useRoute()
@@ -104,5 +105,8 @@ if (domain == "https://www.hyperos.fans") {
   url = 'https://hyperos.fans' + route.path
   await navigateTo(url, { external: true })
 }
-
+const theme = useTheme();
+function toggleTheme() {
+  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+}
 </script>

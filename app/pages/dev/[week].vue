@@ -73,24 +73,24 @@
         <v-expansion-panel-text>
           <p><span style="color: red;">{{ $t('note') }} </span>{{ $t('suspendednote') }}</p>
           <v-table>
-          <thead>
-            <tr>
-              <th class="text-left">{{ $t('name') }}</th>
-              <th class="text-left">{{ $t('hyperos') }}</th>
-              <th class="text-left">{{ $t('android') }}</th>
-              <th class="text-left">{{ $t('recovery') }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="{ device, name, rom } in data['suspended']">
-              <td>{{ name[locale] }}({{ device }})</td>
-              <td>{{ rom['os'] }}</td>
-              <td>{{ rom['android'] }}</td>
-              <td v-if="rom['recovery'] == ''">{{ $t('yet') }}</td>
-              <td v-else><a :href="('https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/' + rom['os'] + '/' + rom['recovery'])"><span v-if="$device.isDesktopOrTablet">{{ rom['recovery'] }}</span><span v-else>{{ $t('recovery') }}</span></a></td>
-            </tr>
-          </tbody>
-        </v-table>
+            <thead>
+              <tr>
+                <th class="text-left">{{ $t('name') }}</th>
+                <th class="text-left">{{ $t('hyperos') }}</th>
+                <th class="text-left">{{ $t('android') }}</th>
+                <th class="text-left">{{ $t('recovery') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="{ device, name, rom } in data['suspended']">
+                <td>{{ name[locale] }}({{ device }})</td>
+                <td>{{ rom['os'] }}</td>
+                <td>{{ rom['android'] }}</td>
+                <td v-if="rom['recovery'] == ''">{{ $t('yet') }}</td>
+                <td v-else><a :href="('https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/' + rom['os'] + '/' + rom['recovery'])"><span v-if="$device.isDesktopOrTablet">{{ rom['recovery'] }}</span><span v-else>{{ $t('recovery') }}</span></a></td>
+              </tr>
+            </tbody>
+          </v-table>
         </v-expansion-panel-text>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -111,8 +111,13 @@ export default {
 };
 </script>
 <script setup>
+import { useTheme } from 'vuetify'
 const route = useRoute()
 const { locale } = useI18n();
 const url = "https://data.hyperos.fans/dev/" + route.params.week.toLowerCase() + ".json"
 const { data } = await useFetch(url)
+const theme = useTheme();
+function toggleTheme() {
+  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+}
 </script>

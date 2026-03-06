@@ -1,6 +1,6 @@
 export default defineI18nConfig(() => ({
 	legacy: false,
-	locale: "zh",
+	locale: "zh" as const,
 	messages: {
 		zh: {
 			home: "首页",
@@ -38,7 +38,7 @@ export default defineI18nConfig(() => ({
 			source: "源代码与数据源",
 			top: "返回顶部",
 			lang: "English",
-			hometitle: "小米澎湃OS3, 第一批已开测，欢迎使用。",
+			hometitle: "小米澎湃OS3, 已经公开发布，欢迎使用。",
 			devlist: "小米澎湃OS机型列表",
 			rompage: "澎湃OS官方刷机包下载",
 			getitdown: "下载",
@@ -152,14 +152,14 @@ export default defineI18nConfig(() => ({
 			lang: "中文",
 			no: "No",
 			hometitle:
-				"Xiaomi HyperOS3, the first batch has been released for testing! Welcome!",
+				"Xiaomi HyperOS3, has been released for testing! Welcome to use!",
 			devlist: "Device list for Xiaomi HyperOS",
 			rompage: "Xiaomi HyperOS Official ROMs for",
 			getitdown: "Download",
 			yet: "N/A",
 			disclaimerlong:
 				"This Website is NOT A Xiaomi Website. We are not affiliated with Xiaomi Corp. or HyperOS Development Team in any way.",
-			disclaimer: "This is NOT a Xiaomi Website",
+			disclaimer: "This is NOT a Xiaomi Website.",
 			gotomiui: ", go to the MIUI site: ",
 			miuier: " - MIUI Official ROMs",
 			miuisite: "MIUI Official ROMs",

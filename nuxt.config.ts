@@ -1,6 +1,12 @@
 import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 
 export default defineNuxtConfig({
+	// devtools: {
+	// 	enabled: true,
+	// 	timeline: {
+	// 		enabled: true,
+	// 	},
+	// },
 	build: {
 		transpile: ["vuetify"],
 	},
@@ -63,10 +69,4 @@ export default defineNuxtConfig({
 	},
 
 	compatibilityDate: "2024-07-31",
-
-	devtools: {
-		timeline: {
-			enabled: true,
-		},
-	},
 });
