@@ -12,6 +12,12 @@
           <span class="text-capitalize text-tab_text">{{ item[locale] }}</span>
         </v-btn>
       </a>
+      <a href="/search.html">
+        <v-btn>
+          <v-icon class="text-tab_text">mdi-magnify</v-icon>
+          <span class="text-capitalize text-tab_text">{{ $t('search') }}</span>
+        </v-btn>
+      </a>
       <a href="#top">
         <v-btn>
           <v-icon class="text-tab_text">mdi-arrow-up</v-icon>
@@ -31,7 +37,6 @@ export default {
     return {
       items: [
         { zh: '首页', en: 'Home', path: '', icon: 'mdi-home' },
-        { zh: '开发版', en: 'DEV', path: 'dev', icon: 'mdi-dev-to' },
         { zh: '机型列表', en: 'Devices', path: 'devices', icon: 'mdi-devices' },
         { zh: '站点日志', en: 'Sitelog', path: 'sitelog', icon: 'mdi-update' },
       ],

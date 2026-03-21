@@ -113,6 +113,7 @@ export default defineI18nConfig(() => ({
 				"网站正在完善中，我们正在努力为您提供更好的服务，预计10分钟后恢复,敬请期待。",
 			suspendednote:
 				"撤包版本存在极大可能性使得您的设备死机、重启、变砖，请不要轻易尝试，也不要轻易因为别人安装后正常的情况选择安装，因此带来的问题，我站不负任何责任",
+			search: "搜索",
 		},
 		en: {
 			home: "Home",
@@ -225,6 +226,7 @@ export default defineI18nConfig(() => ({
 				"We are improving our website for better experience, please wait for a while,we will come back in 10 minutes time.",
 			suspendednote:
 				"Suspended ROMs may affect your device to be end up in boot loop or bricked, so don't try it with ease and becuase of some one is using that version is fine , any problem caused by it is under your choice of act and is your responsibility, and we are not responsible for it",
+			search: "Search",
 		},
 	},
 }));

@@ -18,6 +18,14 @@
             <v-icon icon="mdi-translate" class="text-tab_text"></v-icon>
             <span class="text-capitalize text-tab_text">{{ $t('lang') }}</span>
           </v-tab></NuxtLink>
+        <a :href="'/' + locale + '/dev'" class="text-tab_text"><v-tab value="totop">
+            <v-icon icon="mdi-dev-to" class="text-tab_text"></v-icon>
+            <span class="text-capitalize text-tab_text">{{ $t('dev') }}</span>
+          </v-tab></a>
+        <a href="/search.html" class="text-tab_text"><v-tab value="totop">
+            <v-icon icon="mdi-magnify" class="text-tab_text"></v-icon>
+            <span class="text-capitalize text-tab_text">{{ $t('search') }}</span>
+          </v-tab></a>
         <a href="#top" class="text-tab_text"><v-tab value="totop">
             <v-icon icon="mdi-arrow-up" class="text-tab_text"></v-icon>
             <span class="text-capitalize text-tab_text">{{ $t('top') }}</span>
@@ -48,7 +56,18 @@
             <v-list-item-title v-text="item[locale]" class="text-tab_text"></v-list-item-title>
           </v-list-item>
         </a>
-
+        <a class="text-capitalize NavLinks" :href="'/' + locale + '/dev'"><v-list-item value="dev">
+            <template v-slot:prepend>
+              <v-icon icon="mdi-dev-to" class="text-tab_text"></v-icon>
+            </template>
+            <v-list-item-title class="text-tab_text">{{ $t('dev') }}</v-list-item-title>
+          </v-list-item></a>
+        <a class="text-capitalize NavLinks" href="/search.html"><v-list-item value="search">
+            <template v-slot:prepend>
+              <v-icon icon="mdi-magnify" class="text-tab_text"></v-icon>
+            </template>
+            <v-list-item-title class="text-tab_text">{{ $t('search') }}</v-list-item-title>
+          </v-list-item></a>
         <a class="text-capitalize NavLinks" v-for="locale in availableLocales" :key="locale['code']" :href="switchLocalePath(locale['code'])"><v-list-item value="translate">
             <template v-slot:prepend>
               <v-icon icon="mdi-translate" class="text-tab_text"></v-icon>
@@ -74,7 +93,6 @@ export default {
     return {
       items: [
         { zh: '首页', en: 'Home', path: '', icon: 'mdi-home' },
-        { zh: '开发版', en: 'DEV', path: 'dev', icon: 'mdi-dev-to' },
         { zh: '机型列表', en: 'Devices', path: 'devices', icon: 'mdi-devices' },
         { zh: '源码', en: 'Source', path: 'source', icon: 'mdi-code-json' },
         { zh: '站点日志', en: 'Sitelog', path: 'sitelog', icon: 'mdi-update' },
