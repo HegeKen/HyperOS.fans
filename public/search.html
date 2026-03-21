@@ -2,929 +2,1461 @@
 <html lang="zh-CN">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>小米ROM版本查询 - By Xiaomi miclaw</title>
-	<style>
-		* {
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-		}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#667eea">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>小米ROM版本查询 - By Xiaomi miclaw</title>
+  <style>
+    :root {
+      --primary: #667eea;
+      --primary-dark: #764ba2;
+      --hyperos: #2655ff;
+      --miui: #ff6900;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      --bg: #f5f7fa;
+      --card: #ffffff;
+      --text: #1f2937;
+      --text-secondary: #6b7280;
+      --border: #e5e7eb;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --radius: 12px;
+      --radius-lg: 16px;
+    }
 
-		body {
-			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-			min-height: 100vh;
-			padding: 20px;
-		}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-		.container {
-			max-width: 1200px;
-			margin: 0 auto;
-		}
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
-		header {
-			text-align: center;
-			color: white;
-			margin-bottom: 30px;
-		}
+    body {
+      font-family: MiSans, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      min-height: 100vh;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    }
 
-		header h1 {
-			font-size: 2.5rem;
-			margin-bottom: 10px;
-			text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-		}
+    .app-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px;
+    }
 
-		header p {
-			font-size: 1.1rem;
-			opacity: 0.9;
-		}
+    /* Header */
+    .header {
+      text-align: center;
+      color: white;
+      padding: 24px 16px;
+      margin-bottom: 8px;
+    }
 
-		.search-box {
-			background: white;
-			border-radius: 20px;
-			padding: 30px;
-			box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-			margin-bottom: 30px;
-		}
+    .header h1 {
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
 
-		.search-container {
-			display: flex;
-			gap: 15px;
-			flex-wrap: wrap;
-		}
+    .header p {
+      font-size: clamp(0.875rem, 2.5vw, 1.1rem);
+      opacity: 0.9;
+      max-width: 500px;
+      margin: 0 auto;
+    }
 
-		.search-input {
-			flex: 1;
-			min-width: 200px;
-			padding: 15px 20px;
-			border: 2px solid #e0e0e0;
-			border-radius: 12px;
-			font-size: 16px;
-			transition: all 0.3s ease;
-		}
+    /* Search Section */
+    .search-section {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-lg);
+    }
 
-		.search-input:focus {
-			outline: none;
-			border-color: #667eea;
-			box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
-		}
+    .search-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
 
-		.filter-select {
-			padding: 15px 20px;
-			border: 2px solid #e0e0e0;
-			border-radius: 12px;
-			font-size: 16px;
-			background: white;
-			cursor: pointer;
-			transition: all 0.3s ease;
-		}
+    @media (min-width: 640px) {
+      .search-grid {
+        grid-template-columns: 1fr auto auto auto;
+      }
+    }
 
-		.filter-select:focus {
-			outline: none;
-			border-color: #667eea;
-		}
+    .search-input-wrapper {
+      position: relative;
+    }
 
-		.search-btn {
-			padding: 15px 40px;
-			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-			color: white;
-			border: none;
-			border-radius: 12px;
-			font-size: 16px;
-			font-weight: 600;
-			cursor: pointer;
-			transition: all 0.3s ease;
-		}
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+    }
 
-		.search-btn:hover {
-			transform: translateY(-2px);
-			box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-		}
+    .search-input {
+      width: 100%;
+      padding: 14px 16px 14px 44px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 16px;
+      transition: all 0.2s ease;
+      background: var(--bg);
+    }
 
-		.stats {
-			display: flex;
-			justify-content: center;
-			gap: 30px;
-			margin-bottom: 30px;
-			flex-wrap: wrap;
-		}
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: white;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
 
-		.stat-card {
-			background: rgba(255, 255, 255, 0.95);
-			padding: 20px 30px;
-			border-radius: 15px;
-			text-align: center;
-			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-		}
+    .filter-select {
+      padding: 14px 36px 14px 16px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 15px;
+      background: var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E") no-repeat right 12px center;
+      cursor: pointer;
+      appearance: none;
+      min-width: 130px;
+      transition: all 0.2s;
+    }
 
-		.stat-number {
-			font-size: 2rem;
-			font-weight: bold;
-			color: #667eea;
-		}
+    .filter-select:focus {
+      outline: none;
+      border-color: var(--primary);
+      background-color: white;
+    }
 
-		.stat-label {
-			color: #666;
-			font-size: 0.9rem;
-			margin-top: 5px;
-		}
+    .search-btn {
+      padding: 14px 28px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
 
-		.results {
-			display: grid;
-			grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-			gap: 20px;
-		}
+    .search-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
 
-		.device-card {
-			background: white;
-			border-radius: 16px;
-			overflow: hidden;
-			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-			transition: all 0.3s ease;
-			cursor: pointer;
-		}
+    .search-btn:active {
+      transform: translateY(0);
+    }
 
-		.device-card:hover {
-			transform: translateY(-5px);
-			box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-		}
+    /* Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
 
-		.device-header {
-			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-			color: white;
-			padding: 20px;
-		}
+    @media (min-width: 640px) {
+      .stats-grid {
+        grid-template-columns: repeat(3, minmax(140px, 180px));
+        justify-content: center;
+      }
+    }
 
-		.device-name {
-			font-size: 1.3rem;
-			font-weight: 600;
-			margin-bottom: 5px;
-		}
+    .stat-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 16px 12px;
+      border-radius: var(--radius);
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s;
+    }
 
-		.device-code {
-			font-size: 0.9rem;
-			opacity: 0.9;
-		}
+    .stat-card:hover {
+      transform: translateY(-2px);
+    }
 
-		.device-body {
-			padding: 20px;
-		}
+    .stat-number {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+    }
 
-		.source-tag {
-			display: inline-block;
-			padding: 4px 12px;
-			border-radius: 20px;
-			font-size: 0.75rem;
-			font-weight: 600;
-			margin-bottom: 15px;
-		}
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      margin-top: 4px;
+      font-weight: 500;
+    }
 
-		.source-hyperos {
-			background: #e8f5e9;
-			color: #2655ff !important;
-		}
+    /* Results */
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+    }
 
-		.source-miui {
-			background: #fff3e0;
-			color: #ff6900 !important;
-		}
+    @media (max-width: 639px) {
+      .results-grid {
+        grid-template-columns: 1fr;
+      }
+    }
 
-		.rom-list {
-			max-height: 200px;
-			overflow-y: auto;
-		}
+    .device-card {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      position: relative;
+    }
 
-		.rom-item {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			padding: 10px 0;
-			border-bottom: 1px solid #f0f0f0;
-		}
+    .device-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
 
-		.rom-item:last-child {
-			border-bottom: none;
-		}
+    .device-card:active {
+      transform: translateY(-2px) scale(0.98);
+    }
 
-		.rom-version {
-			font-weight: 500;
-			color: #333;
-			font-size: 0.9rem;
-		}
+    .device-header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
 
-		.rom-date {
-			color: #888;
-			font-size: 0.8rem;
-		}
+    .device-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 100px;
+      height: 100px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+    }
 
-		.rom-android {
-			background: #f5f5f5;
-			padding: 2px 8px;
-			border-radius: 10px;
-			font-size: 0.75rem;
-			color: #666;
-		}
+    .device-name {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      position: relative;
+      z-index: 1;
+    }
 
-		.loading {
-			text-align: center;
-			padding: 50px;
-			color: white;
-		}
+    .device-code {
+      font-size: 0.875rem;
+      opacity: 0.85;
+      font-family: 'SF Mono', Monaco, monospace;
+      position: relative;
+      z-index: 1;
+    }
 
-		.loading-spinner {
-			width: 50px;
-			height: 50px;
-			border: 4px solid rgba(255, 255, 255, 0.3);
-			border-top-color: white;
-			border-radius: 50%;
-			animation: spin 1s linear infinite;
-			margin: 0 auto 20px;
-		}
+    .device-body {
+      padding: 16px 20px;
+    }
 
-		@keyframes spin {
-			to {
-				transform: rotate(360deg);
-			}
-		}
+    .source-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
 
-		.no-results {
-			text-align: center;
-			padding: 50px;
-			color: white;
-			font-size: 1.2rem;
-		}
+    .source-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
 
-		.modal {
-			display: none;
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background: rgba(0, 0, 0, 0.7);
-			z-index: 1000;
-			overflow-y: auto;
-			padding: 20px;
-		}
+    .source-tag.hyperos {
+      background: #e0e7ff;
+      color: var(--hyperos);
+    }
 
-		.modal.active {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
+    .source-tag.miui {
+      background: #ffedd5;
+      color: var(--miui);
+    }
 
-		.modal-content {
-			background: white;
-			border-radius: 20px;
-			max-width: 800px;
-			width: 100%;
-			max-height: 90vh;
-			overflow-y: auto;
-		}
+    .device-meta {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-		.modal-header {
-			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-			color: white;
-			padding: 25px;
-			border-radius: 20px 20px 0 0;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-		}
+    /* Loading */
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      color: white;
+    }
 
-		.modal-close {
-			background: none;
-			border: none;
-			color: white;
-			font-size: 2rem;
-			cursor: pointer;
-			opacity: 0.8;
-			transition: opacity 0.3s;
-		}
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 16px;
+    }
 
-		.modal-close:hover {
-			opacity: 1;
-		}
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
 
-		.modal-body {
-			padding: 25px;
-		}
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: white;
+    }
 
-		.detail-section {
-			margin-bottom: 25px;
-		}
+    .empty-icon {
+      font-size: 4rem;
+      margin-bottom: 16px;
+      opacity: 0.8;
+    }
 
-		.detail-title {
-			font-size: 1.1rem;
-			font-weight: 600;
-			color: #333;
-			margin-bottom: 15px;
-			padding-bottom: 10px;
-			border-bottom: 2px solid #f0f0f0;
-		}
+    .empty-text {
+      font-size: 1.125rem;
+      opacity: 0.9;
+    }
 
-		.detail-grid {
-			display: grid;
-			grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-			gap: 10px;
-		}
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      padding: 16px;
+      overflow-y: auto;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
 
-		.detail-item {
-			background: #f8f9fa;
-			padding: 12px;
-			border-radius: 10px;
-			text-align: center;
-		}
+    .modal-overlay.active {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      opacity: 1;
+    }
 
-		.detail-label {
-			font-size: 0.8rem;
-			color: #888;
-			margin-bottom: 5px;
-		}
+    .modal-container {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 800px;
+      max-height: calc(100vh - 32px);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transform: scale(0.95) translateY(10px);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      margin-top: env(safe-area-inset-top);
+    }
 
-		.detail-value {
-			font-weight: 600;
-			color: #333;
-		}
+    .modal-overlay.active .modal-container {
+      transform: scale(1) translateY(0);
+    }
 
-		.rom-table {
-			width: 100%;
-			border-collapse: collapse;
-		}
+    .modal-header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      flex-shrink: 0;
+    }
 
-		.rom-table th,
-		.rom-table td {
-			padding: 12px;
-			text-align: left;
-			border-bottom: 1px solid #f0f0f0;
-		}
+    .modal-title-group {
+      flex: 1;
+      min-width: 0;
+    }
 
-		.rom-table th {
-			background: #f8f9fa;
-			font-weight: 600;
-			color: #555;
-		}
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      word-break: break-word;
+    }
 
-		.rom-table tr:hover {
-			background: #f8f9fa;
-		}
+    .modal-subtitle {
+      font-size: 0.875rem;
+      opacity: 0.9;
+      font-family: 'SF Mono', Monaco, monospace;
+    }
 
-		.download-link {
-			color: #667eea;
-			text-decoration: none;
-			font-weight: 500;
-		}
+    .modal-close {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
 
-		.download-link:hover {
-			text-decoration: underline;
-		}
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: rotate(90deg);
+    }
 
-		.detail-branch-group {
-			display: grid;
-			grid-template-columns: 1fr;
-			gap: 0;
-		}
+    .modal-body {
+      padding: 20px 24px;
+      overflow-y: auto;
+      flex: 1;
+    }
 
-		.detail-branch-section {
-			border: 1px solid #f0f0f0;
-			border-radius: 12px;
-			padding: 18px;
-			margin-bottom: 18px;
-			background: #fafbfc;
-		}
+    /* Detail Sections */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
 
-		.detail-branch-section .detail-title {
-			border-bottom: none;
-			margin-bottom: 12px;
-			padding-bottom: 8px;
-		}
+    @media (min-width: 640px) {
+      .info-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      }
+    }
 
-		@media (max-width: 768px) {
-			header h1 {
-				font-size: 1.8rem;
-			}
+    .info-item {
+      background: var(--bg);
+      padding: 14px;
+      border-radius: var(--radius);
+      text-align: center;
+    }
 
-			.search-container {
-				flex-direction: column;
-			}
+    .info-label {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
 
-			.results {
-				grid-template-columns: 1fr;
-			}
+    .info-value {
+      font-weight: 600;
+      color: var(--text);
+      font-size: 0.9375rem;
+    }
 
-			.stats {
-				flex-direction: column;
-				gap: 15px;
-			}
-		}
-	</style>
+    /* Search in Modal */
+    .modal-search {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .modal-search-input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+
+    .modal-search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .modal-search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+    }
+
+    /* Branch Sections */
+    .branch-section {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      margin-bottom: 16px;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    .branch-header {
+      padding: 16px 20px;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .branch-title {
+      font-weight: 600;
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    .branch-source-tags {
+      display: flex;
+      gap: 6px;
+    }
+
+    .rom-subsection {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .rom-subsection:last-child {
+      border-bottom: none;
+    }
+
+    .rom-source-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .rom-source-label.hyperos {
+      color: var(--hyperos);
+    }
+
+    .rom-source-label.miui {
+      color: var(--miui);
+    }
+
+    /* Table */
+    .table-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 0 -4px;
+      padding: 0 4px;
+      border-radius: var(--radius);
+    }
+
+    .rom-table {
+      width: 100%;
+      min-width: 600px;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 0.875rem;
+    }
+
+    .rom-table th,
+    .rom-table td {
+      padding: 12px 10px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .rom-table th {
+      background: white;
+      font-weight: 600;
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .rom-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .rom-table tr:hover td {
+      background: rgba(102, 126, 234, 0.03);
+    }
+
+    .version-cell {
+      font-weight: 500;
+      color: var(--text);
+      font-family: 'MiSans', Monaco, monospace;
+      font-size: 0.8125rem;
+    }
+
+    .android-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      background: #dbeafe;
+      color: #1e40af;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .date-cell {
+      color: var(--text-secondary);
+      font-size: 0.8125rem;
+      white-space: nowrap;
+    }
+
+    .download-btns {
+      display: flex;
+      gap: 8px;
+      flex-wrap: nowrap;
+    }
+
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .download-btn.recovery {
+      background: #e0e7ff;
+      color: var(--hyperos);
+    }
+
+    .download-btn.fastboot {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .download-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(0.95);
+    }
+
+    .download-btn:empty,
+    .download-btn[href=""],
+    .download-btn[href="#"] {
+      display: none;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--text);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      box-shadow: var(--shadow-lg);
+      z-index: 2000;
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(102, 126, 234, 0.3);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(102, 126, 234, 0.5);
+    }
+
+    /* Utility */
+    .hidden {
+      display: none !important;
+    }
+
+    .skeleton {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 4px;
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 200% 0;
+      }
+
+      100% {
+        background-position: -200% 0;
+      }
+    }
+
+    /* Print */
+    @media print {
+      body {
+        background: white;
+      }
+
+      .search-section,
+      .modal-overlay {
+        display: none;
+      }
+
+      .device-card {
+        break-inside: avoid;
+      }
+    }
+  </style>
 </head>
 
 <body>
-	<div class="container">
-		<header>
-			<h1>📱 小米ROM版本查询</h1>
-			<p>融合 HyperOS 与 MIUI 数据源，一站式查询设备ROM信息</p>
-		</header>
+  <div class="app-container">
+    <header class="header">
+      <h1>📱 小米ROM版本查询</h1>
+      <p>融合 HyperOS 与 MIUI 数据源，一站式查询设备ROM信息</p>
+    </header>
 
-		<div class="search-box">
-			<div class="search-container">
-				<input type="text" class="search-input" id="searchInput" placeholder="搜索设备名称或代号...">
-				<select class="filter-select" id="sourceFilter">
-					<option value="all">全部数据源</option>
-					<option value="hyperos">仅HyperOS</option>
-					<option value="miui">仅MIUI</option>
-				</select>
-				<select class="filter-select" id="brandFilter">
-					<option value="all">全部品牌</option>
-					<option value="mi">小米</option>
-					<option value="redmi">Redmi</option>
-					<option value="poco">POCO</option>
-				</select>
-				<button class="search-btn" onclick="searchDevices()">🔍 搜索</button>
-			</div>
-		</div>
+    <section class="search-section">
+      <div class="search-grid">
+        <div class="search-input-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="search-input" id="searchInput" placeholder="搜索设备名称或代号..." autocomplete="off">
+        </div>
+        <select class="filter-select" id="sourceFilter">
+          <option value="all">全部数据源</option>
+          <option value="hyperos">仅HyperOS</option>
+          <option value="miui">仅MIUI</option>
+        </select>
+        <select class="filter-select" id="brandFilter">
+          <option value="all">全部品牌</option>
+          <option value="mi">小米</option>
+          <option value="redmi">Redmi</option>
+          <option value="poco">POCO</option>
+        </select>
+        <button class="search-btn" onclick="app.search()">搜索</button>
+      </div>
+    </section>
 
-		<div class="stats" id="stats">
-			<div class="stat-card">
-				<div class="stat-number" id="totalDevices">-</div>
-				<div class="stat-label">设备总数</div>
-			</div>
-			<div class="stat-card">
-				<div class="stat-number" id="hyperosCount">-</div>
-				<div class="stat-label">HyperOS设备</div>
-			</div>
-			<div class="stat-card">
-				<div class="stat-number" id="miuiCount">-</div>
-				<div class="stat-label">MIUI设备</div>
-			</div>
-		</div>
+    <div class="stats-grid" id="statsContainer">
+      <div class="stat-card">
+        <div class="stat-number" id="totalDevices">-</div>
+        <div class="stat-label">设备总数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="hyperosCount">-</div>
+        <div class="stat-label">HyperOS</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="miuiCount">-</div>
+        <div class="stat-label">MIUI</div>
+      </div>
+    </div>
 
-		<div id="loading" class="loading" style="display: none;">
-			<div class="loading-spinner"></div>
-			<p>正在加载设备数据...</p>
-		</div>
+    <div id="loadingState" class="loading-container">
+      <div class="spinner"></div>
+      <p>正在加载设备数据...</p>
+    </div>
 
-		<div id="noResults" class="no-results" style="display: none;">
-			<p>😕 未找到匹配的设备</p>
-		</div>
+    <div id="emptyState" class="empty-state hidden">
+      <div class="empty-icon">🔍</div>
+      <p class="empty-text">未找到匹配的设备</p>
+    </div>
 
-		<div class="results" id="results"></div>
-	</div>
+    <div class="results-grid" id="resultsContainer"></div>
+  </div>
 
-	<div class="modal" id="deviceModal">
-		<div class="modal-content">
-			<div class="modal-header">
-				<div>
-					<h2 id="modalTitle">设备详情</h2>
-					<p id="modalSubtitle"></p>
-				</div>
-				<button class="modal-close" onclick="closeModal()">×</button>
-			</div>
-			<div class="modal-body" id="modalBody">
-				<!-- 动态内容 -->
-			</div>
-		</div>
-	</div>
+  <div class="modal-overlay" id="deviceModal" onclick="app.closeModal(event)">
+    <div class="modal-container" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h2 class="modal-title" id="modalTitle">设备详情</h2>
+          <p class="modal-subtitle" id="modalSubtitle"></p>
+        </div>
+        <button class="modal-close" onclick="app.closeModal()">×</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <div class="loading-container" style="color: var(--text-secondary);">
+          <div class="spinner" style="border-color: var(--border); border-top-color: var(--primary);"></div>
+          <p>加载详情中...</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-	<script>
-		const API = {
-			hyperos: {
-				list: 'https://data.hyperos.fans/devices.json',
-				detail: 'https://data.hyperos.fans/devices/{code}.json'
-			},
-			miui: {
-				list: 'https://data.miuier.com/data/devices.json',
-				detail: 'https://data.miuier.com/data/devices/{code}.json'
-			}
-		};
+  <div class="toast" id="toast"></div>
 
-		let allDevices = [];
+  <script>
+    const CONFIG = {
+      API: {
+        hyperos: {
+          list: 'https://data.hyperos.fans/devices.json',
+          detail: 'https://data.hyperos.fans/devices/{code}.json'
+        },
+        miui: {
+          list: 'https://data.miuier.com/data/devices.json',
+          detail: 'https://data.miuier.com/data/devices/{code}.json'
+        }
+      },
+      CACHE: {
+        maxAge: 5 * 60 * 1000, // 5分钟
+        key: 'rom_devices_cache'
+      }
+    };
 
-		// 分支名规范化：去掉OS标识、地区前缀，统一"正式版"→"正式版"
-		function normalizeBranchName(name) {
-			if (!name) return '';
-			let n = name;
-			// 去掉OS标识
-			n = n.replace(/小米澎湃\s*(OS)?/g, '');
-			n = n.replace(/MIUI/g, '');
-			n = n.replace(/Xiaomi HyperOS/g, '');
-			n = n.replace(/HyperOS/g, '');
-			n = n.trim();
-			// 去掉地区前缀（需先trim，否则OS去掉后留的空格导致匹配失败）
-			n = n.replace(/^(中国大陆|中国|欧洲|俄罗斯|印度尼西亚|印度|土耳其|国际)/, '');
-			n = n.trim();
-			// 正式版 → 正式版
-			n = n.replace(/正式版$/, '正式版');
-			return n;
-		}
+    class RomQueryApp {
+      constructor() {
+        this.devices = [];
+        this.filteredDevices = [];
+        this.cache = new Map();
+        this.init();
+      }
 
-		// 生成匹配key：region + 规范化分支名
-		function makeBranchKey(region, branchName) {
-			return (region || '') + '_' + normalizeBranchName(branchName);
-		}
+      init() {
+        this.bindEvents();
+        this.loadData();
+      }
 
-		async function init() {
-			showLoading(true);
-			try {
-				const [hyperosDevices, miuiDevices] = await Promise.all([
-					fetchHyperosDevices(),
-					fetchMiuiDevices()
-				]);
+      bindEvents() {
+        // 搜索输入防抖
+        let searchTimeout;
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+          clearTimeout(searchTimeout);
+          searchTimeout = setTimeout(() => this.search(), 300);
+        });
 
-				allDevices = [...hyperosDevices, ...miuiDevices];
-				updateStats();
-				renderDevices(allDevices);
-			} catch (error) {
-				console.error('加载失败:', error);
-				alert('数据加载失败，请刷新页面重试');
-			}
-			showLoading(false);
-		}
+        // 筛选器变更
+        document.getElementById('sourceFilter').addEventListener('change', () => this.search());
+        document.getElementById('brandFilter').addEventListener('change', () => this.search());
 
-		async function fetchHyperosDevices() {
-			const response = await fetch(API.hyperos.list);
-			const data = await response.json();
-			const devices = [];
+        // 回车搜索
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') this.search();
+        });
 
-			for (const brandKey in data) {
-				const brand = data[brandKey];
-				if (brand.devices) {
-					brand.devices.forEach(device => {
-						devices.push({
-							code: device.code,
-							name: device.name.zh || device.name.en,
-							brand: brandKey,
-							source: 'hyperos',
-							image: device.image
-						});
-					});
-				}
-			}
+        // ESC关闭模态框
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') this.closeModal();
+        });
 
-			return devices;
-		}
+        // 模态框滚动锁定
+        const modal = document.getElementById('deviceModal');
+        modal.addEventListener('touchmove', (e) => {
+          if (e.target === modal) e.preventDefault();
+        }, { passive: false });
+      }
 
-		async function fetchMiuiDevices() {
-			const response = await fetch(API.miui.list);
-			const data = await response.json();
-			const devices = [];
+      // 缓存管理
+      getCache(key) {
+        const cached = this.cache.get(key);
+        if (cached && Date.now() - cached.time < CONFIG.CACHE.maxAge) {
+          return cached.data;
+        }
+        return null;
+      }
 
-			for (const brandKey in data) {
-				if (Array.isArray(data[brandKey])) {
-					data[brandKey].forEach(device => {
-						devices.push({
-							code: device.code,
-							name: device['zh-cn'] || device['en-us'],
-							brand: brandKey,
-							source: 'miui'
-						});
-					});
-				}
-			}
+      setCache(key, data) {
+        this.cache.set(key, { data, time: Date.now() });
+      }
 
-			return devices;
-		}
+      async fetchWithCache(url, cacheKey) {
+        const cached = this.getCache(cacheKey);
+        if (cached) return cached;
 
-		function updateStats() {
-			const hyperosCount = allDevices.filter(d => d.source === 'hyperos').length;
-			const miuiCount = allDevices.filter(d => d.source === 'miui').length;
-			const uniqueCodes = new Set(allDevices.map(d => d.code));
+        try {
+          const response = await fetch(url);
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          const data = await response.json();
+          this.setCache(cacheKey, data);
+          return data;
+        } catch (error) {
+          console.error(`Fetch error for ${url}:`, error);
+          throw error;
+        }
+      }
 
-			document.getElementById('totalDevices').textContent = uniqueCodes.size;
-			document.getElementById('hyperosCount').textContent = hyperosCount;
-			document.getElementById('miuiCount').textContent = miuiCount;
-		}
+      async loadData() {
+        try {
+          const [hyperosData, miuiData] = await Promise.all([
+            this.fetchWithCache(CONFIG.API.hyperos.list, 'hyperos_list'),
+            this.fetchWithCache(CONFIG.API.miui.list, 'miui_list')
+          ]);
 
-		function searchDevices() {
-			const keyword = document.getElementById('searchInput').value.toLowerCase();
-			const source = document.getElementById('sourceFilter').value;
-			const brand = document.getElementById('brandFilter').value;
+          this.devices = this.mergeDevices(
+            this.parseHyperosDevices(hyperosData),
+            this.parseMiuiDevices(miuiData)
+          );
 
-			let filtered = allDevices;
+          this.filteredDevices = [...this.devices];
+          this.updateStats();
+          this.renderDevices();
+          this.hideLoading();
+        } catch (error) {
+          this.showError('数据加载失败，请刷新页面重试');
+          console.error('Init error:', error);
+        }
+      }
 
-			if (keyword) {
-				filtered = filtered.filter(d =>
-					d.name.toLowerCase().includes(keyword) ||
-					d.code.toLowerCase().includes(keyword)
-				);
-			}
+      parseHyperosDevices(data) {
+        const devices = [];
+        for (const brandKey in data) {
+          const brand = data[brandKey];
+          if (brand.devices) {
+            brand.devices.forEach(device => {
+              devices.push({
+                code: device.code,
+                name: device.name?.zh || device.name?.en || device.code,
+                brand: brandKey,
+                source: 'hyperos',
+                image: device.image,
+                _raw: device
+              });
+            });
+          }
+        }
+        return devices;
+      }
 
-			if (source !== 'all') {
-				filtered = filtered.filter(d => d.source === source);
-			}
+      parseMiuiDevices(data) {
+        const devices = [];
+        for (const brandKey in data) {
+          if (Array.isArray(data[brandKey])) {
+            data[brandKey].forEach(device => {
+              devices.push({
+                code: device.code,
+                name: device['zh-cn'] || device['en-us'] || device.code,
+                brand: brandKey,
+                source: 'miui',
+                _raw: device
+              });
+            });
+          }
+        }
+        return devices;
+      }
 
-			if (brand !== 'all') {
-				filtered = filtered.filter(d => d.brand === brand);
-			}
+      mergeDevices(hyperosDevices, miuiDevices) {
+        const deviceMap = new Map();
 
-			renderDevices(filtered);
+        // 合并相同代号的设备
+        [...hyperosDevices, ...miuiDevices].forEach(device => {
+          if (deviceMap.has(device.code)) {
+            const existing = deviceMap.get(device.code);
+            if (!existing.sources.includes(device.source)) {
+              existing.sources.push(device.source);
+            }
+          } else {
+            deviceMap.set(device.code, {
+              ...device,
+              sources: [device.source]
+            });
+          }
+        });
 
-			document.getElementById('noResults').style.display = filtered.length === 0 ? 'block' : 'none';
-		}
+        return Array.from(deviceMap.values()).sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'));
+      }
 
-		function renderDevices(devices) {
-			const container = document.getElementById('results');
-			container.innerHTML = '';
+      updateStats() {
+        const uniqueCodes = new Set(this.devices.map(d => d.code));
+        const hyperosCount = this.devices.filter(d => d.sources.includes('hyperos')).length;
+        const miuiCount = this.devices.filter(d => d.sources.includes('miui')).length;
 
-			// Group by code
-			const grouped = {};
-			devices.forEach(device => {
-				if (!grouped[device.code]) {
-					grouped[device.code] = [];
-				}
-				grouped[device.code].push(device);
-			});
+        this.animateNumber('totalDevices', uniqueCodes.size);
+        this.animateNumber('hyperosCount', hyperosCount);
+        this.animateNumber('miuiCount', miuiCount);
+      }
 
-			for (const code in grouped) {
-				const deviceGroup = grouped[code];
-				const card = document.createElement('div');
-				card.className = 'device-card';
-				card.onclick = () => showDeviceDetail(code);
+      animateNumber(elementId, target) {
+        const element = document.getElementById(elementId);
+        const start = parseInt(element.textContent) || 0;
+        const duration = 600;
+        const startTime = performance.now();
 
-				const mainDevice = deviceGroup[0];
-				const sources = deviceGroup.map(d => d.source);
-				const uniqueSources = [...new Set(sources)];
+        const update = (currentTime) => {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const easeOut = 1 - Math.pow(1 - progress, 3);
+          const current = Math.floor(start + (target - start) * easeOut);
+          element.textContent = current;
+          if (progress < 1) requestAnimationFrame(update);
+        };
 
-				card.innerHTML = `
-                    <div class="device-header">
-                        <div class="device-name">${mainDevice.name}</div>
-                        <div class="device-code">代号: ${code}</div>
-                    </div>
-                    <div class="device-body">
-                        ${uniqueSources.map(s =>
-					`<span class="source-tag source-${s}">${s === 'hyperos' ? 'HyperOS' : 'MIUI'}</span>`
-				).join(' ')}
-                        <p style="color: #888; font-size: 0.9rem; margin-top: 10px;">
-                            点击查看详细ROM版本
-                        </p>
+        requestAnimationFrame(update);
+      }
+
+      search() {
+        const keyword = document.getElementById('searchInput').value.toLowerCase().trim();
+        const source = document.getElementById('sourceFilter').value;
+        const brand = document.getElementById('brandFilter').value;
+
+        this.filteredDevices = this.devices.filter(device => {
+          // 关键词匹配
+          const matchKeyword = !keyword ||
+            device.name.toLowerCase().includes(keyword) ||
+            device.code.toLowerCase().includes(keyword);
+
+          // 数据源筛选
+          const matchSource = source === 'all' || device.sources.includes(source);
+
+          // 品牌筛选
+          const matchBrand = brand === 'all' || device.brand === brand;
+
+          return matchKeyword && matchSource && matchBrand;
+        });
+
+        this.renderDevices();
+        this.toggleEmptyState(this.filteredDevices.length === 0);
+      }
+
+      renderDevices() {
+        const container = document.getElementById('resultsContainer');
+        container.innerHTML = this.filteredDevices.map(device => this.createDeviceCard(device)).join('');
+      }
+
+      createDeviceCard(device) {
+        const sourceTags = device.sources.map(s =>
+          `<span class="source-tag ${s}">${s === 'hyperos' ? '🔵 HyperOS' : '🟠 MIUI'}</span>`
+        ).join('');
+
+        return `
+                    <article class="device-card" onclick="app.showDetail('${device.code}')" role="button" tabindex="0">
+                        <div class="device-header">
+                            <h3 class="device-name">${this.escapeHtml(device.name)}</h3>
+                            <p class="device-code">${device.code}</p>
+                        </div>
+                        <div class="device-body">
+                            <div class="source-tags">${sourceTags}</div>
+                            <p class="device-meta">
+                                <span>点击查看详细ROM版本 →</span>
+                            </p>
+                        </div>
+                    </article>
+                `;
+      }
+
+      async showDetail(code) {
+        const modal = document.getElementById('deviceModal');
+        const modalBody = document.getElementById('modalBody');
+
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+
+        // 重置加载状态
+        modalBody.innerHTML = `
+                    <div class="loading-container" style="color: var(--text-secondary);">
+                        <div class="spinner" style="border-color: var(--border); border-top-color: var(--primary);"></div>
+                        <p>加载详情中...</p>
                     </div>
                 `;
 
-				container.appendChild(card);
-			}
-		}
+        try {
+          const device = this.devices.find(d => d.code === code);
+          if (!device) throw new Error('Device not found');
 
-		async function showDeviceDetail(code) {
-			const modal = document.getElementById('deviceModal');
-			const modalTitle = document.getElementById('modalTitle');
-			const modalSubtitle = document.getElementById('modalSubtitle');
-			const modalBody = document.getElementById('modalBody');
+          document.getElementById('modalTitle').textContent = device.name;
+          document.getElementById('modalSubtitle').textContent = `代号: ${code}`;
 
-			modalBody.innerHTML = '<div class="loading-spinner"></div>';
-			modal.classList.add('active');
+          // 并行获取详情
+          const [hyperosDetail, miuiDetail] = await Promise.all([
+            device.sources.includes('hyperos') ? this.fetchDetail('hyperos', code) : null,
+            device.sources.includes('miui') ? this.fetchDetail('miui', code) : null
+          ]);
 
-			try {
-				const [hyperosData, miuiData] = await Promise.all([
-					fetchDeviceDetail('hyperos', code),
-					fetchDeviceDetail('miui', code)
-				]);
-
-				const device = hyperosData || miuiData;
-				if (!device) {
-					modalBody.innerHTML = '<p style="text-align: center; color: #888;">未找到设备详情</p>';
-					return;
-				}
-
-				modalTitle.textContent = device.name?.zh || device.name || device['zh-cn'] || code;
-				modalSubtitle.textContent = `代号: ${code}`;
-
-				// ===== 用规范化分支名匹配合并 =====
-				const branchMap = {};
-
-				// HyperOS 分支 → 按 key 存入
-				if (hyperosData && hyperosData.branches) {
-					hyperosData.branches.forEach(branch => {
-						const key = makeBranchKey(branch.region, branch.name?.zh || branch.name?.en);
-						if (!branchMap[key]) {
-							branchMap[key] = { hyperosRoms: [], miuiRoms: [], names: [], region: branch.region || '' };
-						}
-						branchMap[key].hyperosRoms = Object.values(branch.roms || {});
-						// 保留原始名（去OS标识后）用于显示
-						const displayName = (branch.name?.zh || branch.name?.en || '').replace(/小米澎湃\s*(OS)?/g, '').replace(/Xiaomi HyperOS/g, '').trim();
-						if (displayName) branchMap[key].names.push(displayName);
-					});
-				}
-
-				// MIUI 分支 → 按 key 合并
-				if (miuiData && miuiData.branches) {
-					miuiData.branches.forEach(branch => {
-						const key = makeBranchKey(branch.region, branch['zh-cn'] || branch['en-us']);
-						if (!branchMap[key]) {
-							branchMap[key] = { hyperosRoms: [], miuiRoms: [], names: [], region: branch.region || '' };
-						}
-						branchMap[key].miuiRoms = branch.links || [];
-						const displayName = (branch['zh-cn'] || branch['en-us'] || '').replace(/MIUI/g, '').trim();
-						if (displayName) branchMap[key].names.push(displayName);
-					});
-				}
-
-				// 渲染
-				const detailSearchId = 'detailSearch_' + code.replace(/[^a-zA-Z0-9]/g, '_');
-				let html = '';
-
-				// 设备基本信息：合并 HyperOS + MIUI 数据
-				const infoItems = [];
-				// 版本号排序：从大到小（通用，适用于 OS/V 前缀版本号）
-				function sortVersions(arr) {
-					return arr.slice().sort((a, b) => {
-						const pa = a.replace(/^[^0-9]*/, '').split('.').map(Number);
-						const pb = b.replace(/^[^0-9]*/, '').split('.').map(Number);
-						for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
-							const diff = (pb[i] || 0) - (pa[i] || 0);
-							if (diff !== 0) return diff;
-						}
-						return 0;
-					});
-				}
-				// HyperOS 支持系统
-				if (hyperosData?.suppports?.length) {
-					infoItems.push({ label: 'HyperOS 版本', value: sortVersions(hyperosData.suppports).join(', ') });
-				}
-				// MIUI 版本
-				if (miuiData?.miui?.length) {
-					infoItems.push({ label: 'MIUI 版本', value: sortVersions(miuiData.miui).join(', ') });
-				}
-				// Android 版本（合并去重）
-				const androidVersions = [
-					...(hyperosData?.android || []),
-					...(miuiData?.android || [])
-				];
-				const uniqueAndroid = [...new Set(androidVersions)];
-				if (uniqueAndroid.length) {
-					infoItems.push({ label: 'Android 版本', value: sortVersions(uniqueAndroid).join(', ') });
-				}
-				if (infoItems.length) {
-					html += `<div class="detail-grid">`;
-					infoItems.forEach(item => {
-						html += `<div class="detail-item">
-                            <div class="detail-label">${item.label}</div>
-                            <div class="detail-value">${item.value}</div>
-                        </div>`;
-					});
-					html += `</div>`;
-				}
-
-				// 搜索框
-				html += `
-                    <div style="margin: 20px 0 10px;">
-                        <input type="text" id="${detailSearchId}" placeholder="🔍 搜索版本号、Android版本..."
-                               style="width: 100%; padding: 10px 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 14px; box-sizing: border-box;"
-                               oninput="filterDetailRoms('${detailSearchId}')">
-                    </div>
-                `;
-
-				// cn排前面，其余按key排序
-				const branchKeys = Object.keys(branchMap).sort((a, b) => {
-					const aCn = branchMap[a].region === 'cn' ? 0 : 1;
-					const bCn = branchMap[b].region === 'cn' ? 0 : 1;
-					return aCn - bCn || a.localeCompare(b);
-				});
-
-				branchKeys.forEach(key => {
-					const branch = branchMap[key];
-					const hasHyperOS = branch.hyperosRoms.length > 0;
-					const hasMiui = branch.miuiRoms.length > 0;
-					if (!hasHyperOS && !hasMiui) return;
-
-					// 合并显示名：去重后用" / "连接
-					const uniqueNames = [...new Set(branch.names.filter(n => n))];
-					let displayName = uniqueNames.join(' / ');
-					// 再做一次最终清理，去掉残留的OS字样
-					displayName = displayName.replace(/小米澎湃\s*(OS)?/g, '').replace(/Xiaomi HyperOS/g, '').replace(/HyperOS/g, '').replace(/MIUI/g, '').trim();
-
-					// 来源标签
-					let sourceTags = '';
-					if (hasHyperOS) sourceTags += '<span class="source-tag source-hyperos">HyperOS</span> ';
-					if (hasMiui) sourceTags += '<span class="source-tag source-miui">MIUI</span>';
-
-					html += `
-                        <div class="detail-section detail-branch-section">
-                            <div class="detail-title">${displayName || '未知分支'} ${sourceTags}</div>
-                            <div class="detail-branch-group">
-                    `;
-
-					// HyperOS ROMs
-					if (hasHyperOS) {
-						html += `
-                            <div style="margin-bottom: ${hasMiui ? '15px' : '0'};">
-                                <div style="font-size:0.85rem; font-weight:600; color:#2e7d32; margin-bottom:8px;" class="source-tag source-hyperos">🔵 HyperOS</div>
-                                <div class="rom-list detail-rom-list" style="max-height: 250px;">
-                                    <table class="rom-table detail-rom-table">
-                                        <thead><tr><th>版本号</th><th>Android</th><th>发布日期</th><th>卡刷包</th><th>线刷包</th></tr></thead>
-                                        <tbody>
-                                            ${branch.hyperosRoms.map(rom => `
-                                                <tr class="detail-rom-row">
-                                                    <td class="rom-version">${rom.os}</td>
-                                                    <td><span class="rom-android">${rom.android}</span></td>
-                                                    <td class="rom-date">${rom.release}</td>
-                                                    <td>${rom.recovery ? `<a href="https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/${rom.os}/${rom.recovery}" class="download-link" target="_blank">📦 Recovery</a>` : ''}</td>
-                                                    <td>${rom.fastboot ? `<a href="https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/${rom.os}/${rom.fastboot}" class="download-link" target="_blank" style="margin-left:8px;">⚡ Fastboot</a>` : ''}</td>
-                                                </tr>
-                                            `).join('')}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        `;
-					}
-
-					// MIUI ROMs
-					if (hasMiui) {
-						html += `
-                            <div>
-                                <div style="font-size:0.85rem; font-weight:600; color:#e65100; margin-bottom:8px;" class="source-tag source-miui">🟠 MIUI</div>
-                                <div class="rom-list detail-rom-list" style="max-height: 250px;">
-                                    <table class="rom-table detail-rom-table">
-                                        <thead><tr><th>版本号</th><th>Android</th><th>发布日期</th><th>卡刷包</th><th>线刷包</th></tr></thead>
-                                        <tbody>
-                                            ${branch.miuiRoms.map(rom => `
-                                                <tr class="detail-rom-row">
-                                                    <td class="rom-version">${rom.miui}</td>
-                                                    <td><span class="rom-android">${rom.android || '-'}</span></td>
-                                                    <td class="rom-date">${rom.release}</td>
-                                                    <td>${rom.recovery ? `<a href="https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/${rom.os}/${rom.recovery}" class="download-link" target="_blank">📦 Recovery</a>` : ''}</td>
-                                                    <td>${rom.fastboot ? `<a href="https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/${rom.os}/${rom.fastboot}" class="download-link" target="_blank" style="margin-left:8px;">⚡ Fastboot</a>` : ''}</td>
-                                                </tr>
-                                            `).join('')}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        `;
-					}
-
-					html += `
-                            </div>
+          modalBody.innerHTML = this.renderDetailContent(hyperosDetail, miuiDetail);
+        } catch (error) {
+          modalBody.innerHTML = `
+                        <div class="empty-state" style="color: var(--text-secondary);">
+                            <div class="empty-icon">⚠️</div>
+                            <p>加载失败，请重试</p>
                         </div>
                     `;
-				});
+          console.error('Detail error:', error);
+        }
+      }
 
-				if (!html) {
-					html = '<p style="text-align: center; color: #888;">暂无ROM数据</p>';
-				}
+      async fetchDetail(source, code) {
+        const url = CONFIG.API[source].detail.replace('{code}', code);
+        const cacheKey = `${source}_${code}`;
+        return this.fetchWithCache(url, cacheKey);
+      }
 
-				modalBody.innerHTML = html;
+      renderDetailContent(hyperosData, miuiData) {
+        const infoItems = [];
 
-			} catch (error) {
-				console.error('加载详情失败:', error);
-				modalBody.innerHTML = '<p style="text-align: center; color: #ff5252;">加载失败，请重试</p>';
-			}
-		}
+        // 提取版本信息
+        if (hyperosData?.suppports?.length) {
+          infoItems.push({
+            label: 'HyperOS 版本',
+            value: this.sortVersions(hyperosData.suppports).join(', ')
+          });
+        }
 
-		// 机型详情内的搜索过滤
-		function filterDetailRoms(inputId) {
-			const input = document.getElementById(inputId);
-			if (!input) return;
-			const keyword = input.value.toLowerCase().trim();
-			const rows = document.querySelectorAll('.detail-rom-row');
-			const sections = document.querySelectorAll('.detail-branch-section');
+        if (miuiData?.miui?.length) {
+          infoItems.push({
+            label: 'MIUI 版本',
+            value: this.sortVersions(miuiData.miui).join(', ')
+          });
+        }
 
-			rows.forEach(row => {
-				const text = row.textContent.toLowerCase();
-				row.style.display = (!keyword || text.includes(keyword)) ? '' : 'none';
-			});
+        // Android版本
+        const androidVersions = [
+          ...(hyperosData?.android || []),
+          ...(miuiData?.android || [])
+        ];
+        const uniqueAndroid = [...new Set(androidVersions)];
+        if (uniqueAndroid.length) {
+          infoItems.push({
+            label: 'Android 版本',
+            value: this.sortVersions(uniqueAndroid).join(', ')
+          });
+        }
 
-			// 隐藏没有任何可见行的分支栏目
-			sections.forEach(section => {
-				const visibleRows = section.querySelectorAll('.detail-rom-row:not([style*="display: none"])');
-				section.style.display = visibleRows.length > 0 ? '' : 'none';
-			});
-		}
+        let html = '';
 
-		async function fetchDeviceDetail(source, code) {
-			try {
-				const url = API[source].detail.replace('{code}', code);
-				const response = await fetch(url);
-				if (response.ok) return await response.json();
-			} catch (e) {
-				console.log(`${source} data not found for ${code}`);
-			}
-			return null;
-		}
+        // 信息网格
+        if (infoItems.length) {
+          html += `<div class="info-grid">`;
+          infoItems.forEach(item => {
+            html += `
+                            <div class="info-item">
+                                <div class="info-label">${item.label}</div>
+                                <div class="info-value">${item.value}</div>
+                            </div>
+                        `;
+          });
+          html += `</div>`;
+        }
 
-		function closeModal() {
-			document.getElementById('deviceModal').classList.remove('active');
-		}
+        // 搜索框
+        html += `
+                    <div class="modal-search">
+                        <span class="modal-search-icon">🔍</span>
+                        <input type="text" class="modal-search-input" id="detailSearch" 
+                               placeholder="搜索版本号、Android版本..." oninput="app.filterDetailRoms()">
+                    </div>
+                `;
 
-		function showLoading(show) {
-			document.getElementById('loading').style.display = show ? 'block' : 'none';
-		}
+        // 合并分支数据
+        const branches = this.mergeBranches(hyperosData?.branches || [], miuiData?.branches || []);
 
-		// Event listeners
-		document.getElementById('searchInput').addEventListener('keyup', (e) => {
-			if (e.key === 'Enter') searchDevices();
-		});
+        if (branches.length === 0) {
+          html += `
+                        <div class="empty-state" style="padding: 40px; color: var(--text-secondary);">
+                            <div class="empty-icon">📦</div>
+                            <p>暂无ROM数据</p>
+                        </div>
+                    `;
+        } else {
+          html += `<div id="branchesContainer">`;
+          branches.forEach(branch => {
+            html += this.renderBranchSection(branch);
+          });
+          html += `</div>`;
+        }
 
-		document.getElementById('deviceModal').addEventListener('click', (e) => {
-			if (e.target.id === 'deviceModal') closeModal();
-		});
+        return html;
+      }
 
-		// Init
-		init();
-	</script>
+      mergeBranches(hyperosBranches, miuiBranches) {
+        const branchMap = new Map();
+
+        // 处理HyperOS分支
+        hyperosBranches.forEach(branch => {
+          const key = this.normalizeBranchKey(branch.region, branch.name?.zh || branch.name?.en);
+          if (!branchMap.has(key)) {
+            branchMap.set(key, {
+              name: this.cleanBranchName(branch.name?.zh || branch.name?.en),
+              region: branch.region,
+              hyperosRoms: [],
+              miuiRoms: []
+            });
+          }
+          const item = branchMap.get(key);
+          item.hyperosRoms = Object.values(branch.roms || {});
+        });
+
+        // 处理MIUI分支
+        miuiBranches.forEach(branch => {
+          const key = this.normalizeBranchKey(branch.region, branch['zh-cn'] || branch['en-us']);
+          if (!branchMap.has(key)) {
+            branchMap.set(key, {
+              name: this.cleanBranchName(branch['zh-cn'] || branch['en-us']),
+              region: branch.region,
+              hyperosRoms: [],
+              miuiRoms: []
+            });
+          }
+          const item = branchMap.get(key);
+          item.miuiRoms = branch.links || [];
+        });
+
+        // 排序：cn优先，然后按名称
+        return Array.from(branchMap.values()).sort((a, b) => {
+          if (a.region === 'cn' && b.region !== 'cn') return -1;
+          if (a.region !== 'cn' && b.region === 'cn') return 1;
+          return a.name.localeCompare(b.name, 'zh-CN');
+        });
+      }
+
+      normalizeBranchKey(region, name) {
+        if (!name) return region || 'unknown';
+        let normalized = name
+          .replace(/小米澎湃\s*(OS)?/gi, '')
+          .replace(/Xiaomi HyperOS/gi, '')
+          .replace(/HyperOS/gi, '')
+          .replace(/MIUI/gi, '')
+          .replace(/^(中国大陆|中国|欧洲|俄罗斯|印度尼西亚|印度|土耳其|国际|台湾|香港)/, '')
+          .trim();
+        return `${region || 'unknown'}_${normalized}`;
+      }
+
+      cleanBranchName(name) {
+        if (!name) return '未知分支';
+        return name
+          .replace(/小米澎湃\s*(OS)?/gi, '')
+          .replace(/Xiaomi HyperOS/gi, '')
+          .replace(/HyperOS/gi, '')
+          .replace(/MIUI/gi, '')
+          .trim() || '未知分支';
+      }
+
+      renderBranchSection(branch) {
+        const hasHyperOS = branch.hyperosRoms.length > 0;
+        const hasMiui = branch.miuiRoms.length > 0;
+
+        let html = `
+                    <div class="branch-section" data-branch-name="${this.escapeHtml(branch.name)}">
+                        <div class="branch-header">
+                            <span class="branch-title">${this.escapeHtml(branch.name)}</span>
+                            <div class="branch-source-tags">
+                                ${hasHyperOS ? '<span class="source-tag hyperos">HyperOS</span>' : ''}
+                                ${hasMiui ? '<span class="source-tag miui">MIUI</span>' : ''}
+                            </div>
+                        </div>
+                `;
+
+        if (hasHyperOS) {
+          html += `
+                        <div class="rom-subsection">
+                            <div class="rom-source-label hyperos">🔵 HyperOS</div>
+                            ${this.renderRomTable(branch.hyperosRoms, 'hyperos')}
+                        </div>
+                    `;
+        }
+
+        if (hasMiui) {
+          html += `
+                        <div class="rom-subsection">
+                            <div class="rom-source-label miui">🟠 MIUI</div>
+                            ${this.renderRomTable(branch.miuiRoms, 'miui')}
+                        </div>
+                    `;
+        }
+
+        html += `</div>`;
+        return html;
+      }
+
+      renderRomTable(roms, source) {
+        if (!roms.length) return '<p style="color: var(--text-secondary); padding: 20px;">暂无数据</p>';
+
+        const sortedRoms = this.sortRomsByVersion(roms, source);
+
+        return `
+                    <div class="table-wrapper">
+                        <table class="rom-table">
+                            <thead>
+                                <tr>
+                                    <th>版本号</th>
+                                    <th>Android</th>
+                                    <th>发布日期</th>
+                                    <th>下载</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${sortedRoms.map(rom => this.renderRomRow(rom, source)).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+      }
+
+      renderRomRow(rom, source) {
+        const version = source === 'hyperos' ? rom.os : rom.miui;
+        const android = rom.android || '-';
+        const date = rom.release || '-';
+
+        // 构建下载链接
+        const recoveryUrl = rom.recovery ?
+          `https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/${rom.os}/${rom.recovery}` : '';
+        const fastbootUrl = rom.fastboot ?
+          `https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/${rom.os}/${rom.fastboot}` : '';
+
+        return `
+                    <tr class="rom-row" data-version="${this.escapeHtml(version)}" data-android="${this.escapeHtml(android)}">
+                        <td class="version-cell">${this.escapeHtml(version)}</td>
+                        <td><span class="android-badge">${this.escapeHtml(android)}</span></td>
+                        <td class="date-cell">${this.escapeHtml(date)}</td>
+                        <td>
+                            <div class="download-btns">
+                                ${recoveryUrl ? `<a href="${recoveryUrl}" class="download-btn recovery" target="_blank" rel="noopener" onclick="event.stopPropagation()">📦 卡刷</a>` : ''}
+                                ${fastbootUrl ? `<a href="${fastbootUrl}" class="download-btn fastboot" target="_blank" rel="noopener" onclick="event.stopPropagation()">⚡ 线刷</a>` : ''}
+                                ${!recoveryUrl && !fastbootUrl ? '<span style="color: var(--text-secondary); font-size: 0.75rem;">暂无链接</span>' : ''}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+      }
+
+      sortRomsByVersion(roms, source) {
+        return [...roms].sort((a, b) => {
+          const va = source === 'hyperos' ? a.os : a.miui;
+          const vb = source === 'hyperos' ? b.os : b.miui;
+          return this.compareVersions(vb, va); // 降序
+        });
+      }
+
+      sortVersions(versions) {
+        return [...versions].sort((a, b) => this.compareVersions(b, a));
+      }
+
+      compareVersions(a, b) {
+        // 提取数字部分进行比较
+        const parseVer = (v) => {
+          const nums = v.replace(/^[^0-9]*/, '').split(/[.\s]/).map(n => parseInt(n) || 0);
+          return nums;
+        };
+
+        const pa = parseVer(a);
+        const pb = parseVer(b);
+
+        for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+          const diff = (pa[i] || 0) - (pb[i] || 0);
+          if (diff !== 0) return diff;
+        }
+        return 0;
+      }
+
+      filterDetailRoms() {
+        const keyword = document.getElementById('detailSearch')?.value.toLowerCase().trim();
+        if (!keyword) {
+          document.querySelectorAll('.rom-row, .branch-section').forEach(el => {
+            el.style.display = '';
+          });
+          return;
+        }
+
+        document.querySelectorAll('.rom-row').forEach(row => {
+          const version = row.dataset.version.toLowerCase();
+          const android = row.dataset.android.toLowerCase();
+          const visible = version.includes(keyword) || android.includes(keyword);
+          row.style.display = visible ? '' : 'none';
+        });
+
+        // 隐藏没有可见行的分支
+        document.querySelectorAll('.branch-section').forEach(section => {
+          const visibleRows = section.querySelectorAll('.rom-row:not([style*="display: none"])');
+          section.style.display = visibleRows.length > 0 ? '' : 'none';
+        });
+      }
+
+      closeModal(event) {
+        if (event && event.target !== event.currentTarget) return;
+
+        const modal = document.getElementById('deviceModal');
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      hideLoading() {
+        document.getElementById('loadingState').classList.add('hidden');
+      }
+
+      toggleEmptyState(show) {
+        document.getElementById('emptyState').classList.toggle('hidden', !show);
+        document.getElementById('resultsContainer').classList.toggle('hidden', show);
+      }
+
+      showError(message) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+      }
+
+      escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+    }
+
+    // 初始化应用
+    const app = new RomQueryApp();
+  </script>
 </body>
 
 </html>
