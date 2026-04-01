@@ -5,35 +5,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#667eea">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Meta tags -->
-  <meta name="baidu-site-verification" content="codeva-AXUJixvVZA">
-  <meta name="msvalidate.01" content="D0A12F85D732BE57318CA28F52500432">
-
-  <!-- Links -->
-  <link rel="icon" type="image/x-icon" href="https://data.hyperos.fans/favicon.ico">
-  <link rel="stylesheet" href="https://cdn-font.hyperos.mi.com/font/css?family=MiSans_VF:VF:Chinese_Simplify,Latin&display=swap">
-  <link rel="apple-touch-icon-precomposed" sizes="150x150" href="/apple-touch-icon.png">
   <title>小米ROM版本查询 - By Xiaomi miclaw & Kimi</title>
+  <link rel="icon" type="image/x-icon" href="https://data.hyperos.fans/favicon.ico">
   <style>
     :root {
       --primary: #667eea;
       --primary-dark: #764ba2;
       --hyperos: #2655ff;
       --miui: #ff6900;
-      --success: #10b981;
-      --warning: #f59e0b;
-      --error: #ef4444;
       --bg: #f5f7fa;
       --card: #ffffff;
       --text: #1f2937;
       --text-secondary: #6b7280;
       --border: #e5e7eb;
-      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
       --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
       --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
       --radius: 12px;
@@ -50,17 +34,16 @@
     html {
       scroll-behavior: smooth;
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
 
     body {
-      font-family: MiSans, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
       background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
       min-height: 100vh;
       padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
     }
 
-    .app-container {
+    .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 16px;
@@ -89,7 +72,7 @@
     }
 
     /* Search Section */
-    .search-section {
+    .search-card {
       background: var(--card);
       border-radius: var(--radius-lg);
       padding: 20px;
@@ -109,17 +92,16 @@
       }
     }
 
-    .search-input-wrapper {
+    .input-wrap {
       position: relative;
     }
 
-    .search-icon {
+    .input-icon {
       position: absolute;
       left: 14px;
       top: 50%;
       transform: translateY(-50%);
       color: var(--text-secondary);
-      font-size: 1.1rem;
     }
 
     .search-input {
@@ -128,7 +110,7 @@
       border: 2px solid var(--border);
       border-radius: var(--radius);
       font-size: 16px;
-      transition: all 0.2s ease;
+      transition: all 0.2s;
       background: var(--bg);
     }
 
@@ -139,7 +121,7 @@
       box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
     }
 
-    .filter-select {
+    .select {
       padding: 14px 36px 14px 16px;
       border: 2px solid var(--border);
       border-radius: var(--radius);
@@ -148,16 +130,14 @@
       cursor: pointer;
       appearance: none;
       min-width: 130px;
-      transition: all 0.2s;
     }
 
-    .filter-select:focus {
+    .select:focus {
       outline: none;
       border-color: var(--primary);
-      background-color: white;
     }
 
-    .search-btn {
+    .btn {
       padding: 14px 28px;
       background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
       color: white;
@@ -174,31 +154,31 @@
       white-space: nowrap;
     }
 
-    .search-btn:hover {
+    .btn:hover {
       transform: translateY(-1px);
       box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
     }
 
-    .search-btn:active {
+    .btn:active {
       transform: translateY(0);
     }
 
     /* Stats */
-    .stats-grid {
+    .stats {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 12px;
       margin-bottom: 20px;
+      justify-content: center;
     }
 
     @media (min-width: 640px) {
-      .stats-grid {
+      .stats {
         grid-template-columns: repeat(3, minmax(140px, 180px));
-        justify-content: center;
       }
     }
 
-    .stat-card {
+    .stat {
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(10px);
       padding: 16px 12px;
@@ -208,18 +188,17 @@
       transition: transform 0.2s;
     }
 
-    .stat-card:hover {
+    .stat:hover {
       transform: translateY(-2px);
     }
 
-    .stat-number {
+    .stat-value {
       font-size: clamp(1.5rem, 4vw, 2rem);
       font-weight: 700;
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      line-height: 1.2;
     }
 
     .stat-label {
@@ -230,34 +209,33 @@
     }
 
     /* Results */
-    .results-grid {
+    .results {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 16px;
     }
 
     @media (max-width: 639px) {
-      .results-grid {
+      .results {
         grid-template-columns: 1fr;
       }
     }
 
-    .device-card {
+    .device {
       background: var(--card);
       border-radius: var(--radius-lg);
       overflow: hidden;
       box-shadow: var(--shadow);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
-      position: relative;
     }
 
-    .device-card:hover {
+    .device:hover {
       transform: translateY(-4px);
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
     }
 
-    .device-card:active {
+    .device:active {
       transform: translateY(-2px) scale(0.98);
     }
 
@@ -291,7 +269,7 @@
     .device-code {
       font-size: 0.875rem;
       opacity: 0.85;
-      font-family: 'SF Mono', Monaco, monospace;
+      font-family: monospace;
       position: relative;
       z-index: 1;
     }
@@ -300,14 +278,14 @@
       padding: 16px 20px;
     }
 
-    .source-tags {
+    .tags {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
       margin-bottom: 12px;
     }
 
-    .source-tag {
+    .tag {
       display: inline-flex;
       align-items: center;
       gap: 4px;
@@ -317,12 +295,12 @@
       font-weight: 600;
     }
 
-    .source-tag.hyperos {
+    .tag.hyperos {
       background: #e0e7ff;
       color: var(--hyperos);
     }
 
-    .source-tag.miui {
+    .tag.miui {
       background: #ffedd5;
       color: var(--miui);
     }
@@ -335,8 +313,8 @@
       gap: 6px;
     }
 
-    /* Loading */
-    .loading-container {
+    /* States */
+    .loading {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -361,8 +339,7 @@
       }
     }
 
-    /* Empty State */
-    .empty-state {
+    .empty {
       text-align: center;
       padding: 60px 20px;
       color: white;
@@ -374,13 +351,8 @@
       opacity: 0.8;
     }
 
-    .empty-text {
-      font-size: 1.125rem;
-      opacity: 0.9;
-    }
-
     /* Modal */
-    .modal-overlay {
+    .modal {
       display: none;
       position: fixed;
       inset: 0;
@@ -390,17 +362,17 @@
       padding: 16px;
       overflow-y: auto;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.3s;
     }
 
-    .modal-overlay.active {
+    .modal.active {
       display: flex;
       align-items: flex-start;
       justify-content: center;
       opacity: 1;
     }
 
-    .modal-container {
+    .modal-content {
       background: var(--card);
       border-radius: var(--radius-lg);
       width: 100%;
@@ -414,7 +386,7 @@
       margin-top: env(safe-area-inset-top);
     }
 
-    .modal-overlay.active .modal-container {
+    .modal.active .modal-content {
       transform: scale(1) translateY(0);
     }
 
@@ -429,11 +401,6 @@
       flex-shrink: 0;
     }
 
-    .modal-title-group {
-      flex: 1;
-      min-width: 0;
-    }
-
     .modal-title {
       font-size: 1.25rem;
       font-weight: 600;
@@ -444,7 +411,7 @@
     .modal-subtitle {
       font-size: 0.875rem;
       opacity: 0.9;
-      font-family: 'SF Mono', Monaco, monospace;
+      font-family: monospace;
     }
 
     .modal-close {
@@ -474,7 +441,7 @@
       flex: 1;
     }
 
-    /* Detail Sections */
+    /* Info Grid */
     .info-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -508,37 +475,73 @@
       font-size: 0.9375rem;
     }
 
-    /* Search in Modal */
-    .modal-search {
-      position: relative;
+    /* Filter Bar */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
       margin-bottom: 20px;
+      align-items: center;
     }
 
-    .modal-search-input {
-      width: 100%;
-      padding: 12px 16px 12px 44px;
+    .filter-input {
+      flex: 1;
+      min-width: 200px;
+      padding: 12px 16px;
       border: 2px solid var(--border);
       border-radius: var(--radius);
       font-size: 15px;
+    }
+
+    .filter-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .date-filter {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .date-input {
+      padding: 10px 12px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 14px;
+    }
+
+    .date-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .quick-btns {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .quick-btn {
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      cursor: pointer;
       transition: all 0.2s;
     }
 
-    .modal-search-input:focus {
-      outline: none;
+    .quick-btn:hover {
+      background: var(--primary);
+      color: white;
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-    }
-
-    .modal-search-icon {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-secondary);
     }
 
     /* Branch Sections */
-    .branch-section {
+    .branch {
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       margin-bottom: 16px;
@@ -563,21 +566,26 @@
       font-size: 1rem;
     }
 
-    .branch-source-tags {
-      display: flex;
-      gap: 6px;
+    .branch-id {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-left: 8px;
+      font-family: monospace;
+      background: var(--bg);
+      padding: 2px 6px;
+      border-radius: 4px;
     }
 
-    .rom-subsection {
+    .rom-section {
       padding: 16px 20px;
       border-bottom: 1px solid var(--border);
     }
 
-    .rom-subsection:last-child {
+    .rom-section:last-child {
       border-bottom: none;
     }
 
-    .rom-source-label {
+    .rom-label {
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -586,21 +594,20 @@
       margin-bottom: 12px;
     }
 
-    .rom-source-label.hyperos {
+    .rom-label.hyperos {
       color: var(--hyperos);
     }
 
-    .rom-source-label.miui {
+    .rom-label.miui {
       color: var(--miui);
     }
 
     /* Table */
-    .table-wrapper {
+    .table-wrap {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       margin: 0 -4px;
       padding: 0 4px;
-      border-radius: var(--radius);
     }
 
     .rom-table {
@@ -639,14 +646,14 @@
       background: rgba(102, 126, 234, 0.03);
     }
 
-    .version-cell {
+    .version {
       font-weight: 500;
       color: var(--text);
-      font-family: 'MiSans', Monaco, monospace;
+      font-family: monospace;
       font-size: 0.8125rem;
     }
 
-    .android-badge {
+    .android {
       display: inline-flex;
       align-items: center;
       padding: 2px 8px;
@@ -657,19 +664,18 @@
       font-weight: 500;
     }
 
-    .date-cell {
+    .date {
       color: var(--text-secondary);
       font-size: 0.8125rem;
       white-space: nowrap;
     }
 
-    .download-btns {
+    .dl-btns {
       display: flex;
       gap: 8px;
-      flex-wrap: nowrap;
     }
 
-    .download-btn {
+    .dl-btn {
       display: inline-flex;
       align-items: center;
       gap: 4px;
@@ -679,28 +685,38 @@
       font-weight: 500;
       text-decoration: none;
       transition: all 0.2s;
-      white-space: nowrap;
     }
 
-    .download-btn.recovery {
+    .dl-btn.recovery {
       background: #e0e7ff;
       color: var(--hyperos);
     }
 
-    .download-btn.fastboot {
+    .dl-btn.fastboot {
       background: #fef3c7;
       color: #92400e;
     }
 
-    .download-btn:hover {
+    .dl-btn:hover {
       transform: translateY(-1px);
       filter: brightness(0.95);
     }
 
-    .download-btn:empty,
-    .download-btn[href=""],
-    .download-btn[href="#"] {
-      display: none;
+    /* No Results */
+    .no-results {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-secondary);
+      background: var(--bg);
+      border-radius: var(--radius-lg);
+      border: 2px dashed var(--border);
+    }
+
+    .no-results-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text);
     }
 
     /* Toast */
@@ -726,6 +742,10 @@
       opacity: 1;
     }
 
+    .hidden {
+      display: none !important;
+    }
+
     /* Scrollbar */
     ::-webkit-scrollbar {
       width: 8px;
@@ -744,163 +764,396 @@
     ::-webkit-scrollbar-thumb:hover {
       background: rgba(102, 126, 234, 0.5);
     }
-
-    /* Utility */
-    .hidden {
-      display: none !important;
-    }
-
-    .skeleton {
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
-      border-radius: 4px;
-    }
-
-    @keyframes shimmer {
-      0% {
-        background-position: 200% 0;
-      }
-
-      100% {
-        background-position: -200% 0;
-      }
-    }
-
-    /* Print */
-    @media print {
-      body {
-        background: white;
-      }
-
-      .search-section,
-      .modal-overlay {
-        display: none;
-      }
-
-      .device-card {
-        break-inside: avoid;
-      }
-    }
-
-    /* Detail page quick date buttons */
-    .quick-date-btn:hover {
-      background: var(--primary) !important;
-      color: white !important;
-      border-color: var(--primary) !important;
-      transform: translateY(-1px);
-    }
-
-    .quick-date-btn:active {
-      transform: translateY(0);
-    }
-
-    .date-clear-btn:hover {
-      opacity: 1 !important;
-      background: var(--error) !important;
-    }
   </style>
 </head>
 
 <body>
-  <div class="app-container">
+  <div class="container">
     <header class="header">
       <h1>📱 小米ROM版本查询</h1>
       <p>融合 HyperOS 与 MIUI 数据源，一站式查询设备ROM信息</p>
     </header>
 
-    <section class="search-section">
+    <section class="search-card">
       <div class="search-grid">
-        <div class="search-input-wrapper">
-          <span class="search-icon">🔍</span>
+        <div class="input-wrap">
+          <span class="input-icon">🔍</span>
           <input type="text" class="search-input" id="searchInput" placeholder="搜索设备名称或代号..." autocomplete="off">
         </div>
-        <select class="filter-select" id="sourceFilter">
+        <select class="select" id="sourceFilter">
           <option value="all">全部数据源</option>
           <option value="hyperos">仅HyperOS</option>
           <option value="miui">仅MIUI</option>
         </select>
-        <select class="filter-select" id="brandFilter">
+        <select class="select" id="brandFilter">
           <option value="all">全部品牌</option>
           <option value="mi">小米</option>
           <option value="redmi">Redmi</option>
           <option value="poco">POCO</option>
         </select>
-        <button class="search-btn" onclick="app.search()">搜索</button>
+        <button class="btn" onclick="app.search()">搜索</button>
       </div>
     </section>
 
-    <div class="stats-grid" id="statsContainer">
-      <div class="stat-card">
-        <div class="stat-number" id="totalDevices">-</div>
+    <div class="stats" id="stats">
+      <div class="stat">
+        <div class="stat-value" id="statTotal">-</div>
         <div class="stat-label">设备总数</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-number" id="hyperosCount">-</div>
+      <div class="stat">
+        <div class="stat-value" id="statHyperOS">-</div>
         <div class="stat-label">HyperOS</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-number" id="miuiCount">-</div>
+      <div class="stat">
+        <div class="stat-value" id="statMIUI">-</div>
         <div class="stat-label">MIUI</div>
       </div>
     </div>
 
-    <div id="loadingState" class="loading-container">
+    <div id="loading" class="loading">
       <div class="spinner"></div>
       <p>正在加载设备数据...</p>
     </div>
 
-    <div id="emptyState" class="empty-state hidden">
+    <div id="empty" class="empty hidden">
       <div class="empty-icon">🔍</div>
-      <p class="empty-text">未找到匹配的设备</p>
+      <p>未找到匹配的设备</p>
     </div>
 
-    <div class="results-grid" id="resultsContainer"></div>
+    <div class="results" id="results"></div>
   </div>
 
-  <div class="modal-overlay" id="deviceModal" onclick="app.closeModal(event)">
-    <div class="modal-container" onclick="event.stopPropagation()">
+  <div class="modal" id="modal" onclick="app.closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
       <div class="modal-header">
-        <div class="modal-title-group">
+        <div>
           <h2 class="modal-title" id="modalTitle">设备详情</h2>
           <p class="modal-subtitle" id="modalSubtitle"></p>
         </div>
         <button class="modal-close" onclick="app.closeModal()">×</button>
       </div>
-      <div class="modal-body" id="modalBody">
-        <div class="loading-container" style="color: var(--text-secondary);">
-          <div class="spinner" style="border-color: var(--border); border-top-color: var(--primary);"></div>
-          <p>加载详情中...</p>
-        </div>
-      </div>
+      <div class="modal-body" id="modalBody"></div>
     </div>
   </div>
 
   <div class="toast" id="toast"></div>
 
   <script>
+    // 配置常量
     const CONFIG = {
       API: {
         hyperos: {
           list: 'https://data.hyperos.fans/devices.json',
-          detail: 'https://data.hyperos.fans/devices/{code}.json'
+          detail: code => `https://data.hyperos.fans/devices/${code}.json`
         },
         miui: {
           list: 'https://data.miuier.com/data/devlist.json',
-          detail: 'https://data.miuier.com/data/devices/{code}.json'
+          detail: code => `https://data.miuier.com/data/devices/${code}.json`
         }
       },
-      CACHE: {
-        maxAge: 5 * 60 * 1000, // 5分钟
-        key: 'rom_devices_cache'
+      CACHE_TTL: 5 * 60 * 1000 // 5分钟
+    };
+
+    // 工具函数
+    const utils = {
+      // 防抖
+      debounce: (fn, delay) => {
+        let timer;
+        return (...args) => {
+          clearTimeout(timer);
+          timer = setTimeout(() => fn(...args), delay);
+        };
+      },
+
+      // 版本号比较（降序）
+      compareVersion: (a, b) => {
+        const parse = v => v.replace(/^[^0-9]*/, '').split(/[.\s]/).map(n => parseInt(n) || 0);
+        const pa = parse(a), pb = parse(b);
+        for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+          const diff = (pa[i] || 0) - (pb[i] || 0);
+          if (diff !== 0) return diff;
+        }
+        return 0;
+      },
+
+      // HTML转义
+      escape: text => {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      },
+
+      // 动画数字
+      animateNumber: (element, target) => {
+        const start = parseInt(element.textContent) || 0;
+        const duration = 600;
+        const startTime = performance.now();
+        const update = current => {
+          const progress = Math.min((current - startTime) / duration, 1);
+          const ease = 1 - Math.pow(1 - progress, 3);
+          element.textContent = Math.floor(start + (target - start) * ease);
+          if (progress < 1) requestAnimationFrame(update);
+        };
+        requestAnimationFrame(update);
       }
     };
 
-    class RomQueryApp {
+    // 数据服务
+    class DataService {
       constructor() {
-        this.devices = [];
-        this.filteredDevices = [];
         this.cache = new Map();
+      }
+
+      async fetch(url, cacheKey) {
+        const cached = this.cache.get(cacheKey);
+        if (cached && Date.now() - cached.time < CONFIG.CACHE_TTL) {
+          return cached.data;
+        }
+
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        this.cache.set(cacheKey, { data, time: Date.now() });
+        return data;
+      }
+
+      // 解析HyperOS设备列表
+      parseHyperOS(data) {
+        const devices = [];
+        for (const brandKey in data) {
+          const brand = data[brandKey];
+          if (brand.devices) {
+            brand.devices.forEach(d => {
+              devices.push({
+                code: d.code,
+                name: d.name?.zh || d.name?.en || d.code,
+                brand: brandKey,
+                source: 'hyperos',
+                raw: d
+              });
+            });
+          }
+        }
+        return devices;
+      }
+
+      // 解析MIUI设备列表
+      parseMIUI(data) {
+        const devices = [];
+        if (!data.brands) return devices;
+
+        data.brands.forEach(brandItem => {
+          const brandKey = brandItem.brand?.toLowerCase() || 'unknown';
+          if (!brandItem.series) return;
+
+          brandItem.series.forEach(series => {
+            if (!series.devices) return;
+            series.devices.forEach(d => {
+              devices.push({
+                code: d.code,
+                name: d['zh-cn'] || d['en-us'] || d.code,
+                brand: brandKey,
+                source: 'miui',
+                raw: d
+              });
+            });
+          });
+        });
+        return devices;
+      }
+
+      // 合并设备（处理马甲机）
+      mergeDevices(hyperosDevices, miuiDevices) {
+        const map = new Map();
+
+        [...hyperosDevices, ...miuiDevices].forEach(d => {
+          if (map.has(d.code)) {
+            const existing = map.get(d.code);
+            if (!existing.sources.includes(d.source)) {
+              existing.sources.push(d.source);
+            }
+            // 记录不同名称作为别名
+            if (d.source === 'miui' && d.name !== existing.name) {
+              if (!existing.aliases) existing.aliases = [];
+              if (!existing.aliases.includes(d.name)) {
+                existing.aliases.push(d.name);
+              }
+            }
+          } else {
+            map.set(d.code, { ...d, sources: [d.source], aliases: [] });
+          }
+        });
+
+        return Array.from(map.values()).sort((a, b) =>
+          a.name.localeCompare(b.name, 'zh-CN')
+        );
+      }
+
+      // 获取详情
+      async getDetail(source, code) {
+        const url = CONFIG.API[source].detail(code);
+        return this.fetch(url, `${source}_${code}`);
+      }
+    }
+
+    // 渲染器
+    class Renderer {
+      static deviceCard(device) {
+        const tags = device.sources.map(s =>
+          `<span class="tag ${s}">${s === 'hyperos' ? '🔵 HyperOS' : '🟠 MIUI'}</span>`
+        ).join('');
+
+        const aliasText = device.aliases?.length
+          ? `<span style="opacity:0.85;font-size:0.9em;"> / ${device.aliases.map(a => utils.escape(a)).join(' / ')}</span>`
+          : '';
+
+        return `
+          <article class="device" onclick="app.showDetail('${device.code}')">
+            <div class="device-header">
+              <h3 class="device-name">${utils.escape(device.name)}${aliasText}</h3>
+              <p class="device-code">${device.code}</p>
+            </div>
+            <div class="device-body">
+              <div class="tags">${tags}</div>
+              <p class="device-meta"><span>点击查看详细ROM版本 →</span></p>
+            </div>
+          </article>
+        `;
+      }
+
+      static infoGrid(device, hyperosData, miuiData) {
+        const items = [];
+
+        if (device.aliases?.length) {
+          items.push({ label: '其他名称', value: device.aliases.join(' / ') });
+        }
+
+        if (hyperosData?.suppports?.length) {
+          items.push({
+            label: 'HyperOS 版本',
+            value: [...hyperosData.suppports].sort(utils.compareVersion).reverse().join(', ')
+          });
+        }
+
+        if (miuiData?.miui?.length) {
+          items.push({
+            label: 'MIUI 版本',
+            value: [...miuiData.miui].sort(utils.compareVersion).reverse().join(', ')
+          });
+        }
+
+        const androids = [...new Set([
+          ...(hyperosData?.android || []),
+          ...(miuiData?.android || [])
+        ])].sort(utils.compareVersion).reverse();
+
+        if (androids.length) {
+          items.push({ label: 'Android 版本', value: androids.join(', ') });
+        }
+
+        if (!items.length) return '';
+
+        return `
+          <div class="info-grid">
+            ${items.map(item => `
+              <div class="info-item">
+                <div class="info-label">${item.label}</div>
+                <div class="info-value">${utils.escape(item.value)}</div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      static romTable(roms, source) {
+        if (!roms?.length) return '<p style="color: var(--text-secondary); padding: 20px;">暂无数据</p>';
+
+        const sorted = [...roms].sort((a, b) => {
+          const va = source === 'hyperos' ? a.os : a.miui;
+          const vb = source === 'hyperos' ? b.os : b.miui;
+          return utils.compareVersion(vb, va);
+        });
+
+        return `
+          <div class="table-wrap">
+            <table class="rom-table">
+              <thead>
+                <tr><th>版本号</th><th>Android</th><th>发布日期</th><th>下载</th></tr>
+              </thead>
+              <tbody>
+                ${sorted.map(rom => {
+          const version = source === 'hyperos' ? rom.os : rom.miui;
+          const android = rom.android || '-';
+          const date = rom.release || '-';
+
+          const recoveryUrl = rom.recovery
+            ? `https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/${rom.os}/${rom.recovery}`
+            : '';
+          const fastbootUrl = rom.fastboot
+            ? `https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/${rom.os}/${rom.fastboot}`
+            : '';
+
+          return `
+                    <tr class="rom-row" data-version="${utils.escape(version)}" data-android="${utils.escape(android)}" data-date="${utils.escape(date)}">
+                      <td class="version">${utils.escape(version)}</td>
+                      <td><span class="android">${utils.escape(android)}</span></td>
+                      <td class="date">${utils.escape(date)}</td>
+                      <td>
+                        <div class="dl-btns">
+                          ${recoveryUrl ? `<a href="${recoveryUrl}" class="dl-btn recovery" target="_blank" rel="noopener" onclick="event.stopPropagation()">📦 卡刷</a>` : ''}
+                          ${fastbootUrl ? `<a href="${fastbootUrl}" class="dl-btn fastboot" target="_blank" rel="noopener" onclick="event.stopPropagation()">⚡ 线刷</a>` : ''}
+                          ${!recoveryUrl && !fastbootUrl ? '<span style="color: var(--text-secondary); font-size: 0.75rem;">暂无链接</span>' : ''}
+                        </div>
+                      </td>
+                    </tr>
+                  `;
+        }).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      static branchSection(branch) {
+        const hasHyperOS = branch.hyperosRoms?.length > 0;
+        const hasMIUI = branch.miuiRoms?.length > 0;
+
+        return `
+          <div class="branch" data-name="${utils.escape(branch.name)}" data-id="${utils.escape(branch.id)}">
+            <div class="branch-header">
+              <div>
+                <span class="branch-title">${utils.escape(branch.name)}</span>
+                ${branch.id ? `<span class="branch-id">${utils.escape(branch.id)}</span>` : ''}
+              </div>
+              <div class="tags">
+                ${hasHyperOS ? '<span class="tag hyperos">HyperOS</span>' : ''}
+                ${hasMIUI ? '<span class="tag miui">MIUI</span>' : ''}
+              </div>
+            </div>
+            ${hasHyperOS ? `
+              <div class="rom-section">
+                <div class="rom-label hyperos">🔵 HyperOS</div>
+                ${this.romTable(branch.hyperosRoms, 'hyperos')}
+              </div>
+            ` : ''}
+            ${hasMIUI ? `
+              <div class="rom-section">
+                <div class="rom-label miui">🟠 MIUI</div>
+                ${this.romTable(branch.miuiRoms, 'miui')}
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }
+    }
+
+    // 主应用
+    class App {
+      constructor() {
+        this.dataService = new DataService();
+        this.devices = [];
+        this.filtered = [];
+        this.currentDevice = null;
         this.init();
       }
 
@@ -910,194 +1163,53 @@
       }
 
       bindEvents() {
-        // 搜索输入防抖
-        let searchTimeout;
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-          clearTimeout(searchTimeout);
-          searchTimeout = setTimeout(() => this.search(), 300);
-        });
-
-        // 筛选器变更
+        // 搜索防抖
+        const debouncedSearch = utils.debounce(() => this.search(), 300);
+        document.getElementById('searchInput').addEventListener('input', debouncedSearch);
         document.getElementById('sourceFilter').addEventListener('change', () => this.search());
         document.getElementById('brandFilter').addEventListener('change', () => this.search());
 
         // 回车搜索
-        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+        document.getElementById('searchInput').addEventListener('keypress', e => {
           if (e.key === 'Enter') this.search();
         });
 
         // ESC关闭模态框
-        document.addEventListener('keydown', (e) => {
-          // ESC关闭模态框
-          if (e.key === 'Escape') {
-            this.closeModal();
-            return;
-          }
+        document.addEventListener('keydown', e => {
+          if (e.key === 'Escape') this.closeModal();
         });
-
-        // 模态框滚动锁定
-        const modal = document.getElementById('deviceModal');
-        modal.addEventListener('touchmove', (e) => {
-          if (e.target === modal) e.preventDefault();
-        }, { passive: false });
-      }
-
-      // 缓存管理
-      getCache(key) {
-        const cached = this.cache.get(key);
-        if (cached && Date.now() - cached.time < CONFIG.CACHE.maxAge) {
-          return cached.data;
-        }
-        return null;
-      }
-
-      setCache(key, data) {
-        this.cache.set(key, { data, time: Date.now() });
-      }
-
-      async fetchWithCache(url, cacheKey) {
-        const cached = this.getCache(cacheKey);
-        if (cached) return cached;
-
-        try {
-          const response = await fetch(url);
-          if (!response.ok) throw new Error(`HTTP ${response.status}`);
-          const data = await response.json();
-          this.setCache(cacheKey, data);
-          return data;
-        } catch (error) {
-          console.error(`Fetch error for ${url}:`, error);
-          throw error;
-        }
       }
 
       async loadData() {
         try {
           const [hyperosData, miuiData] = await Promise.all([
-            this.fetchWithCache(CONFIG.API.hyperos.list, 'hyperos_list'),
-            this.fetchWithCache(CONFIG.API.miui.list, 'miui_list')
+            this.dataService.fetch(CONFIG.API.hyperos.list, 'hyperos_list'),
+            this.dataService.fetch(CONFIG.API.miui.list, 'miui_list')
           ]);
 
-          this.devices = this.mergeDevices(
-            this.parseHyperosDevices(hyperosData),
-            this.parseMiuiDevices(miuiData)
-          );
+          const hyperosDevices = this.dataService.parseHyperOS(hyperosData);
+          const miuiDevices = this.dataService.parseMIUI(miuiData);
 
-          this.filteredDevices = [...this.devices];
+          this.devices = this.dataService.mergeDevices(hyperosDevices, miuiDevices);
+          this.filtered = [...this.devices];
+
           this.updateStats();
           this.renderDevices();
           this.hideLoading();
-        } catch (error) {
-          this.showError('数据加载失败，请刷新页面重试');
-          console.error('Init error:', error);
+        } catch (err) {
+          console.error('Load error:', err);
+          this.showToast('数据加载失败，请刷新页面重试');
         }
-      }
-
-      parseHyperosDevices(data) {
-        const devices = [];
-        for (const brandKey in data) {
-          const brand = data[brandKey];
-          if (brand.devices) {
-            brand.devices.forEach(device => {
-              devices.push({
-                code: device.code,
-                name: device.name?.zh || device.name?.en || device.code,
-                brand: brandKey,
-                source: 'hyperos',
-                image: device.image,
-                _raw: device
-              });
-            });
-          }
-        }
-        return devices;
-      }
-
-      parseMiuiDevices(data) {
-        const devices = [];
-        // 新接口结构: { brands: [{ brand, series: [{ devices: [...] }] }] }
-        if (data.brands && Array.isArray(data.brands)) {
-          data.brands.forEach(brandItem => {
-            const brandKey = brandItem.brand?.toLowerCase() || 'unknown';
-            if (brandItem.series && Array.isArray(brandItem.series)) {
-              brandItem.series.forEach(seriesItem => {
-                if (seriesItem.devices && Array.isArray(seriesItem.devices)) {
-                  seriesItem.devices.forEach(device => {
-                    devices.push({
-                      code: device.code,
-                      name: device['zh-cn'] || device['en-us'] || device.code,
-                      brand: brandKey,
-                      source: 'miui',
-                      _raw: device
-                    });
-                  });
-                }
-              });
-            }
-          });
-        }
-        return devices;
-      }
-
-      mergeDevices(hyperosDevices, miuiDevices) {
-        const deviceMap = new Map();
-
-        // 合并相同代号的设备
-        // 处理MIUI数据中同一代号多个马甲的情况（如alioth=小米11X/RedmiK40/POCOF3）
-        [...hyperosDevices, ...miuiDevices].forEach(device => {
-          if (deviceMap.has(device.code)) {
-            const existing = deviceMap.get(device.code);
-
-            // 合并数据源
-            if (!existing.sources.includes(device.source)) {
-              existing.sources.push(device.source);
-            }
-
-            // 合并马甲名称（如果名称不同且不是重复的）
-            if (device.name !== existing.name && device.source === 'miui') {
-              if (!existing.aliases) existing.aliases = [];
-              if (!existing.aliases.includes(device.name) && device.name !== existing.name) {
-                existing.aliases.push(device.name);
-              }
-            }
-          } else {
-            deviceMap.set(device.code, {
-              ...device,
-              sources: [device.source],
-              aliases: []
-            });
-          }
-        });
-
-        return Array.from(deviceMap.values()).sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'));
       }
 
       updateStats() {
-        const uniqueCodes = new Set(this.devices.map(d => d.code));
-        const hyperosCount = this.devices.filter(d => d.sources.includes('hyperos')).length;
-        const miuiCount = this.devices.filter(d => d.sources.includes('miui')).length;
+        const uniqueCodes = new Set(this.filtered.map(d => d.code));
+        const hyperosCount = this.filtered.filter(d => d.sources.includes('hyperos')).length;
+        const miuiCount = this.filtered.filter(d => d.sources.includes('miui')).length;
 
-        this.animateNumber('totalDevices', uniqueCodes.size);
-        this.animateNumber('hyperosCount', hyperosCount);
-        this.animateNumber('miuiCount', miuiCount);
-      }
-
-      animateNumber(elementId, target) {
-        const element = document.getElementById(elementId);
-        const start = parseInt(element.textContent) || 0;
-        const duration = 600;
-        const startTime = performance.now();
-
-        const update = (currentTime) => {
-          const elapsed = currentTime - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          const easeOut = 1 - Math.pow(1 - progress, 3);
-          const current = Math.floor(start + (target - start) * easeOut);
-          element.textContent = current;
-          if (progress < 1) requestAnimationFrame(update);
-        };
-
-        requestAnimationFrame(update);
+        utils.animateNumber(document.getElementById('statTotal'), uniqueCodes.size);
+        utils.animateNumber(document.getElementById('statHyperOS'), hyperosCount);
+        utils.animateNumber(document.getElementById('statMIUI'), miuiCount);
       }
 
       search() {
@@ -1105,265 +1217,158 @@
         const source = document.getElementById('sourceFilter').value;
         const brand = document.getElementById('brandFilter').value;
 
-        this.filteredDevices = this.devices.filter(device => {
-          // 关键词匹配 - 包括主名称、代号和马甲名称
-          const nameMatch = device.name.toLowerCase().includes(keyword);
-          const codeMatch = device.code.toLowerCase().includes(keyword);
-          const aliasMatch = device.aliases && device.aliases.some(alias =>
-            alias.toLowerCase().includes(keyword)
-          );
+        this.filtered = this.devices.filter(d => {
+          const nameMatch = d.name.toLowerCase().includes(keyword);
+          const codeMatch = d.code.toLowerCase().includes(keyword);
+          const aliasMatch = d.aliases?.some(a => a.toLowerCase().includes(keyword));
           const matchKeyword = !keyword || nameMatch || codeMatch || aliasMatch;
 
-          // 数据源筛选
-          const matchSource = source === 'all' || device.sources.includes(source);
-
-          // 品牌筛选 - 也考虑马甲的品牌
-          const matchBrand = brand === 'all' || device.brand === brand ||
-            (device._raw && device._raw.brand === brand);
+          const matchSource = source === 'all' || d.sources.includes(source);
+          const matchBrand = brand === 'all' || d.brand === brand;
 
           return matchKeyword && matchSource && matchBrand;
         });
 
         this.renderDevices();
-        this.toggleEmptyState(this.filteredDevices.length === 0);
         this.updateStats();
+
+        const empty = this.filtered.length === 0;
+        document.getElementById('empty').classList.toggle('hidden', !empty);
+        document.getElementById('results').classList.toggle('hidden', empty);
       }
 
       renderDevices() {
-        const container = document.getElementById('resultsContainer');
-        container.innerHTML = this.filteredDevices.map(device => this.createDeviceCard(device)).join('');
+        document.getElementById('results').innerHTML = this.filtered
+          .map(d => Renderer.deviceCard(d))
+          .join('');
       }
 
-      createDeviceCard(device) {
-        const sourceTags = device.sources.map(s =>
-          `<span class="source-tag ${s}">${s === 'hyperos' ? '🔵 HyperOS' : '🟠 MIUI'}</span>`
-        ).join('');
-
-        // 如果有马甲名称，显示在主名称后面
-        const aliasText = device.aliases && device.aliases.length > 0
-          ? `<span style="opacity:0.85;font-size:0.9em;"> / ${device.aliases.map(a => this.escapeHtml(a)).join(' / ')}</span>`
-          : '';
-
-        return `
-                    <article class="device-card" onclick="app.showDetail('${device.code}')" role="button" tabindex="0">
-                        <div class="device-header">
-                            <h3 class="device-name">${this.escapeHtml(device.name)}${aliasText}</h3>
-                            <p class="device-code">${device.code}</p>
-                        </div>
-                        <div class="device-body">
-                            <div class="source-tags">${sourceTags}</div>
-                            <p class="device-meta">
-                                <span>点击查看详细ROM版本 →</span>
-                            </p>
-                        </div>
-                    </article>
-                `;
+      hideLoading() {
+        document.getElementById('loading').classList.add('hidden');
       }
 
       async showDetail(code) {
-        const modal = document.getElementById('deviceModal');
-        const modalBody = document.getElementById('modalBody');
+        this.currentDevice = this.devices.find(d => d.code === code);
+        if (!this.currentDevice) return;
+
+        const modal = document.getElementById('modal');
+        const body = document.getElementById('modalBody');
 
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
 
-        // 重置加载状态
-        modalBody.innerHTML = `
-                    <div class="loading-container" style="color: var(--text-secondary);">
-                        <div class="spinner" style="border-color: var(--border); border-top-color: var(--primary);"></div>
-                        <p>加载详情中...</p>
-                    </div>
-                `;
+        document.getElementById('modalTitle').textContent = this.currentDevice.name;
+        document.getElementById('modalSubtitle').textContent = `代号: ${code}`;
+
+        body.innerHTML = `
+          <div class="loading" style="color: var(--text-secondary);">
+            <div class="spinner" style="border-color: var(--border); border-top-color: var(--primary);"></div>
+            <p>加载详情中...</p>
+          </div>
+        `;
 
         try {
-          const device = this.devices.find(d => d.code === code);
-          if (!device) throw new Error('Device not found');
-
-          document.getElementById('modalTitle').textContent = device.name;
-          document.getElementById('modalSubtitle').textContent = `代号: ${code}`;
-
-          // 并行获取详情
           const [hyperosDetail, miuiDetail] = await Promise.all([
-            device.sources.includes('hyperos') ? this.fetchDetail('hyperos', code) : null,
-            device.sources.includes('miui') ? this.fetchDetail('miui', code) : null
+            this.currentDevice.sources.includes('hyperos')
+              ? this.dataService.getDetail('hyperos', code)
+              : null,
+            this.currentDevice.sources.includes('miui')
+              ? this.dataService.getDetail('miui', code)
+              : null
           ]);
 
-          modalBody.innerHTML = this.renderDetailContent(hyperosDetail, miuiDetail, device);
-        } catch (error) {
-          modalBody.innerHTML = `
-                        <div class="empty-state" style="color: var(--text-secondary);">
-                            <div class="empty-icon">⚠️</div>
-                            <p>加载失败，请重试</p>
-                        </div>
-                    `;
-          console.error('Detail error:', error);
+          body.innerHTML = this.renderDetail(hyperosDetail, miuiDetail);
+        } catch (err) {
+          console.error('Detail error:', err);
+          body.innerHTML = `
+            <div class="empty" style="color: var(--text-secondary);">
+              <div class="empty-icon">⚠️</div>
+              <p>加载失败，请重试</p>
+            </div>
+          `;
         }
       }
 
-      async fetchDetail(source, code) {
-        const url = CONFIG.API[source].detail.replace('{code}', code);
-        const cacheKey = `${source}_${code}`;
-        return this.fetchWithCache(url, cacheKey);
-      }
+      renderDetail(hyperosData, miuiData) {
+        // 合并分支
+        const branches = this.mergeBranches(
+          hyperosData?.branches || [],
+          miuiData?.branches || []
+        );
 
-      renderDetailContent(hyperosData, miuiData, device) {
-        const infoItems = [];
+        let html = Renderer.infoGrid(this.currentDevice, hyperosData, miuiData);
 
-        // 添加马甲名称信息（如果有）
-        if (device.aliases && device.aliases.length > 0) {
-          infoItems.push({
-            label: '其他名称',
-            value: device.aliases.join(' / ')
-          });
-        }
-
-        // 提取版本信息
-        if (hyperosData?.suppports?.length) {
-          infoItems.push({
-            label: 'HyperOS 版本',
-            value: this.sortVersions(hyperosData.suppports).join(', ')
-          });
-        }
-
-        if (miuiData?.miui?.length) {
-          infoItems.push({
-            label: 'MIUI 版本',
-            value: this.sortVersions(miuiData.miui).join(', ')
-          });
-        }
-
-        // Android版本
-        const androidVersions = [
-          ...(hyperosData?.android || []),
-          ...(miuiData?.android || [])
-        ];
-        const uniqueAndroid = [...new Set(androidVersions)];
-        if (uniqueAndroid.length) {
-          infoItems.push({
-            label: 'Android 版本',
-            value: this.sortVersions(uniqueAndroid).join(', ')
-          });
-        }
-
-        let html = '';
-
-        // 信息网格
-        if (infoItems.length) {
-          html += `<div class="info-grid">`;
-          infoItems.forEach(item => {
-            html += `
-                            <div class="info-item">
-                                <div class="info-label">${item.label}</div>
-                                <div class="info-value">${item.value}</div>
-                            </div>
-                        `;
-          });
-          html += `</div>`;
-        }
-
-        // 搜索和日期筛选
+        // 筛选栏
         html += `
-                    <!-- 搜索框单独一行 -->
-                    <div class="modal-search" style="margin-bottom: 12px;">
-                        <span class="modal-search-icon">🔍</span>
-                        <input type="text" class="modal-search-input" id="detailSearch" 
-                               placeholder="搜索版本号、Android版本或日期(2024-01-15)..." oninput="app.filterDetailRoms()">
-                    </div>
+          <div class="filter-bar">
+            <input type="text" class="filter-input" id="detailSearch" placeholder="搜索版本号、Android版本或日期..." oninput="app.filterDetail()">
+            <div class="date-filter">
+              <input type="date" class="date-input" id="detailDate" onchange="app.filterDetail()">
+              <div class="quick-btns">
+                <button class="quick-btn" onclick="app.setQuickDate(0)">今天</button>
+                <button class="quick-btn" onclick="app.setQuickDate(-1)">昨天</button>
+                <button class="quick-btn" onclick="app.setQuickDate(-7)">最近7天</button>
+                <button class="quick-btn" onclick="app.setQuickDate(-30)">最近30天</button>
+                <button class="quick-btn" onclick="app.clearDetailFilters()" style="background: #fee2e2; color: #991b1b; border-color: #fecaca;">清除</button>
+              </div>
+            </div>
+          </div>
+        `;
 
-                    <!-- 日期筛选和快速选择按钮一排 -->
-                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
-                        <!-- 日期选择器 -->
-                        <div style="position: relative; display: flex; align-items: center; flex-shrink: 0;">
-                            <input type="date" class="modal-search-input" id="detailDateFilter" 
-                                   style="width: 150px; padding-left: 12px; padding-right: 32px; margin-bottom: 0;" 
-                                   onchange="app.filterDetailRoms()"
-                                   title="筛选发布日期">
-                            <span class="date-clear-btn" onclick="app.clearDetailDateFilter()" title="清除日期" 
-                                  style="position: absolute; right: 8px; width: 18px; height: 18px; background: var(--text-secondary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; opacity: 0.6; transition: opacity 0.2s;">×</span>
-                        </div>
-
-                        <!-- 间隔 -->
-                        <div style="flex: 1; min-width: 20px;"></div>
-
-                        <!-- 快速选择按钮 -->
-                        <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
-                            <button class="quick-date-btn" onclick="app.setDetailQuickDate(0)" style="padding: 6px 14px; border: 1px solid var(--border); background: var(--bg); border-radius: 16px; font-size: 0.8rem; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; white-space: nowrap;">今天</button>
-                            <button class="quick-date-btn" onclick="app.setDetailQuickDate(-1)" style="padding: 6px 14px; border: 1px solid var(--border); background: var(--bg); border-radius: 16px; font-size: 0.8rem; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; white-space: nowrap;">昨天</button>
-                            <button class="quick-date-btn" onclick="app.setDetailQuickDate(-7)" style="padding: 6px 14px; border: 1px solid var(--border); background: var(--bg); border-radius: 16px; font-size: 0.8rem; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; white-space: nowrap;">最近7天</button>
-                            <button class="quick-date-btn" onclick="app.setDetailQuickDate(-30)" style="padding: 6px 14px; border: 1px solid var(--border); background: var(--bg); border-radius: 16px; font-size: 0.8rem; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; white-space: nowrap;">最近30天</button>
-                        </div>
-                    </div>
-                `;
-
-        // 合并分支数据
-        const branches = this.mergeBranches(hyperosData?.branches || [], miuiData?.branches || []);
-
-        if (branches.length === 0) {
+        if (!branches.length) {
           html += `
-                        <div class="empty-state" style="padding: 40px; color: var(--text-secondary);">
-                            <div class="empty-icon">📦</div>
-                            <p>暂无ROM数据</p>
-                        </div>
-                    `;
+            <div class="no-results">
+              <div class="empty-icon">📦</div>
+              <p>暂无ROM数据</p>
+            </div>
+          `;
         } else {
-          html += `<div id="branchesContainer">`;
-          branches.forEach(branch => {
-            html += this.renderBranchSection(branch);
-          });
-          html += `</div>`;
+          html += `<div id="branchesList">${branches.map(b => Renderer.branchSection(b)).join('')}</div>`;
+          html += `<div id="noResults" class="no-results hidden"><div class="empty-icon">🔍</div><p class="no-results-title">未找到匹配的ROM版本</p><p>请尝试调整搜索关键词或日期筛选条件</p></div>`;
         }
 
         return html;
       }
 
       mergeBranches(hyperosBranches, miuiBranches) {
-        const branchMap = new Map();
+        const map = new Map();
 
-        // 处理HyperOS分支 - 使用 idtag 作为合并键
-        hyperosBranches.forEach(branch => {
-          // 使用 idtag 作为合并键，如果没有则使用 region + name 的组合
-          const mergeKey = branch.idtag || `${branch.region}_${this.cleanBranchName(branch.name?.zh || branch.name?.en)}`;
-
-          if (!branchMap.has(mergeKey)) {
-            branchMap.set(mergeKey, {
-              name: this.cleanBranchName(branch.name?.zh || branch.name?.en),
-              region: branch.region,
-              idtag: branch.idtag,
+        // 处理HyperOS分支
+        hyperosBranches.forEach(b => {
+          const key = b.idtag || `${b.region}_${this.cleanBranchName(b.name?.zh || b.name?.en)}`;
+          if (!map.has(key)) {
+            map.set(key, {
+              name: this.cleanBranchName(b.name?.zh || b.name?.en),
+              region: b.region,
+              id: b.idtag,
               hyperosRoms: [],
               miuiRoms: []
             });
           }
-          const item = branchMap.get(mergeKey);
-          item.hyperosRoms = Object.values(branch.roms || {});
+          map.get(key).hyperosRoms = Object.values(b.roms || {});
         });
 
-        // 处理MIUI分支 - 使用 branch 字段作为合并键
-        miuiBranches.forEach(branch => {
-          // 使用 branch 字段作为合并键，如果没有则使用 region + name 的组合
-          const mergeKey = branch.branch || `${branch.region}_${this.cleanBranchName(branch['zh-cn'] || branch['en-us'])}`;
-
-          if (!branchMap.has(mergeKey)) {
-            branchMap.set(mergeKey, {
-              name: this.cleanBranchName(branch['zh-cn'] || branch['en-us']),
-              region: branch.region,
-              idtag: branch.branch, // 将MIUI的branch字段映射为idtag以便统一显示
+        // 处理MIUI分支
+        miuiBranches.forEach(b => {
+          const key = b.branch || `${b.region}_${this.cleanBranchName(b['zh-cn'] || b['en-us'])}`;
+          if (!map.has(key)) {
+            map.set(key, {
+              name: this.cleanBranchName(b['zh-cn'] || b['en-us']),
+              region: b.region,
+              id: b.branch,
               hyperosRoms: [],
               miuiRoms: []
             });
           }
-          const item = branchMap.get(mergeKey);
-          item.miuiRoms = branch.links || [];
+          map.get(key).miuiRoms = b.links || [];
         });
 
-        // 排序：cn优先，然后按名称
-        return Array.from(branchMap.values()).sort((a, b) => {
+        return Array.from(map.values()).sort((a, b) => {
           if (a.region === 'cn' && b.region !== 'cn') return -1;
           if (a.region !== 'cn' && b.region === 'cn') return 1;
           return a.name.localeCompare(b.name, 'zh-CN');
         });
       }
-
-      // normalizeBranchKey 方法已移除，使用 idtag/branch 字段直接合并
 
       cleanBranchName(name) {
         if (!name) return '未知分支';
@@ -1375,265 +1380,99 @@
           .trim() || '未知分支';
       }
 
-      renderBranchSection(branch) {
-        const hasHyperOS = branch.hyperosRoms.length > 0;
-        const hasMiui = branch.miuiRoms.length > 0;
-
-        let html = `
-                    <div class="branch-section" data-branch-name="${this.escapeHtml(branch.name)}" data-branch-id="${this.escapeHtml(branch.idtag || '')}">
-                        <div class="branch-header">
-                            <div>
-                                <span class="branch-title">${this.escapeHtml(branch.name)}</span>
-                                ${branch.idtag ? `<span style="font-size: 0.75rem; color: var(--text-secondary); margin-left: 8px; font-family: monospace; background: var(--bg); padding: 2px 6px; border-radius: 4px;">${this.escapeHtml(branch.idtag)}</span>` : ''}
-                            </div>
-                            <div class="branch-source-tags">
-                                ${hasHyperOS ? '<span class="source-tag hyperos">HyperOS</span>' : ''}
-                                ${hasMiui ? '<span class="source-tag miui">MIUI</span>' : ''}
-                            </div>
-                        </div>
-                `;
-
-        if (hasHyperOS) {
-          html += `
-                        <div class="rom-subsection">
-                            <div class="rom-source-label hyperos">🔵 HyperOS</div>
-                            ${this.renderRomTable(branch.hyperosRoms, 'hyperos')}
-                        </div>
-                    `;
-        }
-
-        if (hasMiui) {
-          html += `
-                        <div class="rom-subsection">
-                            <div class="rom-source-label miui">🟠 MIUI</div>
-                            ${this.renderRomTable(branch.miuiRoms, 'miui')}
-                        </div>
-                    `;
-        }
-
-        html += `</div>`;
-        return html;
-      }
-
-      renderRomTable(roms, source) {
-        if (!roms.length) return '<p style="color: var(--text-secondary); padding: 20px;">暂无数据</p>';
-
-        const sortedRoms = this.sortRomsByVersion(roms, source);
-
-        return `
-                    <div class="table-wrapper">
-                        <table class="rom-table">
-                            <thead>
-                                <tr>
-                                    <th>版本号</th>
-                                    <th>Android</th>
-                                    <th>发布日期</th>
-                                    <th>下载</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${sortedRoms.map(rom => this.renderRomRow(rom, source)).join('')}
-                            </tbody>
-                        </table>
-                    </div>
-                `;
-      }
-
-      renderRomRow(rom, source) {
-        const version = source === 'hyperos' ? rom.os : rom.miui;
-        const android = rom.android || '-';
-        const date = rom.release || '-';
-
-        // 构建下载链接
-        const recoveryUrl = rom.recovery ?
-          `https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/${rom.os}/${rom.recovery}` : '';
-        const fastbootUrl = rom.fastboot ?
-          `https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/${rom.os}/${rom.fastboot}` : '';
-
-        return `
-                    <tr class="rom-row" data-version="${this.escapeHtml(version)}" data-android="${this.escapeHtml(android)}" data-date="${this.escapeHtml(date)}">
-                        <td class="version-cell">${this.escapeHtml(version)}</td>
-                        <td><span class="android-badge">${this.escapeHtml(android)}</span></td>
-                        <td class="date-cell">${this.escapeHtml(date)}</td>
-                        <td>
-                            <div class="download-btns">
-                                ${recoveryUrl ? `<a href="${recoveryUrl}" class="download-btn recovery" target="_blank" rel="noopener" onclick="event.stopPropagation()">📦 卡刷</a>` : ''}
-                                ${fastbootUrl ? `<a href="${fastbootUrl}" class="download-btn fastboot" target="_blank" rel="noopener" onclick="event.stopPropagation()">⚡ 线刷</a>` : ''}
-                                ${!recoveryUrl && !fastbootUrl ? '<span style="color: var(--text-secondary); font-size: 0.75rem;">暂无链接</span>' : ''}
-                            </div>
-                        </td>
-                    </tr>
-                `;
-      }
-
-      sortRomsByVersion(roms, source) {
-        return [...roms].sort((a, b) => {
-          const va = source === 'hyperos' ? a.os : a.miui;
-          const vb = source === 'hyperos' ? b.os : b.miui;
-          return this.compareVersions(vb, va); // 降序
-        });
-      }
-
-      sortVersions(versions) {
-        return [...versions].sort((a, b) => this.compareVersions(b, a));
-      }
-
-      compareVersions(a, b) {
-        // 提取数字部分进行比较
-        const parseVer = (v) => {
-          const nums = v.replace(/^[^0-9]*/, '').split(/[.\s]/).map(n => parseInt(n) || 0);
-          return nums;
-        };
-
-        const pa = parseVer(a);
-        const pb = parseVer(b);
-
-        for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
-          const diff = (pa[i] || 0) - (pb[i] || 0);
-          if (diff !== 0) return diff;
-        }
-        return 0;
-      }
-      // 筛选详情页ROM信息（完善版：支持分支/子分支隐藏和无结果提示）
-      filterDetailRoms() {
+      filterDetail() {
         const searchText = document.getElementById('detailSearch').value.toLowerCase().trim();
-        const dateFilter = document.getElementById('detailDateFilter').value;
-        const dateRange = document.getElementById('detailDateFilter').dataset.range;
+        const dateValue = document.getElementById('detailDate').value;
+        const dateRange = document.getElementById('detailDate').dataset.range;
 
-        // 获取所有分支区块
-        const branchSections = document.querySelectorAll('.branch-section');
-        let hasAnyVisibleRom = false;
+        const branches = document.querySelectorAll('.branch');
+        let hasAnyVisible = false;
 
-        branchSections.forEach(section => {
-          // 获取该分支下所有子分支（HyperOS/MIUI subsection）
-          const subsections = section.querySelectorAll('.rom-subsection');
-          let hasVisibleSubsection = false;
+        branches.forEach(branch => {
+          const sections = branch.querySelectorAll('.rom-section');
+          let hasVisibleSection = false;
 
-          subsections.forEach(subsection => {
-            // 获取该子分支下的所有ROM行
-            const romRows = subsection.querySelectorAll('.rom-row');
-            let hasVisibleRomInSubsection = false;
+          sections.forEach(section => {
+            const rows = section.querySelectorAll('.rom-row');
+            let hasVisibleRow = false;
 
-            romRows.forEach(row => {
-              // 获取行内关键信息
-              const versionText = row.querySelector('.version-cell')?.textContent.toLowerCase() || '';
-              const androidText = row.querySelector('.android-badge')?.textContent.toLowerCase() || '';
-              const dateText = row.querySelector('.date-cell')?.textContent || '';
+            rows.forEach(row => {
+              const version = row.dataset.version.toLowerCase();
+              const android = row.dataset.android.toLowerCase();
+              const date = row.dataset.date;
 
-              // 文本匹配逻辑（版本号/Android版本/日期）
               const textMatch = !searchText ||
-                versionText.includes(searchText) ||
-                androidText.includes(searchText) ||
-                dateText.includes(searchText);
+                version.includes(searchText) ||
+                android.includes(searchText) ||
+                date.includes(searchText);
 
-              // 日期筛选逻辑
               let dateMatch = true;
-              if (dateFilter) {
-                if (dateRange && dateRange.includes('_')) {
-                  // 范围日期筛选（最近N天）
-                  const [startStr, endStr] = dateRange.split('_');
-                  dateMatch = dateText >= startStr && dateText <= endStr;
+              if (dateValue) {
+                if (dateRange?.includes('_')) {
+                  const [start, end] = dateRange.split('_');
+                  dateMatch = date >= start && date <= end;
                 } else {
-                  // 单日筛选
-                  dateMatch = dateText.includes(dateFilter);
+                  dateMatch = date.includes(dateValue);
                 }
               }
 
-              // 显示/隐藏行
-              const shouldShow = textMatch && dateMatch;
-              row.style.display = shouldShow ? '' : 'none';
-
-              if (shouldShow) {
-                hasVisibleRomInSubsection = true;
-              }
+              const visible = textMatch && dateMatch;
+              row.style.display = visible ? '' : 'none';
+              if (visible) hasVisibleRow = true;
             });
 
-            // 如果该子分支下没有可见的ROM行，隐藏整个子分支
-            subsection.style.display = hasVisibleRomInSubsection ? '' : 'none';
-
-            if (hasVisibleRomInSubsection) {
-              hasVisibleSubsection = true;
-              hasAnyVisibleRom = true;
-            }
+            section.style.display = hasVisibleRow ? '' : 'none';
+            if (hasVisibleRow) hasVisibleSection = true;
           });
 
-          // 如果该分支下没有可见的子分支，隐藏整个分支区块
-          section.style.display = hasVisibleSubsection ? '' : 'none';
+          branch.style.display = hasVisibleSection ? '' : 'none';
+          if (hasVisibleSection) hasAnyVisible = true;
         });
 
-        // 处理无结果提示
-        this.toggleNoResultsCard(!hasAnyVisibleRom);
+        document.getElementById('branchesList').classList.toggle('hidden', !hasAnyVisible);
+        document.getElementById('noResults').classList.toggle('hidden', hasAnyVisible);
       }
 
-      // 切换无结果提示卡片的显示
-      toggleNoResultsCard(show) {
-        let noResultsCard = document.getElementById('noResultsCard');
-        const branchesContainer = document.getElementById('branchesContainer');
+      setQuickDate(days) {
+        const input = document.getElementById('detailDate');
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
 
-        if (show) {
-          // 显示无结果提示
-          if (!noResultsCard) {
-            noResultsCard = document.createElement('div');
-            noResultsCard.id = 'noResultsCard';
-            noResultsCard.className = 'empty-state';
-            noResultsCard.style.cssText = 'padding: 60px 20px; color: var(--text-secondary); background: var(--bg); border-radius: var(--radius-lg); margin-top: 20px; border: 2px dashed var(--border);';
-            noResultsCard.innerHTML = `
-              <div class="empty-icon" style="font-size: 4rem; margin-bottom: 16px; opacity: 0.8;">🔍</div>
-              <p style="font-size: 1.125rem; font-weight: 600; margin-bottom: 8px; color: var(--text);">未找到匹配的ROM版本</p>
-              <p style="font-size: 0.875rem; opacity: 0.7; margin-bottom: 20px;">请尝试调整搜索关键词或日期筛选条件</p>
-              <button onclick="app.clearAllDetailFilters()" style="padding: 10px 24px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; border: none; border-radius: var(--radius); font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all 0.2s; box-shadow: var(--shadow);" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 4px 12px rgba(102, 126, 234, 0.4)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';">清除所有筛选</button>
-            `;
-            if (branchesContainer) {
-              branchesContainer.parentNode.insertBefore(noResultsCard, branchesContainer.nextSibling);
-            }
-          }
-          noResultsCard.style.display = 'block';
-          if (branchesContainer) branchesContainer.style.display = 'none';
-        } else {
-          // 隐藏无结果提示，显示分支容器
-          if (noResultsCard) noResultsCard.style.display = 'none';
-          if (branchesContainer) branchesContainer.style.display = 'block';
+        if (days === 0) {
+          // 今天
+          input.value = today.toISOString().split('T')[0];
+          delete input.dataset.range;
+        } else if (days < 0) {
+          // 范围（最近N天）
+          const end = new Date(today);
+          const start = new Date(today);
+          start.setDate(start.getDate() + days);
+          input.value = start.toISOString().split('T')[0];
+          input.dataset.range = `${start.toISOString().split('T')[0]}_${end.toISOString().split('T')[0]}`;
         }
+
+        this.filterDetail();
       }
 
-      // 清除所有详情页筛选条件
-      clearAllDetailFilters() {
+      clearDetailFilters() {
         document.getElementById('detailSearch').value = '';
-        const dateFilter = document.getElementById('detailDateFilter');
-        dateFilter.value = '';
-        dateFilter.style.borderColor = 'var(--border)';
-        delete dateFilter.dataset.range;
+        const dateInput = document.getElementById('detailDate');
+        dateInput.value = '';
+        delete dateInput.dataset.range;
 
-        // 恢复所有显示
-        const branchSections = document.querySelectorAll('.branch-section');
-        branchSections.forEach(section => {
-          section.style.display = '';
-          const romRows = section.querySelectorAll('.rom-row');
-          romRows.forEach(row => row.style.display = '');
-        });
+        document.querySelectorAll('.branch').forEach(b => b.style.display = '');
+        document.querySelectorAll('.rom-section').forEach(s => s.style.display = '');
+        document.querySelectorAll('.rom-row').forEach(r => r.style.display = '');
 
-        // 隐藏无结果提示
-        this.toggleNoResultsCard(false);
+        document.getElementById('branchesList').classList.remove('hidden');
+        document.getElementById('noResults').classList.add('hidden');
 
         this.showToast('已清除所有筛选条件');
       }
 
-      // 清除日期筛选（调用统一筛选方法）
-      clearDetailDateFilter() {
-        const dateFilter = document.getElementById('detailDateFilter');
-        dateFilter.value = '';
-        dateFilter.style.borderColor = 'var(--border)';
-        delete dateFilter.dataset.range;
-        this.filterDetailRoms();
-        this.showToast('已清除日期筛选');
-      }
-
-
       closeModal(event) {
         if (event && event.target !== event.currentTarget) return;
-
-        const modal = document.getElementById('deviceModal');
-        modal.classList.remove('active');
+        document.getElementById('modal').classList.remove('active');
         document.body.style.overflow = '';
       }
 
@@ -1643,39 +1482,10 @@
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 2000);
       }
-
-      hideLoading() {
-        document.getElementById('loadingState').classList.add('hidden');
-      }
-
-      toggleEmptyState(show) {
-        document.getElementById('emptyState').classList.toggle('hidden', !show);
-        document.getElementById('resultsContainer').classList.toggle('hidden', show);
-      }
-
-      showError(message) {
-        const toast = document.getElementById('toast');
-        toast.textContent = message;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 3000);
-      }
-
-      escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-      }
     }
 
-    // 初始化应用
-    const app = new RomQueryApp();
-    var _hmt = _hmt || [];
-    (function () {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?c9e1b96ca1ad298ed068716ea5702f9c";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
+    // 初始化
+    const app = new App();
   </script>
 </body>
 
