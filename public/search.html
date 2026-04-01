@@ -7,6 +7,17 @@
   <meta name="theme-color" content="#667eea">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta tags -->
+  <meta name="baidu-site-verification" content="codeva-AXUJixvVZA">
+  <meta name="msvalidate.01" content="D0A12F85D732BE57318CA28F52500432">
+
+  <!-- Links -->
+  <link rel="icon" type="image/x-icon" href="https://data.hyperos.fans/favicon.ico">
+  <link rel="stylesheet" href="https://cdn-font.hyperos.mi.com/font/css?family=MiSans_VF:VF:Chinese_Simplify,Latin&display=swap">
+  <link rel="apple-touch-icon-precomposed" sizes="150x150" href="/apple-touch-icon.png">
   <title>小米ROM版本查询 - By Xiaomi miclaw</title>
   <style>
     :root {
@@ -1002,16 +1013,28 @@
         const deviceMap = new Map();
 
         // 合并相同代号的设备
+        // 处理MIUI数据中同一代号多个马甲的情况（如alioth=小米11X/RedmiK40/POCOF3）
         [...hyperosDevices, ...miuiDevices].forEach(device => {
           if (deviceMap.has(device.code)) {
             const existing = deviceMap.get(device.code);
+
+            // 合并数据源
             if (!existing.sources.includes(device.source)) {
               existing.sources.push(device.source);
+            }
+
+            // 合并马甲名称（如果名称不同且不是重复的）
+            if (device.name !== existing.name && device.source === 'miui') {
+              if (!existing.aliases) existing.aliases = [];
+              if (!existing.aliases.includes(device.name) && device.name !== existing.name) {
+                existing.aliases.push(device.name);
+              }
             }
           } else {
             deviceMap.set(device.code, {
               ...device,
-              sources: [device.source]
+              sources: [device.source],
+              aliases: []
             });
           }
         });
@@ -1053,16 +1076,20 @@
         const brand = document.getElementById('brandFilter').value;
 
         this.filteredDevices = this.devices.filter(device => {
-          // 关键词匹配
-          const matchKeyword = !keyword ||
-            device.name.toLowerCase().includes(keyword) ||
-            device.code.toLowerCase().includes(keyword);
+          // 关键词匹配 - 包括主名称、代号和马甲名称
+          const nameMatch = device.name.toLowerCase().includes(keyword);
+          const codeMatch = device.code.toLowerCase().includes(keyword);
+          const aliasMatch = device.aliases && device.aliases.some(alias =>
+            alias.toLowerCase().includes(keyword)
+          );
+          const matchKeyword = !keyword || nameMatch || codeMatch || aliasMatch;
 
           // 数据源筛选
           const matchSource = source === 'all' || device.sources.includes(source);
 
-          // 品牌筛选
-          const matchBrand = brand === 'all' || device.brand === brand;
+          // 品牌筛选 - 也考虑马甲的品牌
+          const matchBrand = brand === 'all' || device.brand === brand ||
+            (device._raw && device._raw.brand === brand);
 
           return matchKeyword && matchSource && matchBrand;
         });
@@ -1081,10 +1108,15 @@
           `<span class="source-tag ${s}">${s === 'hyperos' ? '🔵 HyperOS' : '🟠 MIUI'}</span>`
         ).join('');
 
+        // 如果有马甲名称，显示在主名称后面
+        const aliasText = device.aliases && device.aliases.length > 0
+          ? `<span style="opacity:0.85;font-size:0.9em;"> / ${device.aliases.map(a => this.escapeHtml(a)).join(' / ')}</span>`
+          : '';
+
         return `
                     <article class="device-card" onclick="app.showDetail('${device.code}')" role="button" tabindex="0">
                         <div class="device-header">
-                            <h3 class="device-name">${this.escapeHtml(device.name)}</h3>
+                            <h3 class="device-name">${this.escapeHtml(device.name)}${aliasText}</h3>
                             <p class="device-code">${device.code}</p>
                         </div>
                         <div class="device-body">
@@ -1125,7 +1157,7 @@
             device.sources.includes('miui') ? this.fetchDetail('miui', code) : null
           ]);
 
-          modalBody.innerHTML = this.renderDetailContent(hyperosDetail, miuiDetail);
+          modalBody.innerHTML = this.renderDetailContent(hyperosDetail, miuiDetail, device);
         } catch (error) {
           modalBody.innerHTML = `
                         <div class="empty-state" style="color: var(--text-secondary);">
@@ -1143,8 +1175,16 @@
         return this.fetchWithCache(url, cacheKey);
       }
 
-      renderDetailContent(hyperosData, miuiData) {
+      renderDetailContent(hyperosData, miuiData, device) {
         const infoItems = [];
+
+        // 添加马甲名称信息（如果有）
+        if (device.aliases && device.aliases.length > 0) {
+          infoItems.push({
+            label: '其他名称',
+            value: device.aliases.join(' / ')
+          });
+        }
 
         // 提取版本信息
         if (hyperosData?.suppports?.length) {
@@ -1456,6 +1496,13 @@
 
     // 初始化应用
     const app = new RomQueryApp();
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c9e1b96ca1ad298ed068716ea5702f9c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
   </script>
 </body>
 
