@@ -216,6 +216,7 @@
       font-size: clamp(1.5rem, 4vw, 2rem);
       font-weight: 700;
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       line-height: 1.2;
@@ -885,7 +886,7 @@
           detail: 'https://data.hyperos.fans/devices/{code}.json'
         },
         miui: {
-          list: 'https://data.miuier.com/data/devices.json',
+          list: 'https://data.miuier.com/data/devlist.json',
           detail: 'https://data.miuier.com/data/devices/{code}.json'
         }
       },
@@ -1014,18 +1015,26 @@
 
       parseMiuiDevices(data) {
         const devices = [];
-        for (const brandKey in data) {
-          if (Array.isArray(data[brandKey])) {
-            data[brandKey].forEach(device => {
-              devices.push({
-                code: device.code,
-                name: device['zh-cn'] || device['en-us'] || device.code,
-                brand: brandKey,
-                source: 'miui',
-                _raw: device
+        // 新接口结构: { brands: [{ brand, series: [{ devices: [...] }] }] }
+        if (data.brands && Array.isArray(data.brands)) {
+          data.brands.forEach(brandItem => {
+            const brandKey = brandItem.brand?.toLowerCase() || 'unknown';
+            if (brandItem.series && Array.isArray(brandItem.series)) {
+              brandItem.series.forEach(seriesItem => {
+                if (seriesItem.devices && Array.isArray(seriesItem.devices)) {
+                  seriesItem.devices.forEach(device => {
+                    devices.push({
+                      code: device.code,
+                      name: device['zh-cn'] || device['en-us'] || device.code,
+                      brand: brandKey,
+                      source: 'miui',
+                      _raw: device
+                    });
+                  });
+                }
               });
-            });
-          }
+            }
+          });
         }
         return devices;
       }
@@ -1258,7 +1267,7 @@
                     <div class="modal-search" style="margin-bottom: 12px;">
                         <span class="modal-search-icon">🔍</span>
                         <input type="text" class="modal-search-input" id="detailSearch" 
-                               placeholder="搜索版本号、Android版本..." oninput="app.filterDetailRoms()">
+                               placeholder="搜索版本号、Android版本或日期(2024-01-15)..." oninput="app.filterDetailRoms()">
                     </div>
 
                     <!-- 日期筛选和快速选择按钮一排 -->
@@ -1485,89 +1494,140 @@
         }
         return 0;
       }
-
+      // 筛选详情页ROM信息（完善版：支持分支/子分支隐藏和无结果提示）
       filterDetailRoms() {
-        const keyword = document.getElementById('detailSearch')?.value.toLowerCase().trim() || '';
-        const dateFilterEl = document.getElementById('detailDateFilter');
-        const dateFilter = dateFilterEl?.value || '';
-        const dateRange = dateFilterEl?.dataset?.range || '';
+        const searchText = document.getElementById('detailSearch').value.toLowerCase().trim();
+        const dateFilter = document.getElementById('detailDateFilter').value;
+        const dateRange = document.getElementById('detailDateFilter').dataset.range;
 
-        document.querySelectorAll('.rom-row').forEach(row => {
-          const version = row.dataset.version?.toLowerCase() || '';
-          const android = row.dataset.android?.toLowerCase() || '';
+        // 获取所有分支区块
+        const branchSections = document.querySelectorAll('.branch-section');
+        let hasAnyVisibleRom = false;
 
-          // 获取日期单元格的文本内容
-          const dateCell = row.querySelector('.date-cell');
-          const romDate = dateCell ? dateCell.textContent.trim() : '';
+        branchSections.forEach(section => {
+          // 获取该分支下所有子分支（HyperOS/MIUI subsection）
+          const subsections = section.querySelectorAll('.rom-subsection');
+          let hasVisibleSubsection = false;
 
-          // 关键词匹配
-          const matchKeyword = !keyword || version.includes(keyword) || android.includes(keyword);
+          subsections.forEach(subsection => {
+            // 获取该子分支下的所有ROM行
+            const romRows = subsection.querySelectorAll('.rom-row');
+            let hasVisibleRomInSubsection = false;
 
-          // 日期匹配 - 支持单日期或范围
-          let matchDate = true;
-          let isDateMatch = false;
+            romRows.forEach(row => {
+              // 获取行内关键信息
+              const versionText = row.querySelector('.version-cell')?.textContent.toLowerCase() || '';
+              const androidText = row.querySelector('.android-badge')?.textContent.toLowerCase() || '';
+              const dateText = row.querySelector('.date-cell')?.textContent || '';
 
-          if (dateFilter) {
-            if (dateRange) {
-              const [startDate, endDate] = dateRange.split('_');
-              matchDate = romDate >= startDate && romDate <= endDate;
-              isDateMatch = matchDate;
-            } else {
-              matchDate = romDate === dateFilter;
-              isDateMatch = matchDate;
+              // 文本匹配逻辑（版本号/Android版本/日期）
+              const textMatch = !searchText ||
+                versionText.includes(searchText) ||
+                androidText.includes(searchText) ||
+                dateText.includes(searchText);
+
+              // 日期筛选逻辑
+              let dateMatch = true;
+              if (dateFilter) {
+                if (dateRange && dateRange.includes('_')) {
+                  // 范围日期筛选（最近N天）
+                  const [startStr, endStr] = dateRange.split('_');
+                  dateMatch = dateText >= startStr && dateText <= endStr;
+                } else {
+                  // 单日筛选
+                  dateMatch = dateText.includes(dateFilter);
+                }
+              }
+
+              // 显示/隐藏行
+              const shouldShow = textMatch && dateMatch;
+              row.style.display = shouldShow ? '' : 'none';
+
+              if (shouldShow) {
+                hasVisibleRomInSubsection = true;
+              }
+            });
+
+            // 如果该子分支下没有可见的ROM行，隐藏整个子分支
+            subsection.style.display = hasVisibleRomInSubsection ? '' : 'none';
+
+            if (hasVisibleRomInSubsection) {
+              hasVisibleSubsection = true;
+              hasAnyVisibleRom = true;
             }
-          }
+          });
 
-          const visible = matchKeyword && matchDate;
-          row.style.display = visible ? '' : 'none';
-
-          // 高亮匹配的日期行
-          if (isDateMatch && visible) {
-            row.setAttribute('data-date-match', 'true');
-          } else {
-            row.removeAttribute('data-date-match');
-          }
+          // 如果该分支下没有可见的子分支，隐藏整个分支区块
+          section.style.display = hasVisibleSubsection ? '' : 'none';
         });
 
-        // 隐藏没有可见行的分支
-        document.querySelectorAll('.branch-section').forEach(section => {
-          const visibleRows = section.querySelectorAll('.rom-row:not([style*="display: none"])');
-          section.style.display = visibleRows.length > 0 ? '' : 'none';
-        });
+        // 处理无结果提示
+        this.toggleNoResultsCard(!hasAnyVisibleRom);
+      }
 
-        // 显示筛选统计
-        const visibleCount = document.querySelectorAll('.rom-row:not([style*="display: none"])').length;
-        const totalCount = document.querySelectorAll('.rom-row').length;
+      // 切换无结果提示卡片的显示
+      toggleNoResultsCard(show) {
+        let noResultsCard = document.getElementById('noResultsCard');
+        const branchesContainer = document.getElementById('branchesContainer');
 
-        // 更新或创建统计提示
-        let statsEl = document.getElementById('filterStats');
-        if (!statsEl) {
-          statsEl = document.createElement('div');
-          statsEl.id = 'filterStats';
-          statsEl.style.cssText = 'text-align: center; padding: 10px 16px; background: var(--bg); border-radius: var(--radius); color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 16px; border: 1px dashed var(--border);';
-          const container = document.getElementById('branchesContainer');
-          if (container) {
-            container.parentNode.insertBefore(statsEl, container);
-          }
-        }
-
-        if (keyword || dateFilter) {
-          const filterDesc = [];
-          if (keyword) filterDesc.push(`🔍 "${keyword}"`);
-          if (dateFilter) {
-            if (dateRange) {
-              const [start, end] = dateRange.split('_');
-              filterDesc.push(`📅 ${start} ~ ${end}`);
-            } else {
-              filterDesc.push(`📅 ${dateFilter}`);
+        if (show) {
+          // 显示无结果提示
+          if (!noResultsCard) {
+            noResultsCard = document.createElement('div');
+            noResultsCard.id = 'noResultsCard';
+            noResultsCard.className = 'empty-state';
+            noResultsCard.style.cssText = 'padding: 60px 20px; color: var(--text-secondary); background: var(--bg); border-radius: var(--radius-lg); margin-top: 20px; border: 2px dashed var(--border);';
+            noResultsCard.innerHTML = `
+              <div class="empty-icon" style="font-size: 4rem; margin-bottom: 16px; opacity: 0.8;">🔍</div>
+              <p style="font-size: 1.125rem; font-weight: 600; margin-bottom: 8px; color: var(--text);">未找到匹配的ROM版本</p>
+              <p style="font-size: 0.875rem; opacity: 0.7; margin-bottom: 20px;">请尝试调整搜索关键词或日期筛选条件</p>
+              <button onclick="app.clearAllDetailFilters()" style="padding: 10px 24px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; border: none; border-radius: var(--radius); font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all 0.2s; box-shadow: var(--shadow);" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 4px 12px rgba(102, 126, 234, 0.4)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';">清除所有筛选</button>
+            `;
+            if (branchesContainer) {
+              branchesContainer.parentNode.insertBefore(noResultsCard, branchesContainer.nextSibling);
             }
           }
-          statsEl.innerHTML = `<strong>${filterDesc.join(' + ')}</strong><br><span style="font-size: 0.8rem; opacity: 0.8;">显示 ${visibleCount} / ${totalCount} 个版本</span>`;
-          statsEl.style.display = 'block';
+          noResultsCard.style.display = 'block';
+          if (branchesContainer) branchesContainer.style.display = 'none';
         } else {
-          statsEl.style.display = 'none';
+          // 隐藏无结果提示，显示分支容器
+          if (noResultsCard) noResultsCard.style.display = 'none';
+          if (branchesContainer) branchesContainer.style.display = 'block';
         }
       }
+
+      // 清除所有详情页筛选条件
+      clearAllDetailFilters() {
+        document.getElementById('detailSearch').value = '';
+        const dateFilter = document.getElementById('detailDateFilter');
+        dateFilter.value = '';
+        dateFilter.style.borderColor = 'var(--border)';
+        delete dateFilter.dataset.range;
+
+        // 恢复所有显示
+        const branchSections = document.querySelectorAll('.branch-section');
+        branchSections.forEach(section => {
+          section.style.display = '';
+          const romRows = section.querySelectorAll('.rom-row');
+          romRows.forEach(row => row.style.display = '');
+        });
+
+        // 隐藏无结果提示
+        this.toggleNoResultsCard(false);
+
+        this.showToast('已清除所有筛选条件');
+      }
+
+      // 清除日期筛选（调用统一筛选方法）
+      clearDetailDateFilter() {
+        const dateFilter = document.getElementById('detailDateFilter');
+        dateFilter.value = '';
+        dateFilter.style.borderColor = 'var(--border)';
+        delete dateFilter.dataset.range;
+        this.filterDetailRoms();
+        this.showToast('已清除日期筛选');
+      }
+
 
       closeModal(event) {
         if (event && event.target !== event.currentTarget) return;
@@ -1575,68 +1635,6 @@
         const modal = document.getElementById('deviceModal');
         modal.classList.remove('active');
         document.body.style.overflow = '';
-      }
-
-
-
-      // 显示提示
-
-
-      // 详情页快速设置日期筛选
-      setDetailQuickDate(daysOffset) {
-        const dateFilter = document.getElementById('detailDateFilter');
-
-        if (daysOffset === -7 || daysOffset === -30) {
-          // 最近N天范围
-          const days = Math.abs(daysOffset);
-          const endDate = new Date();
-          const startDate = new Date();
-          startDate.setDate(startDate.getDate() - days);
-
-          const formatDate = (d) => {
-            const year = d.getFullYear();
-            const month = String(d.getMonth() + 1).padStart(2, '0');
-            const day = String(d.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
-          };
-
-          const startStr = formatDate(startDate);
-          const endStr = formatDate(endDate);
-
-          dateFilter.dataset.range = `${startStr}_${endStr}`;
-          dateFilter.value = startStr;
-          dateFilter.style.borderColor = 'var(--primary)';
-
-          this.filterDetailRoms();
-          this.showToast(`已筛选最近${days}天 (${startStr} 至 ${endStr}) 发布的版本`);
-        } else {
-          // 单日
-          const date = new Date();
-          date.setDate(date.getDate() + daysOffset);
-
-          const year = date.getFullYear();
-          const month = String(date.getMonth() + 1).padStart(2, '0');
-          const day = String(date.getDate()).padStart(2, '0');
-          const dateStr = `${year}-${month}-${day}`;
-
-          delete dateFilter.dataset.range;
-          dateFilter.value = dateStr;
-          dateFilter.style.borderColor = 'var(--primary)';
-
-          this.filterDetailRoms();
-          this.showToast(`已筛选 ${dateStr} 发布的版本`);
-        }
-      }
-
-      // 详情页清除日期筛选
-      clearDetailDateFilter() {
-        const dateFilter = document.getElementById('detailDateFilter');
-        dateFilter.value = '';
-        dateFilter.style.borderColor = 'var(--border)';
-        delete dateFilter.dataset.range;
-
-        this.filterDetailRoms();
-        this.showToast('已清除日期筛选');
       }
 
       showToast(message) {
