@@ -18,7 +18,7 @@
   <link rel="icon" type="image/x-icon" href="https://data.hyperos.fans/favicon.ico">
   <link rel="stylesheet" href="https://cdn-font.hyperos.mi.com/font/css?family=MiSans_VF:VF:Chinese_Simplify,Latin&display=swap">
   <link rel="apple-touch-icon-precomposed" sizes="150x150" href="/apple-touch-icon.png">
-  <title>小米ROM版本查询 - By Xiaomi miclaw</title>
+  <title>小米ROM版本查询 - By Xiaomi miclaw & Kimi</title>
   <style>
     :root {
       --primary: #667eea;
@@ -781,6 +781,23 @@
         break-inside: avoid;
       }
     }
+
+    /* Detail page quick date buttons */
+    .quick-date-btn:hover {
+      background: var(--primary) !important;
+      color: white !important;
+      border-color: var(--primary) !important;
+      transform: translateY(-1px);
+    }
+
+    .quick-date-btn:active {
+      transform: translateY(0);
+    }
+
+    .date-clear-btn:hover {
+      opacity: 1 !important;
+      background: var(--error) !important;
+    }
   </style>
 </head>
 
@@ -910,7 +927,11 @@
 
         // ESC关闭模态框
         document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape') this.closeModal();
+          // ESC关闭模态框
+          if (e.key === 'Escape') {
+            this.closeModal();
+            return;
+          }
         });
 
         // 模态框滚动锁定
@@ -1096,6 +1117,7 @@
 
         this.renderDevices();
         this.toggleEmptyState(this.filteredDevices.length === 0);
+        this.updateStats();
       }
 
       renderDevices() {
@@ -1230,12 +1252,37 @@
           html += `</div>`;
         }
 
-        // 搜索框
+        // 搜索和日期筛选
         html += `
-                    <div class="modal-search">
+                    <!-- 搜索框单独一行 -->
+                    <div class="modal-search" style="margin-bottom: 12px;">
                         <span class="modal-search-icon">🔍</span>
                         <input type="text" class="modal-search-input" id="detailSearch" 
                                placeholder="搜索版本号、Android版本..." oninput="app.filterDetailRoms()">
+                    </div>
+
+                    <!-- 日期筛选和快速选择按钮一排 -->
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
+                        <!-- 日期选择器 -->
+                        <div style="position: relative; display: flex; align-items: center; flex-shrink: 0;">
+                            <input type="date" class="modal-search-input" id="detailDateFilter" 
+                                   style="width: 150px; padding-left: 12px; padding-right: 32px; margin-bottom: 0;" 
+                                   onchange="app.filterDetailRoms()"
+                                   title="筛选发布日期">
+                            <span class="date-clear-btn" onclick="app.clearDetailDateFilter()" title="清除日期" 
+                                  style="position: absolute; right: 8px; width: 18px; height: 18px; background: var(--text-secondary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; opacity: 0.6; transition: opacity 0.2s;">×</span>
+                        </div>
+
+                        <!-- 间隔 -->
+                        <div style="flex: 1; min-width: 20px;"></div>
+
+                        <!-- 快速选择按钮 -->
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
+                            <button class="quick-date-btn" onclick="app.setDetailQuickDate(0)" style="padding: 6px 14px; border: 1px solid var(--border); background: var(--bg); border-radius: 16px; font-size: 0.8rem; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; white-space: nowrap;">今天</button>
+                            <button class="quick-date-btn" onclick="app.setDetailQuickDate(-1)" style="padding: 6px 14px; border: 1px solid var(--border); background: var(--bg); border-radius: 16px; font-size: 0.8rem; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; white-space: nowrap;">昨天</button>
+                            <button class="quick-date-btn" onclick="app.setDetailQuickDate(-7)" style="padding: 6px 14px; border: 1px solid var(--border); background: var(--bg); border-radius: 16px; font-size: 0.8rem; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; white-space: nowrap;">最近7天</button>
+                            <button class="quick-date-btn" onclick="app.setDetailQuickDate(-30)" style="padding: 6px 14px; border: 1px solid var(--border); background: var(--bg); border-radius: 16px; font-size: 0.8rem; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; white-space: nowrap;">最近30天</button>
+                        </div>
                     </div>
                 `;
 
@@ -1263,33 +1310,39 @@
       mergeBranches(hyperosBranches, miuiBranches) {
         const branchMap = new Map();
 
-        // 处理HyperOS分支
+        // 处理HyperOS分支 - 使用 idtag 作为合并键
         hyperosBranches.forEach(branch => {
-          const key = this.normalizeBranchKey(branch.region, branch.name?.zh || branch.name?.en);
-          if (!branchMap.has(key)) {
-            branchMap.set(key, {
+          // 使用 idtag 作为合并键，如果没有则使用 region + name 的组合
+          const mergeKey = branch.idtag || `${branch.region}_${this.cleanBranchName(branch.name?.zh || branch.name?.en)}`;
+
+          if (!branchMap.has(mergeKey)) {
+            branchMap.set(mergeKey, {
               name: this.cleanBranchName(branch.name?.zh || branch.name?.en),
               region: branch.region,
+              idtag: branch.idtag,
               hyperosRoms: [],
               miuiRoms: []
             });
           }
-          const item = branchMap.get(key);
+          const item = branchMap.get(mergeKey);
           item.hyperosRoms = Object.values(branch.roms || {});
         });
 
-        // 处理MIUI分支
+        // 处理MIUI分支 - 使用 branch 字段作为合并键
         miuiBranches.forEach(branch => {
-          const key = this.normalizeBranchKey(branch.region, branch['zh-cn'] || branch['en-us']);
-          if (!branchMap.has(key)) {
-            branchMap.set(key, {
+          // 使用 branch 字段作为合并键，如果没有则使用 region + name 的组合
+          const mergeKey = branch.branch || `${branch.region}_${this.cleanBranchName(branch['zh-cn'] || branch['en-us'])}`;
+
+          if (!branchMap.has(mergeKey)) {
+            branchMap.set(mergeKey, {
               name: this.cleanBranchName(branch['zh-cn'] || branch['en-us']),
               region: branch.region,
+              idtag: branch.branch, // 将MIUI的branch字段映射为idtag以便统一显示
               hyperosRoms: [],
               miuiRoms: []
             });
           }
-          const item = branchMap.get(key);
+          const item = branchMap.get(mergeKey);
           item.miuiRoms = branch.links || [];
         });
 
@@ -1301,17 +1354,7 @@
         });
       }
 
-      normalizeBranchKey(region, name) {
-        if (!name) return region || 'unknown';
-        let normalized = name
-          .replace(/小米澎湃\s*(OS)?/gi, '')
-          .replace(/Xiaomi HyperOS/gi, '')
-          .replace(/HyperOS/gi, '')
-          .replace(/MIUI/gi, '')
-          .replace(/^(中国大陆|中国|欧洲|俄罗斯|印度尼西亚|印度|土耳其|国际|台湾|香港)/, '')
-          .trim();
-        return `${region || 'unknown'}_${normalized}`;
-      }
+      // normalizeBranchKey 方法已移除，使用 idtag/branch 字段直接合并
 
       cleanBranchName(name) {
         if (!name) return '未知分支';
@@ -1328,9 +1371,12 @@
         const hasMiui = branch.miuiRoms.length > 0;
 
         let html = `
-                    <div class="branch-section" data-branch-name="${this.escapeHtml(branch.name)}">
+                    <div class="branch-section" data-branch-name="${this.escapeHtml(branch.name)}" data-branch-id="${this.escapeHtml(branch.idtag || '')}">
                         <div class="branch-header">
-                            <span class="branch-title">${this.escapeHtml(branch.name)}</span>
+                            <div>
+                                <span class="branch-title">${this.escapeHtml(branch.name)}</span>
+                                ${branch.idtag ? `<span style="font-size: 0.75rem; color: var(--text-secondary); margin-left: 8px; font-family: monospace; background: var(--bg); padding: 2px 6px; border-radius: 4px;">${this.escapeHtml(branch.idtag)}</span>` : ''}
+                            </div>
                             <div class="branch-source-tags">
                                 ${hasHyperOS ? '<span class="source-tag hyperos">HyperOS</span>' : ''}
                                 ${hasMiui ? '<span class="source-tag miui">MIUI</span>' : ''}
@@ -1396,7 +1442,7 @@
           `https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/${rom.os}/${rom.fastboot}` : '';
 
         return `
-                    <tr class="rom-row" data-version="${this.escapeHtml(version)}" data-android="${this.escapeHtml(android)}">
+                    <tr class="rom-row" data-version="${this.escapeHtml(version)}" data-android="${this.escapeHtml(android)}" data-date="${this.escapeHtml(date)}">
                         <td class="version-cell">${this.escapeHtml(version)}</td>
                         <td><span class="android-badge">${this.escapeHtml(android)}</span></td>
                         <td class="date-cell">${this.escapeHtml(date)}</td>
@@ -1441,19 +1487,46 @@
       }
 
       filterDetailRoms() {
-        const keyword = document.getElementById('detailSearch')?.value.toLowerCase().trim();
-        if (!keyword) {
-          document.querySelectorAll('.rom-row, .branch-section').forEach(el => {
-            el.style.display = '';
-          });
-          return;
-        }
+        const keyword = document.getElementById('detailSearch')?.value.toLowerCase().trim() || '';
+        const dateFilterEl = document.getElementById('detailDateFilter');
+        const dateFilter = dateFilterEl?.value || '';
+        const dateRange = dateFilterEl?.dataset?.range || '';
 
         document.querySelectorAll('.rom-row').forEach(row => {
-          const version = row.dataset.version.toLowerCase();
-          const android = row.dataset.android.toLowerCase();
-          const visible = version.includes(keyword) || android.includes(keyword);
+          const version = row.dataset.version?.toLowerCase() || '';
+          const android = row.dataset.android?.toLowerCase() || '';
+
+          // 获取日期单元格的文本内容
+          const dateCell = row.querySelector('.date-cell');
+          const romDate = dateCell ? dateCell.textContent.trim() : '';
+
+          // 关键词匹配
+          const matchKeyword = !keyword || version.includes(keyword) || android.includes(keyword);
+
+          // 日期匹配 - 支持单日期或范围
+          let matchDate = true;
+          let isDateMatch = false;
+
+          if (dateFilter) {
+            if (dateRange) {
+              const [startDate, endDate] = dateRange.split('_');
+              matchDate = romDate >= startDate && romDate <= endDate;
+              isDateMatch = matchDate;
+            } else {
+              matchDate = romDate === dateFilter;
+              isDateMatch = matchDate;
+            }
+          }
+
+          const visible = matchKeyword && matchDate;
           row.style.display = visible ? '' : 'none';
+
+          // 高亮匹配的日期行
+          if (isDateMatch && visible) {
+            row.setAttribute('data-date-match', 'true');
+          } else {
+            row.removeAttribute('data-date-match');
+          }
         });
 
         // 隐藏没有可见行的分支
@@ -1461,6 +1534,39 @@
           const visibleRows = section.querySelectorAll('.rom-row:not([style*="display: none"])');
           section.style.display = visibleRows.length > 0 ? '' : 'none';
         });
+
+        // 显示筛选统计
+        const visibleCount = document.querySelectorAll('.rom-row:not([style*="display: none"])').length;
+        const totalCount = document.querySelectorAll('.rom-row').length;
+
+        // 更新或创建统计提示
+        let statsEl = document.getElementById('filterStats');
+        if (!statsEl) {
+          statsEl = document.createElement('div');
+          statsEl.id = 'filterStats';
+          statsEl.style.cssText = 'text-align: center; padding: 10px 16px; background: var(--bg); border-radius: var(--radius); color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 16px; border: 1px dashed var(--border);';
+          const container = document.getElementById('branchesContainer');
+          if (container) {
+            container.parentNode.insertBefore(statsEl, container);
+          }
+        }
+
+        if (keyword || dateFilter) {
+          const filterDesc = [];
+          if (keyword) filterDesc.push(`🔍 "${keyword}"`);
+          if (dateFilter) {
+            if (dateRange) {
+              const [start, end] = dateRange.split('_');
+              filterDesc.push(`📅 ${start} ~ ${end}`);
+            } else {
+              filterDesc.push(`📅 ${dateFilter}`);
+            }
+          }
+          statsEl.innerHTML = `<strong>${filterDesc.join(' + ')}</strong><br><span style="font-size: 0.8rem; opacity: 0.8;">显示 ${visibleCount} / ${totalCount} 个版本</span>`;
+          statsEl.style.display = 'block';
+        } else {
+          statsEl.style.display = 'none';
+        }
       }
 
       closeModal(event) {
@@ -1469,6 +1575,75 @@
         const modal = document.getElementById('deviceModal');
         modal.classList.remove('active');
         document.body.style.overflow = '';
+      }
+
+
+
+      // 显示提示
+
+
+      // 详情页快速设置日期筛选
+      setDetailQuickDate(daysOffset) {
+        const dateFilter = document.getElementById('detailDateFilter');
+
+        if (daysOffset === -7 || daysOffset === -30) {
+          // 最近N天范围
+          const days = Math.abs(daysOffset);
+          const endDate = new Date();
+          const startDate = new Date();
+          startDate.setDate(startDate.getDate() - days);
+
+          const formatDate = (d) => {
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+          };
+
+          const startStr = formatDate(startDate);
+          const endStr = formatDate(endDate);
+
+          dateFilter.dataset.range = `${startStr}_${endStr}`;
+          dateFilter.value = startStr;
+          dateFilter.style.borderColor = 'var(--primary)';
+
+          this.filterDetailRoms();
+          this.showToast(`已筛选最近${days}天 (${startStr} 至 ${endStr}) 发布的版本`);
+        } else {
+          // 单日
+          const date = new Date();
+          date.setDate(date.getDate() + daysOffset);
+
+          const year = date.getFullYear();
+          const month = String(date.getMonth() + 1).padStart(2, '0');
+          const day = String(date.getDate()).padStart(2, '0');
+          const dateStr = `${year}-${month}-${day}`;
+
+          delete dateFilter.dataset.range;
+          dateFilter.value = dateStr;
+          dateFilter.style.borderColor = 'var(--primary)';
+
+          this.filterDetailRoms();
+          this.showToast(`已筛选 ${dateStr} 发布的版本`);
+        }
+      }
+
+      // 详情页清除日期筛选
+      clearDetailDateFilter() {
+        const dateFilter = document.getElementById('detailDateFilter');
+        dateFilter.value = '';
+        dateFilter.style.borderColor = 'var(--border)';
+        delete dateFilter.dataset.range;
+
+        this.filterDetailRoms();
+        this.showToast('已清除日期筛选');
+      }
+
+      showToast(message) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2000);
       }
 
       hideLoading() {
