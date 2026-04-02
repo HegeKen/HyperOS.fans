@@ -1435,20 +1435,29 @@
 
       setQuickDate(days) {
         const input = document.getElementById('detailDate');
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
+
+        // 获取当前 UTC 时间并转换为 UTC+8（北京时间）
+        const now = new Date();
+        const utc8Time = new Date(now.getTime() + (8 * 60 * 60 * 1000));
+
+        // 格式化为 YYYY-MM-DD（基于 UTC+8）
+        const formatUTC8Date = (date) => {
+          const y = date.getUTCFullYear();
+          const m = String(date.getUTCMonth() + 1).padStart(2, '0');
+          const d = String(date.getUTCDate()).padStart(2, '0');
+          return `${y}-${m}-${d}`;
+        };
 
         if (days === 0) {
-          // 今天
-          input.value = today.toISOString().split('T')[0];
+          // 今天（UTC+8）
+          input.value = formatUTC8Date(utc8Time);
           delete input.dataset.range;
         } else if (days < 0) {
           // 范围（最近N天）
-          const end = new Date(today);
-          const start = new Date(today);
-          start.setDate(start.getDate() + days);
-          input.value = start.toISOString().split('T')[0];
-          input.dataset.range = `${start.toISOString().split('T')[0]}_${end.toISOString().split('T')[0]}`;
+          const end = new Date(utc8Time);
+          const start = new Date(utc8Time.getTime() + (days * 24 * 60 * 60 * 1000));
+          input.value = formatUTC8Date(start);
+          input.dataset.range = `${formatUTC8Date(start)}_${formatUTC8Date(end)}`;
         }
 
         this.filterDetail();
