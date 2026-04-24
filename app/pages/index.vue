@@ -52,7 +52,7 @@
       </v-card-text>
     </v-card>
     <Space></Space> -->
-      <v-card elevation="2" v-show="home['recent']['roms'].length > 0">
+      <v-card elevation="2" v-show="home['recent']['roms'] && Object.keys(home['recent']['roms']).length > 0">
         <v-card-title class="text-HyperBlue">
           {{ $t('update') }}
         </v-card-title>
@@ -61,12 +61,10 @@
           </div>
           <div>
             <ol style="margin-left:20px;">
-              <li v-for="({ code, name, rom }, index) in home['recent']['roms']">
-                <span v-if="index < home.recent.roms.length - 1">
-                  <a :href="('/' + locale + '/devices/' + code)" class="text-HyperBlue" style="text-indent: 20px;">{{ name[locale] }}({{ code }})</a> : {{ rom }};
-                </span>
-                <span v-else>
-                  <a :href="('/' + locale + '/devices/' + code)" class="text-HyperBlue" style="text-indent: 20px;">{{ name[locale] }}({{ code }})</a> : {{ rom }}
+              <li v-for="(device, code) in home['recent']['roms']" :key="code">
+                <a :href="('/' + locale + '/devices/' + code)" class="text-HyperBlue">{{ device.name[locale] }} ({{ code }})</a> :
+                <span v-for="(versionInfo, idx) in device.versions.slice().reverse()" :key="idx">
+                  {{ versionInfo.version }} <i style="color:gray">({{ versionInfo.release_date }})</i><span v-if="idx < device.versions.length - 1">, </span>
                 </span>
               </li>
             </ol>
