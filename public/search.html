@@ -3,8 +3,9 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#667eea">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="msapplication-navbutton-color" content="#667eea">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>小米ROM版本查询 - By Xiaomi miclaw & Kimi</title>
   <link rel="icon" type="image/x-icon" href="https://data.hyperos.fans/favicon.ico">
   <style>
@@ -90,6 +91,30 @@
       .search-grid {
         grid-template-columns: 1fr auto auto auto;
       }
+    }
+
+    .search-grid-secondary {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (min-width: 640px) {
+      .search-grid-secondary {
+        grid-template-columns: 1fr 1fr auto;
+      }
+    }
+
+    .btn-secondary {
+      background: var(--bg);
+      color: var(--text);
+      border: 2px solid var(--border);
+      background: linear-gradient(135deg, var(--bg) 0%, var(--bg) 100%);
+    }
+
+    .btn-secondary:hover {
+      background: var(--border);
+      box-shadow: none;
     }
 
     .input-wrap {
@@ -180,6 +205,7 @@
 
     .stat {
       background: rgba(255, 255, 255, 0.95);
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       padding: 16px 12px;
       border-radius: var(--radius);
@@ -196,8 +222,8 @@
       font-size: clamp(1.5rem, 4vw, 2rem);
       font-weight: 700;
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      background-clip: text;
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
@@ -230,7 +256,7 @@
       cursor: pointer;
       display: flex;
       flex-direction: row;
-      height: 140px;
+      min-height: 140px;
     }
 
     .device:hover {
@@ -263,6 +289,7 @@
       background: rgba(255, 255, 255, 0.15);
       padding: 8px;
       flex-shrink: 0;
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
@@ -277,6 +304,7 @@
       justify-content: center;
       font-size: 2rem;
       flex-shrink: 0;
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
@@ -353,6 +381,11 @@
       color: var(--miui);
     }
 
+    .tag.android {
+      background: #dcfce7;
+      color: #166534;
+    }
+
     .device-meta {
       color: var(--text-secondary);
       font-size: 0.875rem;
@@ -405,6 +438,7 @@
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.6);
+      -webkit-backdrop-filter: blur(4px);
       backdrop-filter: blur(4px);
       z-index: 1000;
       padding: 16px;
@@ -653,7 +687,6 @@
     /* Table */
     .table-wrap {
       overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
       margin: 0 -4px;
       padding: 0 4px;
     }
@@ -823,23 +856,32 @@
     </header>
 
     <section class="search-card">
-      <div class="search-grid">
+      <div class="search-grid search-grid-main">
         <div class="input-wrap">
           <span class="input-icon">🔍</span>
           <input type="text" class="search-input" id="searchInput" placeholder="搜索设备名称或代号..." autocomplete="off">
         </div>
-        <select class="select" id="sourceFilter">
+        <select class="select" id="sourceFilter" title="数据源筛选">
           <option value="all">全部数据源</option>
           <option value="hyperos">仅HyperOS</option>
           <option value="miui">仅MIUI</option>
         </select>
-        <select class="select" id="brandFilter">
+        <select class="select" id="brandFilter" title="品牌筛选">
           <option value="all">全部品牌</option>
           <option value="mi">小米</option>
           <option value="redmi">Redmi</option>
           <option value="poco">POCO</option>
         </select>
         <button class="btn" onclick="app.search()">搜索</button>
+      </div>
+      <div class="search-grid search-grid-secondary">
+        <select class="select" id="osVersionFilter" title="系统版本筛选">
+          <option value="all">全部系统版本</option>
+        </select>
+        <select class="select" id="androidVersionFilter" title="Android版本筛选">
+          <option value="all">全部Android版本</option>
+        </select>
+        <button class="btn btn-secondary" onclick="app.clearFilters()">清除筛选</button>
       </div>
     </section>
 
@@ -915,7 +957,10 @@
 
       // 版本号比较（降序）
       compareVersion: (a, b) => {
-        const parse = v => v.replace(/^[^0-9]*/, '').split(/[.\s]/).map(n => parseInt(n) || 0);
+        const parse = v => {
+          if (typeof v !== 'string') return [0];
+          return v.replace(/^[^0-9]*/, '').split(/[.\s]/).map(n => parseInt(n) || 0);
+        };
         const pa = parse(a), pb = parse(b);
         for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
           const diff = (pa[i] || 0) - (pb[i] || 0);
@@ -972,11 +1017,17 @@
           const brand = data[brandKey];
           if (brand.devices) {
             brand.devices.forEach(d => {
+              const processVersions = (arr) => {
+                if (!Array.isArray(arr)) return [];
+                return arr.filter(v => typeof v === 'string' && v.trim() !== '');
+              };
               devices.push({
                 code: d.code,
                 name: d.name?.zh || d.name?.en || d.code,
                 brand: brandKey,
                 source: 'hyperos',
+                osVersions: processVersions(d.supports),
+                androidVersions: processVersions(d.android),
                 raw: d
               });
             });
@@ -990,6 +1041,11 @@
         const devices = [];
         if (!data.brands) return devices;
 
+        const processVersions = (arr) => {
+          if (!Array.isArray(arr)) return [];
+          return arr.filter(v => typeof v === 'string' && v.trim() !== '');
+        };
+
         data.brands.forEach(brandItem => {
           const brandKey = brandItem.brand?.toLowerCase() || 'unknown';
           if (!brandItem.series) return;
@@ -1002,6 +1058,8 @@
                 name: d['zh-cn'] || d['en-us'] || d.code,
                 brand: brandKey,
                 source: 'miui',
+                osVersions: processVersions(d.miui),
+                androidVersions: processVersions(d.android),
                 raw: d
               });
             });
@@ -1020,6 +1078,18 @@
             if (!existing.sources.includes(d.source)) {
               existing.sources.push(d.source);
             }
+            // 合并系统版本
+            d.osVersions?.forEach(v => {
+              if (typeof v === 'string' && v.trim() !== '' && !existing.osVersions.includes(v)) {
+                existing.osVersions.push(v);
+              }
+            });
+            // 合并Android版本
+            d.androidVersions?.forEach(v => {
+              if (typeof v === 'string' && v.trim() !== '' && !existing.androidVersions.includes(v)) {
+                existing.androidVersions.push(v);
+              }
+            });
             // 记录不同名称作为别名
             if (d.source === 'miui' && d.name !== existing.name) {
               if (!existing.aliases) existing.aliases = [];
@@ -1028,7 +1098,7 @@
               }
             }
           } else {
-            map.set(d.code, { ...d, sources: [d.source], aliases: [] });
+            map.set(d.code, { ...d, sources: [d.source], aliases: [], osVersions: d.osVersions || [], androidVersions: d.androidVersions || [] });
           }
         });
 
@@ -1047,9 +1117,24 @@
     // 渲染器
     class Renderer {
       static deviceCard(device) {
-        const tags = device.sources.map(s =>
+        const sourceTags = device.sources.map(s =>
           `<span class="tag ${s}">${s === 'hyperos' ? '🔵 HyperOS' : '🟠 MIUI'}</span>`
         ).join('');
+
+        const osTags = (device.osVersions || [])
+          .filter(v => typeof v === 'string' && v.trim() !== '')
+          .slice(0, 3)
+          .map(v => {
+            const isHyperOS = v.startsWith('OS') || v.startsWith('HyperOS');
+            return `<span class="tag ${isHyperOS ? 'hyperos' : 'miui'}">${utils.escape(v)}</span>`;
+          }).join('');
+
+        const androidTags = (device.androidVersions || [])
+          .filter(v => typeof v === 'string' && v.trim() !== '')
+          .slice(0, 2)
+          .map(v =>
+            `<span class="tag android">Android ${utils.escape(v)}</span>`
+          ).join('');
 
         const aliasText = device.aliases?.length
           ? `<span style="opacity:0.85;font-size:0.9em;"> / ${device.aliases.map(a => utils.escape(a)).join(' / ')}</span>`
@@ -1101,7 +1186,9 @@
                 <h3 class="device-name">${utils.escape(device.name)}${aliasText}</h3>
                 <p class="device-code">${device.code}</p>
               </div>
-              <div class="tags" style="margin-top: 12px;">${tags}</div>
+              <div class="tags" style="margin-top: 8px;">${sourceTags}</div>
+              ${osTags ? `<div class="tags">${osTags}</div>` : ''}
+              ${androidTags ? `<div class="tags">${androidTags}</div>` : ''}
             </div>
           </article>
         `;
@@ -1252,8 +1339,13 @@
         // 搜索防抖
         const debouncedSearch = utils.debounce(() => this.search(), 300);
         document.getElementById('searchInput').addEventListener('input', debouncedSearch);
-        document.getElementById('sourceFilter').addEventListener('change', () => this.search());
+        document.getElementById('sourceFilter').addEventListener('change', () => {
+          this.updateVersionFilters();
+          this.search();
+        });
         document.getElementById('brandFilter').addEventListener('change', () => this.search());
+        document.getElementById('osVersionFilter').addEventListener('change', () => this.search());
+        document.getElementById('androidVersionFilter').addEventListener('change', () => this.search());
 
         // 回车搜索
         document.getElementById('searchInput').addEventListener('keypress', e => {
@@ -1280,6 +1372,7 @@
           this.filtered = [...this.devices];
 
           this.updateStats();
+          this.updateVersionFilters();
           this.renderDevices();
           this.hideLoading();
         } catch (err) {
@@ -1302,6 +1395,8 @@
         const keyword = document.getElementById('searchInput').value.toLowerCase().trim();
         const source = document.getElementById('sourceFilter').value;
         const brand = document.getElementById('brandFilter').value;
+        const osVersion = document.getElementById('osVersionFilter').value;
+        const androidVersion = document.getElementById('androidVersionFilter').value;
 
         this.filtered = this.devices.filter(d => {
           const nameMatch = d.name.toLowerCase().includes(keyword);
@@ -1312,7 +1407,12 @@
           const matchSource = source === 'all' || d.sources.includes(source);
           const matchBrand = brand === 'all' || d.brand === brand;
 
-          return matchKeyword && matchSource && matchBrand;
+          const matchOsVersion = osVersion === 'all' ||
+            (d.osVersions && d.osVersions.some(v => typeof v === 'string' && v.toLowerCase().includes(osVersion.toLowerCase())));
+          const matchAndroidVersion = androidVersion === 'all' ||
+            (d.androidVersions && d.androidVersions.some(v => typeof v === 'string' && v.toLowerCase().includes(androidVersion.toLowerCase())));
+
+          return matchKeyword && matchSource && matchBrand && matchOsVersion && matchAndroidVersion;
         });
 
         this.renderDevices();
@@ -1321,6 +1421,53 @@
         const empty = this.filtered.length === 0;
         document.getElementById('empty').classList.toggle('hidden', !empty);
         document.getElementById('results').classList.toggle('hidden', empty);
+      }
+
+      updateVersionFilters() {
+        const source = document.getElementById('sourceFilter').value;
+
+        // 过滤设备列表
+        let devicesForFilter = this.devices;
+        if (source !== 'all') {
+          devicesForFilter = devicesForFilter.filter(d => d.sources.includes(source));
+        }
+
+        // 获取所有系统版本
+        const allOsVersions = [...new Set(
+          devicesForFilter.flatMap(d => d.osVersions || [])
+            .filter(v => typeof v === 'string' && v.trim() !== '')
+        )].sort((a, b) => utils.compareVersion(b, a));
+
+        // 获取所有Android版本
+        const allAndroidVersions = [...new Set(
+          devicesForFilter.flatMap(d => d.androidVersions || [])
+            .filter(v => typeof v === 'string' && v.trim() !== '')
+        )].sort((a, b) => utils.compareVersion(b, a));
+
+        // 更新系统版本下拉
+        const osSelect = document.getElementById('osVersionFilter');
+        const currentOsValue = osSelect.value;
+        osSelect.innerHTML = '<option value="all">全部系统版本</option>' +
+          allOsVersions.map(v => `<option value="${utils.escape(v)}">${utils.escape(v)}</option>`).join('');
+        osSelect.value = allOsVersions.includes(currentOsValue) ? currentOsValue : 'all';
+
+        // 更新Android版本下拉
+        const androidSelect = document.getElementById('androidVersionFilter');
+        const currentAndroidValue = androidSelect.value;
+        androidSelect.innerHTML = '<option value="all">全部Android版本</option>' +
+          allAndroidVersions.map(v => `<option value="${utils.escape(v)}">Android ${utils.escape(v)}</option>`).join('');
+        androidSelect.value = allAndroidVersions.includes(currentAndroidValue) ? currentAndroidValue : 'all';
+      }
+
+      clearFilters() {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('sourceFilter').value = 'all';
+        document.getElementById('brandFilter').value = 'all';
+        document.getElementById('osVersionFilter').value = 'all';
+        document.getElementById('androidVersionFilter').value = 'all';
+        this.updateVersionFilters();
+        this.search();
+        this.showToast('已清除所有筛选条件');
       }
 
       renderDevices() {
@@ -1550,37 +1697,56 @@
       }
 
       clearDetailFilters() {
-        document.getElementById('detailSearch').value = '';
+        const searchInput = document.getElementById('detailSearch');
         const dateInput = document.getElementById('detailDate');
-        dateInput.value = '';
-        delete dateInput.dataset.range;
+        const branchesList = document.getElementById('branchesList');
+        const noResults = document.getElementById('noResults');
 
-        document.querySelectorAll('.branch').forEach(b => b.style.display = '');
-        document.querySelectorAll('.rom-section').forEach(s => s.style.display = '');
-        document.querySelectorAll('.rom-row').forEach(r => r.style.display = '');
+        if (searchInput) searchInput.value = '';
+        if (dateInput) {
+          dateInput.value = '';
+          delete dateInput.dataset.range;
+        }
 
-        document.getElementById('branchesList').classList.remove('hidden');
-        document.getElementById('noResults').classList.add('hidden');
+        if (document.querySelectorAll) {
+          document.querySelectorAll('.branch').forEach(b => b.style.display = '');
+          document.querySelectorAll('.rom-section').forEach(s => s.style.display = '');
+          document.querySelectorAll('.rom-row').forEach(r => r.style.display = '');
+        }
+
+        if (branchesList) branchesList.classList.remove('hidden');
+        if (noResults) noResults.classList.add('hidden');
 
         this.showToast('已清除所有筛选条件');
       }
 
       closeModal(event) {
         if (event && event.target !== event.currentTarget) return;
-        document.getElementById('modal').classList.remove('active');
+        const modal = document.getElementById('modal');
+        if (modal) modal.classList.remove('active');
         document.body.style.overflow = '';
       }
 
       showToast(message) {
         const toast = document.getElementById('toast');
-        toast.textContent = message;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2000);
+        if (toast) {
+          toast.textContent = message;
+          toast.classList.add('show');
+          setTimeout(() => toast.classList.remove('show'), 2000);
+        }
       }
     }
 
-    // 初始化
-    const app = new App();
+    // 确保 DOM 加载完成后初始化
+    document.addEventListener('DOMContentLoaded', function () {
+      // 初始化
+      window.app = new App();
+    });
+
+    // 如果 DOMContentLoaded 已经触发，则直接初始化
+    if (document.readyState === 'interactive' || document.readyState === 'complete') {
+      window.app = new App();
+    }
   </script>
 </body>
 
