@@ -1,7 +1,4 @@
 <template>
-  <html :lang="locale">
-
-  </html>
   <div v-if="$device.isDesktopOrTablet">
     <v-app-bar :elevation="2" rounded>
       <v-app-bar-title>
@@ -105,6 +102,7 @@ export default {
 }
 </script>
 <script setup>
+import { onMounted } from 'vue'
 import { useTheme } from 'vuetify'
 const { locale, locales } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
@@ -123,8 +121,35 @@ if (domain == "https://www.hyperos.fans") {
   url = 'https://hyperos.fans' + route.path
   await navigateTo(url, { external: true })
 }
+
 const theme = useTheme();
+
+onMounted(() => {
+  if (typeof window !== 'undefined') {
+    const savedTheme = localStorage.getItem('hyperos-theme')
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+
+    setTimeout(() => {
+      if (savedTheme) {
+        theme.change(savedTheme)
+      } else if (prefersDark) {
+        theme.change('dark')
+      }
+    }, 100)
+  }
+})
+
 function toggleTheme() {
-  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+  // 使用 theme.global 来检查和切换主题
+  const currentThemeName = theme.global.name.value || 'light'
+  const newTheme = currentThemeName === 'dark' ? 'light' : 'dark'
+
+  // 使用新的 API 切换主题
+  theme.change(newTheme)
+
+  // 保存到 localStorage
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('hyperos-theme', newTheme)
+  }
 }
 </script>

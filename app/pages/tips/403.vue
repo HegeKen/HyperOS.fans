@@ -2,6 +2,7 @@
   <title v-if="locale == 'en'">{{ $t('fix403') }} - HyperOS.fans</title>
   <title v-else> {{ $t('fix403') }} - HyperOS.fans</title>
   <v-app>
+    <div id="top"></div>
     <Nav></Nav>
     <Space></Space>
     <v-card elevation="2">
@@ -56,6 +57,6 @@ import { useTheme } from 'vuetify'
 const { locale } = useI18n();
 const theme = useTheme();
 function toggleTheme() {
-  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+  theme.change(theme.current.dark ? 'light' : 'dark')
 }
 </script>

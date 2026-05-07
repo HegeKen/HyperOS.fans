@@ -6,6 +6,7 @@
 		{{ data['name'][locale] }} {{ $t("rompage") }} - HyperOS.fans
 	</title>
 	<v-app>
+		<div id="top"></div>
 		<Nav></Nav>
 		<Space></Space>
 		<v-card>
@@ -100,6 +101,6 @@ const url =
 const { data } = await useFetch(url);
 const theme = useTheme();
 function toggleTheme() {
-	theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+	theme.change(theme.current.dark ? 'light' : 'dark')
 }
 </script>

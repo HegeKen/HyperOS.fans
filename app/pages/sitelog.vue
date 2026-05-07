@@ -1,6 +1,7 @@
 <template>
   <title>{{ $t('sitelog') }} - HyperOS.fans</title>
   <v-app>
+    <div id="top"></div>
     <Nav></Nav>
     <v-timeline align="start" size="large" side="end">
       <v-timeline-item v-for="(elog) in sitelog['logs']" dot-color="#2655ff" fill-dot :icon="elog['icon']">
@@ -44,6 +45,6 @@ const site = "https://data.hyperos.fans/sitelog.json"
 const { data: sitelog } = await useFetch(site)
 const theme = useTheme();
 function toggleTheme() {
-  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+  theme.change(theme.current.dark ? 'light' : 'dark')
 }
 </script>

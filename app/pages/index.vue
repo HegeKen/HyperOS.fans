@@ -1,8 +1,11 @@
 <template>
   <v-app>
+    <div id="top"></div>
     <span v-if="home['recent']['developing'] == 'no'">
       <title>{{ $t('hometitle') }} - HyperOS.fans</title>
-      <Nav></Nav>
+      <ClientOnly>
+        <Nav></Nav>
+      </ClientOnly>
       <v-card elevation="2">
         <v-card-item>
           <v-card-title class="text-HyperBlue">
@@ -19,16 +22,18 @@
         </v-card-text>
       </v-card>
       <Space></Space>
-      <v-card elevation="2" class="MIUI" href="https://roms.miuier.com">
-        <v-card-item>
-          <v-card-title>
-            {{ $t('miuiroms') }}
-          </v-card-title>
-        </v-card-item>
-        <v-card-text>
-          <div><b>{{ $t('href') }}</b> <a href="https://roms.miuier.com" class="MIUI">{{ $t('miuisite') }}</a> </div>
-        </v-card-text>
-      </v-card>
+      <ClientOnly>
+        <v-card elevation="2" class="MIUI" href="https://roms.miuier.com">
+          <v-card-item>
+            <v-card-title>
+              {{ $t('miuiroms') }}
+            </v-card-title>
+          </v-card-item>
+          <v-card-text>
+            <div><b>{{ $t('href') }}</b> <a href="https://roms.miuier.com" class="MIUI">{{ $t('miuisite') }}</a> </div>
+          </v-card-text>
+        </v-card>
+      </ClientOnly>
       <Space></Space>
       <!-- <v-card elevation="2">
       <v-card-title class="text-HyperBlue">
@@ -52,27 +57,29 @@
       </v-card-text>
     </v-card>
     <Space></Space> -->
-      <v-card elevation="2" v-show="home['recent']['roms'] && Object.keys(home['recent']['roms']).length > 0">
-        <v-card-title class="text-HyperBlue">
-          {{ $t('update') }}
-        </v-card-title>
-        <v-card-text>
-          <div><b>{{ $t('uptime') }} </b> <span>{{ home['recent']['time'] }}</span>
-          </div>
-          <div>
-            <ol style="margin-left:20px;">
-              <li v-for="(device, code) in home['recent']['roms']" :key="code">
-                <a :href="('/' + locale + '/devices/' + code)" class="text-HyperBlue">{{ device.name[locale] }} ({{ code }})</a> :
-                <span v-for="(versionInfo, idx) in device.versions.slice().reverse()" :key="idx">
-                  {{ versionInfo.version }} <i style="color:gray">({{ versionInfo.release_date }})</i><span v-if="idx < device.versions.length - 1">, </span>
-                </span>
-              </li>
-            </ol>
-          </div>
-        </v-card-text>
-      </v-card>
-      <Space></Space>
-      <Footer></Footer>
+      <ClientOnly>
+        <v-card elevation="2" v-show="home['recent']['roms'] && Object.keys(home['recent']['roms']).length > 0">
+          <v-card-title class="text-HyperBlue">
+            {{ $t('update') }}
+          </v-card-title>
+          <v-card-text>
+            <div><b>{{ $t('uptime') }} </b> <span>{{ home['recent']['time'] }}</span>
+            </div>
+            <div>
+              <ol style="margin-left:20px;">
+                <li v-for="(device, code) in home['recent']['roms']" :key="code">
+                  <a :href="('/' + locale + '/devices/' + code)" class="text-HyperBlue">{{ device.name[locale] }} ({{ code }})</a> :
+                  <span v-for="(versionInfo, idx) in device.versions.slice().reverse()" :key="idx">
+                    {{ versionInfo.version }} <i style="color:gray">({{ versionInfo.release_date }})</i><span v-if="idx < device.versions.length - 1">, </span>
+                  </span>
+                </li>
+              </ol>
+            </div>
+          </v-card-text>
+        </v-card>
+        <Space></Space>
+        <Footer></Footer>
+      </ClientOnly>
     </span>
     <span v-else>
       <title>{{ $t('dev_title') }} - HyperOS.fans</title>
@@ -107,6 +114,6 @@ const { data: home } = await useFetch(index)
 const { data: sitelog } = await useFetch(site)
 const theme = useTheme();
 function toggleTheme() {
-  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+  theme.change(theme.current.dark ? 'light' : 'dark')
 }
 </script>

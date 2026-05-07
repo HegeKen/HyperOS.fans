@@ -49,7 +49,7 @@ export default {
 import { useTheme } from 'vuetify'
 const theme = useTheme();
 function toggleTheme() {
-  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+  theme.change(theme.current.dark ? 'light' : 'dark')
 }
 const { locale, locales } = useI18n()
 </script>

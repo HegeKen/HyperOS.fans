@@ -1,6 +1,7 @@
 <template>
   <title>{{ $t('source') }} - HyperOS.fans</title>
   <v-app>
+    <div id="top"></div>
     <Nav></Nav>
     <v-card elevation="2">
       <v-card-title>{{ $t('source') }}</v-card-title>
@@ -45,6 +46,6 @@ import { useTheme } from 'vuetify'
 const { locale, locales } = useI18n()
 const theme = useTheme();
 function toggleTheme() {
-  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+  theme.change(theme.current.dark ? 'light' : 'dark')
 }
 </script>

@@ -1,6 +1,7 @@
 <template>
   <title>{{ $t('devtitle') }} - HyperOS.fans</title>
   <v-app>
+    <div id="top"></div>
     <Nav></Nav>
     <v-card v-for="os in data['HyperOS']" elevation="2">
       <v-card-item style="padding:0px;">
@@ -33,6 +34,6 @@ const url = "https://data.hyperos.fans/dev.json"
 const { data } = await useFetch(url)
 const theme = useTheme();
 function toggleTheme() {
-  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+  theme.change(theme.current.dark ? 'light' : 'dark')
 }
 </script>

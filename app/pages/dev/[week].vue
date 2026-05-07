@@ -2,6 +2,7 @@
   <title v-if="locale == 'en'">HyperOS {{ data['title'][locale] }} - HyperOS.fans</title>
   <title v-else>HyperOS {{ data['title'][locale] }} - HyperOS.fans</title>
   <v-app>
+    <div id="top"></div>
     <Nav></Nav>
     <Space></Space>
     <v-card :title="data['title'][locale]" elevation="2">
@@ -118,6 +119,6 @@ const url = "https://data.hyperos.fans/dev/" + route.params.week.toLowerCase() +
 const { data } = await useFetch(url)
 const theme = useTheme();
 function toggleTheme() {
-  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+  theme.change(theme.current.dark ? 'light' : 'dark')
 }
 </script>

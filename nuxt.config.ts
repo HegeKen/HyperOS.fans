@@ -1,12 +1,6 @@
 import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 
 export default defineNuxtConfig({
-	// devtools: {
-	// 	enabled: true,
-	// 	timeline: {
-	// 		enabled: true,
-	// 	},
-	// },
 	build: {
 		transpile: ["vuetify"],
 	},
@@ -48,15 +42,7 @@ export default defineNuxtConfig({
 		/* options for vite */
 		// ssr: true // enable unstable server-side rendering for development (false by default)
 		// experimentWarning: false // hide experimental warning message (disabled by default for tests)
-		build: {
-			rollupOptions: {
-				output: {
-					manualChunks: {
-						lodash: ["lodash"],
-					},
-				},
-			},
-		},
+		build: {},
 		vue: {
 			template: {
 				transformAssetUrls,
@@ -68,5 +54,5 @@ export default defineNuxtConfig({
 		url: "https://hyperos.fans",
 	},
 
-	compatibilityDate: "2024-07-31",
+	compatibilityDate: "2025-05-08",
 });
