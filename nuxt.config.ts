@@ -22,6 +22,28 @@ export default defineNuxtConfig({
 		},
 	],
 
+	devServer: {
+		proxy: {
+			"/api/miui": {
+				target: "https://update.miui.com",
+				changeOrigin: true,
+				pathRewrite: { "^/api/miui": "" },
+			},
+			"/api/miui-intl": {
+				target: "https://update.intl.miui.com",
+				changeOrigin: true,
+				pathRewrite: { "^/api/miui-intl": "" },
+			},
+		},
+	},
+
+	runtimeConfig: {
+		public: {
+			miuiApiUrl: process.env.MIUI_API_URL || "https://update.miui.com",
+			miuiIntlApiUrl: process.env.MIUI_INTL_API_URL || "https://update.intl.miui.com",
+		},
+	},
+
 	i18n: {
 		locales: [
 			{
