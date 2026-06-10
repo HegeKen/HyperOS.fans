@@ -563,7 +563,7 @@ export default {
 		},
 		async fetchDeviceData(device) {
 			try {
-				const url = `/data/devices/${device.toLowerCase()}.json`;
+				const url = `https://www.hyperos.fans/data/devices/${device.toLowerCase()}.json`;
 				const response = await fetch(url);
 				if (response.ok) {
 					return await response.json();
