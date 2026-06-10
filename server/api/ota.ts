@@ -158,15 +158,22 @@ export default defineEventHandler(async (event) => {
 				}
 				console.log("清理后的文本:", plaintext);
 
-				// 关键：将单引号转换为双引号（与加密时的双引号转单引号对应）
-				const jsonText = convertSingleQuoteToJson(plaintext);
-				console.log("转换为JSON格式:", jsonText);
-
-				const result = JSON.parse(jsonText);
-				console.log("JSON解析结果:", result);
-				console.log("=== 解密完成 ===");
-
-				return result;
+				// 优先尝试直接解析（MIUI响应是标准JSON格式，双引号）
+				try {
+					const result = JSON.parse(plaintext);
+					console.log("JSON解析结果:", result);
+					console.log("=== 解密完成 ===");
+					return result;
+				} catch {
+					// 如果直接解析失败，再尝试将单引号转换为双引号（兼容Python str(dict)格式）
+					console.log("直接解析失败，尝试单引号转换...");
+					const jsonText = convertSingleQuoteToJson(plaintext);
+					console.log("转换为JSON格式:", jsonText);
+					const result = JSON.parse(jsonText);
+					console.log("JSON解析结果:", result);
+					console.log("=== 解密完成 ===");
+					return result;
+				}
 			} catch (e) {
 				console.error("解密失败:", e);
 				return null;

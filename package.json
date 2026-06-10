@@ -12,6 +12,7 @@
     "@nuxtjs/device": "^4.0.0",
     "@nuxtjs/i18n": "^10.4.0",
     "@types/crypto-js": "^4.2.2",
+    "@types/node": "^22.0.0",
     "nuxt": "^4.4.8",
     "sass": "^1.100.0",
     "vite-plugin-vuetify": "^2.1.3",

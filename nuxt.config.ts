@@ -64,7 +64,18 @@ export default defineNuxtConfig({
 		/* options for vite */
 		// ssr: true // enable unstable server-side rendering for development (false by default)
 		// experimentWarning: false // hide experimental warning message (disabled by default for tests)
-		build: {},
+		build: {
+			rollupOptions: {
+				output: {
+					manualChunks: (id: string) => {
+						if (id.includes('node_modules/.pnpm/vuetify')) return 'vuetify'
+						if (id.includes('node_modules/.pnpm/crypto-js')) return 'crypto-js'
+						if (id.includes('node_modules/.pnpm/@mdi')) return 'mdi-icons'
+					},
+				},
+			},
+			chunkSizeWarningLimit: 1000,
+		},
 		vue: {
 			template: {
 				transformAssetUrls,

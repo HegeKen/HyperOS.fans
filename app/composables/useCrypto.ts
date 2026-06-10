@@ -132,8 +132,14 @@ export function decryptResponse(encryptedText: string): any {
 			plaintext = plaintext.substring(0, pos + 1);
 		}
 
-		const jsonText = convertSingleQuoteToJson(plaintext);
-		return JSON.parse(jsonText);
+		// MIUI response is standard JSON (double quotes), try direct parse first
+		try {
+			return JSON.parse(plaintext);
+		} catch {
+			// Fallback: convert Python str(dict) single quotes to double quotes
+			const jsonText = convertSingleQuoteToJson(plaintext);
+			return JSON.parse(jsonText);
+		}
 	} catch (e) {
 		console.error("Decryption failed:", e);
 		return null;
