@@ -530,12 +530,20 @@ export default {
 			this.otaResult = null;
 
 			try {
+				console.log('【OTA 请求】开始获取 OTA 下载链接');
+				console.log('【OTA 请求】参数:', { code, device, version, region, android, b, zone });
+
 				const form = this.buildHyperOSForm(code, device, version, region, android, b, zone);
+				console.log('【OTA 请求】构建的 form 数据:', JSON.stringify(form, null, 2));
+
 				const encryptedData = this.miEncrypt(form);
+				console.log('【OTA 请求】加密后的数据:', encryptedData);
 
 				// 规范化 region 用于服务端 API URL 选择
 				const apiRegion = region && region.toLowerCase() === 'cn' ? 'CN' : 'INTL';
+				console.log('【OTA 请求】API 区域:', apiRegion);
 
+				console.log('【OTA 请求】发送请求到 /api/ota...');
 				const response = await fetch('/api/ota', {
 					method: 'POST',
 					headers: {
@@ -548,21 +556,26 @@ export default {
 				});
 
 				if (!response.ok) {
-					console.error('OTA API responded with', response.status);
+					console.error('【OTA 请求】API 响应失败，状态码:', response.status);
 					const body = await response.text().catch(() => '');
+					console.error('【OTA 请求】错误响应体:', body);
 					this.otaError = `服务器错误 (${response.status})`;
 					return;
 				}
 
 				const result = await response.json();
+				console.log('【OTA 请求】API 响应结果:', JSON.stringify(result, null, 2));
 
 				if (result.success) {
+					console.log('【OTA 请求】成功！解密后的数据:', JSON.stringify(result.data, null, 2));
 					this.otaResult = result.data;
 				} else {
+					console.warn('【OTA 请求】失败:', result.message);
 					this.otaError = result.message || this.$t('ota_fetch_failed');
 				}
 			} catch (e) {
-				console.error('OTA fetch error:', e);
+				console.error('【OTA 请求】异常错误:', e);
+				console.error('【OTA 请求】错误堆栈:', e?.stack);
 				this.otaError = e.message || this.$t('ota_fetch_failed_network');
 			} finally {
 				this.otaLoading = false;

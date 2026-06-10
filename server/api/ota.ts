@@ -45,12 +45,8 @@ export default defineEventHandler(async (event) => {
 			console.log("=== 开始加密 ===");
 
 			// JSON序列化
-			let jsonString = JSON.stringify(jsonRequest);
-			console.log("JSON字符串(原始):", jsonString);
-
-			// 将双引号替换为单引号（模拟Python的str(dict)格式）
-			jsonString = jsonString.replace(/"/g, "'");
-			console.log("JSON字符串(单引号):", jsonString);
+			const jsonString = JSON.stringify(jsonRequest);
+			console.log("JSON字符串:", jsonString);
 
 			// ASCII编码
 			const asciiBytes = stringToAsciiBytes(jsonString);
@@ -184,6 +180,7 @@ export default defineEventHandler(async (event) => {
 
 		// 验证必要参数
 		if (!body.data || !body.region) {
+			console.error("【OTA API】缺少必要参数:", JSON.stringify(body));
 			return {
 				success: false,
 				message: "缺少必要参数",
@@ -194,8 +191,15 @@ export default defineEventHandler(async (event) => {
 		// 如果body.data是对象，先进行加密
 		let encryptedData = body.data;
 		if (typeof body.data === "object") {
-			console.log("检测到数据为对象，进行加密...");
+			console.log("【OTA API】检测到数据为对象，进行加密...");
+			console.log(
+				"【OTA API】原始 form 数据:",
+				JSON.stringify(body.data, null, 2),
+			);
 			encryptedData = miuiEncrypt(body.data);
+			console.log("【OTA API】加密后的内容:", encryptedData);
+		} else {
+			console.log("【OTA API】接收到已加密的数据:", encryptedData);
 		}
 
 		// 匹配 Python: 始终使用 update.miui.com
@@ -204,6 +208,10 @@ export default defineEventHandler(async (event) => {
 
 		// 构建请求体：q=加密数据&s=1&t=
 		const requestBody = `q=${encryptedData}&s=1&t=`;
+
+		console.log("【OTA API】发送请求到 MIUI 服务器...");
+		console.log("【OTA API】请求 URL:", url);
+		console.log("【OTA API】请求体长度:", requestBody.length);
 
 		// 发送请求到 MIUI OTA API
 		const response = await fetch(url, {
@@ -223,6 +231,7 @@ export default defineEventHandler(async (event) => {
 		});
 
 		if (!response.ok) {
+			console.error("【OTA API】MIUI API 请求失败，状态码:", response.status);
 			return {
 				success: false,
 				message: "OTA API 请求失败: " + response.status,
@@ -231,13 +240,20 @@ export default defineEventHandler(async (event) => {
 		}
 
 		const encryptedResponse = await response.text();
+		console.log(
+			"【OTA API】MIUI 返回的原始响应长度:",
+			encryptedResponse.length,
+		);
+		console.log("【OTA API】MIUI 返回的加密内容:", encryptedResponse);
 
 		// 匹配 Python: 用 "q=" 分割取第一部分（encrypted payload），第二部分是 "q=..." 后缀
 		const parts = encryptedResponse.split("q=");
 		const encryptedPayload = parts[0] || encryptedResponse;
+		console.log("【OTA API】提取的加密 payload:", encryptedPayload);
 
 		// 如果 payload 包含 'code'，说明请求参数有误（JSON 错误响应）
 		if (encryptedPayload.includes("code")) {
+			console.error("【OTA API】请求参数无效，payload 包含 'code' 字段");
 			return {
 				success: false,
 				message: "请求参数无效",
@@ -246,9 +262,26 @@ export default defineEventHandler(async (event) => {
 		}
 
 		// 解密响应（Python: miui_decrypt(response.text.split("q=")[0])）
+		console.log("【OTA API】开始解密响应...");
 		const decrypted = decryptResponse(encryptedPayload);
 
 		if (!decrypted) {
+			console.error("【OTA API】解密失败！");
+			console.error("【OTA API】失败原因分析:");
+			console.error("  - 加密 payload:", encryptedPayload);
+			console.error("  - payload 长度:", encryptedPayload.length);
+			console.error(
+				"  - 是否包含明显错误:",
+				encryptedPayload.includes("error") ||
+					encryptedPayload.includes("Error") ||
+					encryptedPayload.includes("ERROR"),
+			);
+			console.error(
+				"  - 是否为有效 Base64:",
+				/^[A-Za-z0-9+/=]+$/.test(
+					encryptedPayload.replace(/%2F/g, "/").replace(/%2B/g, "+"),
+				),
+			);
 			return {
 				success: false,
 				message: "无法解密响应",
@@ -256,13 +289,19 @@ export default defineEventHandler(async (event) => {
 			};
 		}
 
+		console.log(
+			"【OTA API】解密成功！响应数据:",
+			JSON.stringify(decrypted, null, 2),
+		);
+
 		return {
 			success: true,
 			message: "获取成功",
 			data: decrypted,
 		};
 	} catch (e: any) {
-		console.error("OTA 请求错误:", e);
+		console.error("【OTA API】请求错误:", e);
+		console.error("【OTA API】错误堆栈:", e.stack);
 		return {
 			success: false,
 			message: e.message || "服务器内部错误",
