@@ -505,7 +505,8 @@ export default {
 			return form;
 		},
 		miEncrypt(reqdata) {
-			const jsonString = JSON.stringify(reqdata);
+			let jsonString = JSON.stringify(reqdata);
+			jsonString = jsonString.replace(/"/g, "'");
 			const asciiBytes = this.stringToAsciiBytes(jsonString);
 			const blockSize = 16;
 			const paddingLength = blockSize - (asciiBytes.length % blockSize);
