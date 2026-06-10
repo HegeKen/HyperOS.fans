@@ -501,7 +501,7 @@ export default {
 				}
 			};
 
-			console.log('Current Form:', JSON.stringify(form, null, 2));
+			//console.log('Current Form:', JSON.stringify(form, null, 2));
 			return form;
 		},
 		miEncrypt(reqdata) {
@@ -547,6 +547,13 @@ export default {
 					}),
 				});
 
+				if (!response.ok) {
+					console.error('OTA API responded with', response.status);
+					const body = await response.text().catch(() => '');
+					this.otaError = `服务器错误 (${response.status})`;
+					return;
+				}
+
 				const result = await response.json();
 
 				if (result.success) {
@@ -566,7 +573,12 @@ export default {
 				const url = `https://www.hyperos.fans/data/devices/${device.toLowerCase()}.json`;
 				const response = await fetch(url);
 				if (response.ok) {
-					return await response.json();
+					const text = await response.text();
+					if (!text || text.trim().length === 0) {
+						console.warn('Device data response is empty:', device);
+						return null;
+					}
+					return JSON.parse(text);
 				}
 				return null;
 			} catch (e) {
