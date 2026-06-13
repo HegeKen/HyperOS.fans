@@ -29,6 +29,7 @@
 					<span><b>{{ $t('merged') }}</b>{{ data['notice'][locale] }} , <a :href="('/' + locale + '/devices/' + data['merged'])">{{ $t('checkit') }} {{ data['merged_with'][locale] }}</a></span>
 				</p>
 				<p style="padding-left:10px;"><b>{{ $t('miui') }}</b><span v-if="data['miui'] == 'yes'">{{ $t('yes') }} {{ $t('gotomiui') }}<a v-if="locale == 'zh'" :href="('https://roms.miuier.com/zh-cn/devices/' + data['device'])">{{ data['name'][locale] }}({{ data['device'] }}) {{ $t('miuier') }}</a><a v-else :href="('https://roms.miuier.com/en-us/devices/' + data['device'])">{{ data['name'][locale] }}({{ data['device'] }}) {{ $t('miuier') }}</a></span><span v-else>{{ $t('no') }}</span></p>
+				<p style="padding-left:10px;"><b>{{ $t('devdata') }}：</b><a :href="('https://data.hyperos.fans/devices/' + data['device'] + '.json')">{{ data['name'][locale] }}({{ data['device'] }}) HyperOS {{ $t('devdata') }}</a> <span v-if="data['miui'] == 'yes'"> | <a :href="('https://data.miuier.com//data/devices/' + data['device'] + '.json')">{{ data['name'][locale] }}({{ data['device'] }}) MIUI {{ $t('devdata') }}</a></span></p>
 			</v-card-text>
 		</v-card>
 
@@ -56,8 +57,8 @@
 						<tbody>
 							<tr v-for="(rom, ver) in branche['roms']">
 								<td v-for="i in branche['table'].length">
-									<span v-if="branche['table'][i - 1] == 'os' || branche['table'][i - 1] == 'android' || branche['table'][i - 1] == 'release'">
-										{{ rom[branche['table'][i - 1]] }}
+									<span v-if="branche['table'][i - 1] == 'os' || branche['table'][i - 1] == 'android' || branche['table'][i - 1] == 'release' || branche['table'][i - 1] == 'aspatch'">
+										{{ rom[branche['table'][i - 1]] || 'N/A' }}
 									</span>
 									<span v-else-if="rom[branche['table'][i - 1]] == ''">{{ $t('yet') }}</span>
 									<span v-else-if="branche['table'][i - 1] == 'originrec' || branche['table'][i - 1] == 'originfb'">

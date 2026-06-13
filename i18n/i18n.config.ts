@@ -153,7 +153,8 @@ export default defineI18nConfig(() => ({
 			increment_rom: "增量更新ROM",
 			recovery_package: "卡刷包",
 			fastboot_package: "线刷包",
-			security_patch: "安全补丁级别",
+			aspatch: "安全补丁级别",
+			devdata: "设备数据",
 		},
 		en: {
 			home: "Home",
@@ -306,7 +307,8 @@ export default defineI18nConfig(() => ({
 			increment_rom: "Increment ROM",
 			recovery_package: "Recovery Package",
 			fastboot_package: "Fastboot Package",
-			security_patch: "Security Patch",
+			aspatch: "Security Patch",
+			devdata: "Device Data",
 		},
 	},
 }));

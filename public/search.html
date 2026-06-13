@@ -1123,7 +1123,13 @@
 
         const osTags = (device.osVersions || [])
           .filter(v => typeof v === 'string' && v.trim() !== '')
-          .slice(0, 3)
+          .sort((a, b) => {
+            const aIsHyperOS = a.startsWith('OS') || a.startsWith('HyperOS');
+            const bIsHyperOS = b.startsWith('OS') || b.startsWith('HyperOS');
+            if (aIsHyperOS && !bIsHyperOS) return -1;
+            if (!aIsHyperOS && bIsHyperOS) return 1;
+            return utils.compareVersion(b, a);
+          })
           .map(v => {
             const isHyperOS = v.startsWith('OS') || v.startsWith('HyperOS');
             return `<span class="tag ${isHyperOS ? 'hyperos' : 'miui'}">${utils.escape(v)}</span>`;
@@ -1131,7 +1137,7 @@
 
         const androidTags = (device.androidVersions || [])
           .filter(v => typeof v === 'string' && v.trim() !== '')
-          .slice(0, 2)
+          .sort((a, b) => utils.compareVersion(b, a))
           .map(v =>
             `<span class="tag android">Android ${utils.escape(v)}</span>`
           ).join('');
@@ -1251,12 +1257,13 @@
           <div class="table-wrap">
             <table class="rom-table">
               <thead>
-                <tr><th>版本号</th><th>Android</th><th>发布日期</th><th>下载</th></tr>
+                <tr><th>版本号</th><th>Android</th><th>安全补丁</th><th>发布日期</th><th>下载</th></tr>
               </thead>
               <tbody>
                 ${sorted.map(rom => {
           const version = source === 'hyperos' ? rom.os : rom.miui;
           const android = rom.android || '-';
+          const aspatch = rom.aspatch || 'N/A';
           const date = rom.release || '-';
 
           const recoveryUrl = rom.recovery
@@ -1267,9 +1274,10 @@
             : '';
 
           return `
-                    <tr class="rom-row" data-version="${utils.escape(version)}" data-android="${utils.escape(android)}" data-date="${utils.escape(date)}">
+                    <tr class="rom-row" data-version="${utils.escape(version)}" data-android="${utils.escape(android)}" data-aspatch="${utils.escape(aspatch)}" data-date="${utils.escape(date)}">
                       <td class="version">${utils.escape(version)}</td>
                       <td><span class="android">${utils.escape(android)}</span></td>
+                      <td class="date">${utils.escape(aspatch)}</td>
                       <td class="date">${utils.escape(date)}</td>
                       <td>
                         <div class="dl-btns">
@@ -1410,7 +1418,7 @@
           const matchOsVersion = osVersion === 'all' ||
             (d.osVersions && d.osVersions.some(v => typeof v === 'string' && v.toLowerCase().includes(osVersion.toLowerCase())));
           const matchAndroidVersion = androidVersion === 'all' ||
-            (d.androidVersions && d.androidVersions.some(v => typeof v === 'string' && v.toLowerCase().includes(androidVersion.toLowerCase())));
+            (d.androidVersions && d.androidVersions.some(v => typeof v === 'string' && v.trim().toLowerCase() === androidVersion.toLowerCase()));
 
           return matchKeyword && matchSource && matchBrand && matchOsVersion && matchAndroidVersion;
         });
