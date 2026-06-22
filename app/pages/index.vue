@@ -70,7 +70,7 @@
                 <li v-for="(device, code) in home['recent']['roms']" :key="code">
                   <a :href="('/' + locale + '/devices/' + code)" class="text-HyperBlue">{{ device.name[locale] }} ({{ code }})</a> :
                   <span v-for="(versionInfo, idx) in device.versions.slice().reverse()" :key="idx">
-                    {{ versionInfo.version }} <i style="color:gray">({{ versionInfo.release_date }})</i><span v-if="idx < device.versions.length - 1">, </span>
+                    {{ versionInfo.version }} <i style="color:gray">({{ versionInfo.insert_date }})</i><span v-if="idx < device.versions.length - 1">, </span>
                   </span>
                 </li>
               </ol>
