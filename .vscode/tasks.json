@@ -1,0 +1,76 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "run-getNewBranch",
+			"type": "shell",
+			"command": "python3",
+			"args": ["${workspaceFolder}/public/data/scripts/getNewBranch.py"],
+			"group": "build",
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "run-OTAFormer",
+			"type": "shell",
+			"command": "python3",
+			"args": ["${workspaceFolder}/public/data/scripts/OTAFormer.py"],
+			"group": "build",
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "run-OTAFull",
+			"type": "shell",
+			"command": "python3",
+			"args": ["${workspaceFolder}/public/data/scripts/OTAFull.py"],
+			"group": "build",
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "run-XFUFull",
+			"type": "shell",
+			"command": "python3",
+			"args": ["${workspaceFolder}/public/data/scripts/XFUFull.py"],
+			"group": "build",
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "run-getCurrentFastboot",
+			"type": "shell",
+			"command": "python3",
+			"args": ["${workspaceFolder}/public/data/scripts/getCurrentFastboot.py"],
+			"group": "build",
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "run-all-jobs",
+			"dependsOn": [
+				"run-getNewBranch",
+				"run-OTAFormer",
+				"run-OTAFull",
+				"run-XFUFull",
+				"run-getCurrentFastboot"
+			],
+			"problemMatcher": []
+		}
+	]
+}
