@@ -66,14 +66,14 @@
             <div><b>{{ $t('uptime') }} </b> <span>{{ home['recent']['time'] }}</span>
             </div>
             <div>
-              <ol style="margin-left:20px;">
-                <li v-for="(device, code) in home['recent']['roms']" :key="code">
-                  <a :href="('/' + locale + '/devices/' + code)" class="text-HyperBlue">{{ device.name[locale] }} ({{ code }})</a> :
-                  <span v-for="(versionInfo, idx) in device.versions.slice().reverse()" :key="idx">
-                    {{ versionInfo.version }} <i style="color:gray">({{ versionInfo.insert_date }})</i><span v-if="idx < device.versions.length - 1">, </span>
-                  </span>
-                </li>
-              </ol>
+              <div v-for="group in groupedRoms" :key="group.date">
+                <b>{{ group.date }}</b>
+                <ol style="padding-left:30px; margin-left:0; list-style-type: decimal-leading-zero;">
+                  <li v-for="entry in group.entries" :key="entry.code" style="padding-left:5px;">
+                    <a :href="('/' + locale + '/devices/' + entry.code)" class="text-HyperBlue">{{ entry.name[locale] }} ({{ entry.code }})</a> : {{ entry.versions.join('，') }}
+                  </li>
+                </ol>
+              </div>
             </div>
           </v-card-text>
         </v-card>
@@ -100,6 +100,7 @@ export default {
 </script>
 <script setup>
 import { useTheme } from 'vuetify'
+import { computed } from 'vue'
 let url = useRequestURL()
 const route = useRoute()
 let domain = url.hostname
@@ -116,4 +117,30 @@ const theme = useTheme();
 function toggleTheme() {
   theme.change(theme.current.dark ? 'light' : 'dark')
 }
+const groupedRoms = computed(() => {
+  const roms = home.value?.recent?.roms || {}
+  const groups = {}
+  Object.entries(roms).forEach(([code, device]) => {
+    device.versions.forEach((versionInfo) => {
+      const date = versionInfo.insert_date
+      if (!groups[date]) {
+        groups[date] = {}
+      }
+      if (!groups[date][code]) {
+        groups[date][code] = {
+          code,
+          name: device.name,
+          versions: []
+        }
+      }
+      groups[date][code].versions.push(versionInfo.version)
+    })
+  })
+  return Object.keys(groups)
+    .sort((a, b) => new Date(b) - new Date(a))
+    .map(date => ({
+      date,
+      entries: Object.values(groups[date])
+    }))
+})
 </script>
