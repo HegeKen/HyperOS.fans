@@ -62,13 +62,39 @@
 			"problemMatcher": []
 		},
 		{
+			"label": "run-aspatch",
+			"type": "shell",
+			"command": "python3",
+			"args": ["${workspaceFolder}/public/data/scripts/test.py"],
+			"group": "build",
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "run-Changelog",
+			"type": "shell",
+			"command": "python3",
+			"args": ["${workspaceFolder}/public/data/scripts/test2.py"],
+			"group": "build",
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			},
+			"problemMatcher": []
+		},
+		{
 			"label": "run-all-jobs",
 			"dependsOn": [
 				"run-getNewBranch",
 				"run-OTAFormer",
 				"run-OTAFull",
 				"run-XFUFull",
-				"run-getCurrentFastboot"
+				"run-getCurrentFastboot",
+				"run-aspatch",
+				"run-Changelog"
 			],
 			"problemMatcher": []
 		}
