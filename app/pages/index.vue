@@ -65,6 +65,8 @@
           <v-card-text>
             <div><b>{{ $t('uptime') }} </b> <span>{{ home['recent']['time'] }}</span>
             </div>
+            <div><b>{{ $t('buildtime') }} </b> <span>{{ formattedBuildTime }}</span>
+            </div>
             <div>
               <div v-for="group in groupedRoms" :key="group.date">
                 <b>{{ group.date }}</b>
@@ -117,6 +119,17 @@ const theme = useTheme();
 function toggleTheme() {
   theme.change(theme.current.dark ? 'light' : 'dark')
 }
+const buildTime = (typeof __BUILD_TIME__ !== 'undefined' ? __BUILD_TIME__ : '')
+const formattedBuildTime = computed(() => {
+  if (!buildTime) return ''
+  try {
+    const d = new Date(buildTime)
+    const pad = (n) => String(n).padStart(2, '0')
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`
+  } catch {
+    return buildTime
+  }
+})
 const groupedRoms = computed(() => {
   const roms = home.value?.recent?.roms || {}
   const groups = {}

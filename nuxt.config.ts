@@ -1,5 +1,7 @@
 import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 
+const buildTime = new Date().toISOString();
+
 export default defineNuxtConfig({
 	build: {
 		transpile: ["vuetify"],
@@ -40,7 +42,8 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		public: {
 			miuiApiUrl: process.env.MIUI_API_URL || "https://update.miui.com",
-			miuiIntlApiUrl: process.env.MIUI_INTL_API_URL || "https://update.intl.miui.com",
+			miuiIntlApiUrl:
+				process.env.MIUI_INTL_API_URL || "https://update.intl.miui.com",
 		},
 	},
 
@@ -64,13 +67,16 @@ export default defineNuxtConfig({
 		/* options for vite */
 		// ssr: true // enable unstable server-side rendering for development (false by default)
 		// experimentWarning: false // hide experimental warning message (disabled by default for tests)
+		define: {
+			__BUILD_TIME__: JSON.stringify(buildTime),
+		},
 		build: {
 			rollupOptions: {
 				output: {
 					manualChunks: (id: string) => {
-						if (id.includes('node_modules/.pnpm/vuetify')) return 'vuetify'
-						if (id.includes('node_modules/.pnpm/crypto-js')) return 'crypto-js'
-						if (id.includes('node_modules/.pnpm/@mdi')) return 'mdi-icons'
+						if (id.includes("node_modules/.pnpm/vuetify")) return "vuetify";
+						if (id.includes("node_modules/.pnpm/crypto-js")) return "crypto-js";
+						if (id.includes("node_modules/.pnpm/@mdi")) return "mdi-icons";
 					},
 				},
 			},
