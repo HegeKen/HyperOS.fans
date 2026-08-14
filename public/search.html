@@ -1207,10 +1207,10 @@
           items.push({ label: '其他名称', value: device.aliases.join(' / ') });
         }
 
-        if (hyperosData?.suppports?.length) {
+        if (hyperosData?.supports?.length) {
           items.push({
             label: 'HyperOS 版本',
-            value: [...hyperosData.suppports].sort(utils.compareVersion).reverse().join(', ')
+            value: [...hyperosData.supports].sort(utils.compareVersion).reverse().join(', ')
           });
         }
 
