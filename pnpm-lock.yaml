@@ -26,6 +26,9 @@ importers:
       '@nuxtjs/sitemap':
         specifier: ^8.3.4
         version: 8.3.4(be83c5a18432ed789e269d6a470c6d0c)
+      crypto-js:
+        specifier: ^4.2.0
+        version: 4.2.0
       vite:
         specifier: ^8.2.2
         version: 8.2.2(@types/node@26.2.0)(esbuild@0.28.1)(jiti@2.7.0)(sass@1.103.0)(terser@5.49.0)(yaml@2.9.0)
@@ -2073,6 +2076,10 @@ packages:
     peerDependenciesMeta:
       srvx:
         optional: true
+
+  crypto-js@4.2.0:
+    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
+    deprecated: Active development of CryptoJS has been discontinued. This library is no longer maintained.
 
   css-select@5.2.2:
     resolution: {integrity: sha512-TizTzUddG/xYLA3NXodFM0fSbNizXjOKhqiQQwvhlspadZokn1KDy0NZFS0wuEubIYAV5/c1/lAr0TaaFXEXzw==}
@@ -6360,6 +6367,8 @@ snapshots:
   crossws@0.4.10(srvx@0.11.22):
     optionalDependencies:
       srvx: 0.11.22
+
+  crypto-js@4.2.0: {}
 
   css-select@5.2.2:
     dependencies:

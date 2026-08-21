@@ -28,10 +28,10 @@
           <v-icon icon="mdi-arrow-up" class="text-tab_text" aria-hidden="true"></v-icon>
           <span class="text-capitalize text-tab_text">{{ $t('top') }}</span>
         </v-tab>
-        <v-btn @click="toggleTheme" class="text-tab_text" variant="text">
+        <v-tab @click="toggleTheme" class="text-tab_text" variant="text">
           <v-icon icon="mdi-theme-light-dark" class="text-tab_text" aria-hidden="true"></v-icon>
           <span class="text-capitalize text-tab_text">{{ $t('changetheme') }}</span>
-        </v-btn>
+        </v-tab>
       </v-tabs>
     </v-app-bar>
     <br /><br />
