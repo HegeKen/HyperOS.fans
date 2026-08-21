@@ -1,36 +1,37 @@
 <template>
   <div v-if="$device.isDesktopOrTablet">
+    <a class="skip-link" href="#main-content">{{ $t('skip_to_content') }}</a>
     <v-app-bar :elevation="2" rounded>
       <v-app-bar-title>
-        <b>Hyper<span class="text-HyperBlue">OS</span>.fans</b>
+        <NuxtLink :to="localePath('/')" class="brand-link" :aria-label="'HyperOS.fans - ' + $t('home')">
+          <b>Hyper<span class="text-HyperBlue">OS</span>.fans</b>
+        </NuxtLink>
       </v-app-bar-title>
       <v-tabs v-model="tab" stacked class="text-HyperBlue NavLinks">
-        <a v-for="(item, i) in items" :key="i" :value="item" :href="('/' + locale + '/' + item['path'])">
-          <v-tab>
-            <v-icon :icon="item['icon']" class="text-tab_text"></v-icon>
-            <span v-text="item[locale]" class="text-capitalize text-tab_text"></span>
-          </v-tab>
-        </a>
-        <NuxtLink v-for="locale in availableLocales" :key="locale['code']" :to="switchLocalePath(locale['code'])" color="#2655ff"><v-tab value="translate">
-            <v-icon icon="mdi-translate" class="text-tab_text"></v-icon>
-            <span class="text-capitalize text-tab_text">{{ $t('lang') }}</span>
-          </v-tab></NuxtLink>
-        <a :href="'/' + locale + '/dev'" class="text-tab_text"><v-tab value="totop">
-            <v-icon icon="mdi-dev-to" class="text-tab_text"></v-icon>
-            <span class="text-capitalize text-tab_text">{{ $t('dev') }}</span>
-          </v-tab></a>
-        <a href="/search.html" class="text-tab_text"><v-tab value="totop">
-            <v-icon icon="mdi-magnify" class="text-tab_text"></v-icon>
-            <span class="text-capitalize text-tab_text">{{ $t('search') }}</span>
-          </v-tab></a>
-        <a href="#top" class="text-tab_text"><v-tab value="totop">
-            <v-icon icon="mdi-arrow-up" class="text-tab_text"></v-icon>
-            <span class="text-capitalize text-tab_text">{{ $t('top') }}</span>
-          </v-tab></a>
-        <v-tab @click="toggleTheme">
-          <v-icon icon="mdi-theme-light-dark" class="text-tab_text"></v-icon>
-          <span class="text-capitalize text-tab_text">{{ $t('changetheme') }}</span>
+        <v-tab v-for="(item, i) in items" :key="i" :value="item" :to="'/' + locale + '/' + item['path']">
+          <v-icon :icon="item['icon']" class="text-tab_text" aria-hidden="true"></v-icon>
+          <span v-text="item[locale]" class="text-capitalize text-tab_text"></span>
         </v-tab>
+        <v-tab v-for="l in availableLocales" :key="l['code']" :to="switchLocalePath(l['code'])" :aria-label="'HyperOS.fans - ' + $t('lang')">
+          <v-icon icon="mdi-translate" class="text-tab_text" aria-hidden="true"></v-icon>
+          <span class="text-capitalize text-tab_text">{{ $t('lang') }}</span>
+        </v-tab>
+        <v-tab :to="'/' + locale + '/dev'">
+          <v-icon icon="mdi-dev-to" class="text-tab_text" aria-hidden="true"></v-icon>
+          <span class="text-capitalize text-tab_text">{{ $t('dev') }}</span>
+        </v-tab>
+        <v-tab href="/search.html">
+          <v-icon icon="mdi-magnify" class="text-tab_text" aria-hidden="true"></v-icon>
+          <span class="text-capitalize text-tab_text">{{ $t('search') }}</span>
+        </v-tab>
+        <v-tab href="#top">
+          <v-icon icon="mdi-arrow-up" class="text-tab_text" aria-hidden="true"></v-icon>
+          <span class="text-capitalize text-tab_text">{{ $t('top') }}</span>
+        </v-tab>
+        <v-btn @click="toggleTheme" class="text-tab_text" variant="text">
+          <v-icon icon="mdi-theme-light-dark" class="text-tab_text" aria-hidden="true"></v-icon>
+          <span class="text-capitalize text-tab_text">{{ $t('changetheme') }}</span>
+        </v-btn>
       </v-tabs>
     </v-app-bar>
     <br /><br />
@@ -39,41 +40,44 @@
     <!-- PC Nav -->
   </div>
   <div v-else>
+    <a class="skip-link" href="#main-content">{{ $t('skip_to_content') }}</a>
     <v-app-bar elevation="2" rounded>
-      <v-btn icon="mdi-menu" @click.stop="drawer = !drawer"></v-btn>
-      <v-app-bar-title><b>Hyper<span class="text-HyperBlue">OS</span>.fans</b></v-app-bar-title>
+      <v-btn icon="mdi-menu" :aria-label="$t('nav_menu')" :aria-expanded="drawer ? 'true' : 'false'" aria-controls="nav-drawer" @click.stop="drawer = !drawer"></v-btn>
+      <v-app-bar-title>
+        <NuxtLink :to="localePath('/')" class="brand-link" :aria-label="'HyperOS.fans - ' + $t('home')">
+          <b>Hyper<span class="text-HyperBlue">OS</span>.fans</b>
+        </NuxtLink>
+      </v-app-bar-title>
     </v-app-bar>
-    <v-navigation-drawer v-model="drawer">
+    <v-navigation-drawer v-model="drawer" id="nav-drawer" :aria-label="$t('nav_menu')">
       <v-list>
-        <a v-for="(item, i) in items" :key="i" :value="item" :href="('/' + locale + '/' + item['path'])">
-          <v-list-item class="NavLinks text-capitalize text-tab_text">
-            <template v-slot:prepend>
-              <v-icon :icon="item['icon']" class="text-tab_text"></v-icon>
-            </template>
-            <v-list-item-title v-text="item[locale]" class="text-tab_text"></v-list-item-title>
-          </v-list-item>
-        </a>
-        <a class="text-capitalize NavLinks" :href="'/' + locale + '/dev'"><v-list-item value="dev">
-            <template v-slot:prepend>
-              <v-icon icon="mdi-dev-to" class="text-tab_text"></v-icon>
-            </template>
-            <v-list-item-title class="text-tab_text">{{ $t('dev') }}</v-list-item-title>
-          </v-list-item></a>
-        <a class="text-capitalize NavLinks" href="/search.html"><v-list-item value="search">
-            <template v-slot:prepend>
-              <v-icon icon="mdi-magnify" class="text-tab_text"></v-icon>
-            </template>
-            <v-list-item-title class="text-tab_text">{{ $t('search') }}</v-list-item-title>
-          </v-list-item></a>
-        <a class="text-capitalize NavLinks" v-for="locale in availableLocales" :key="locale['code']" :href="switchLocalePath(locale['code'])"><v-list-item value="translate">
-            <template v-slot:prepend>
-              <v-icon icon="mdi-translate" class="text-tab_text"></v-icon>
-            </template>
-            <v-list-item-title :v-text="$t('lang')" class="text-tab_text">{{ $t('lang') }}</v-list-item-title>
-          </v-list-item></a>
-        <v-list-item class="NavLinks text-capitalize text-tab_text" @click="toggleTheme">
+        <v-list-item v-for="(item, i) in items" :key="i" :to="'/' + locale + '/' + item['path']" class="NavLinks text-capitalize text-tab_text">
           <template v-slot:prepend>
-            <v-icon icon="mdi-theme-light-dark" class="text-tab_text"></v-icon>
+            <v-icon :icon="item['icon']" class="text-tab_text" aria-hidden="true"></v-icon>
+          </template>
+          <v-list-item-title v-text="item[locale]" class="text-tab_text"></v-list-item-title>
+        </v-list-item>
+        <v-list-item :to="'/' + locale + '/dev'" class="text-capitalize NavLinks">
+          <template v-slot:prepend>
+            <v-icon icon="mdi-dev-to" class="text-tab_text" aria-hidden="true"></v-icon>
+          </template>
+          <v-list-item-title class="text-tab_text">{{ $t('dev') }}</v-list-item-title>
+        </v-list-item>
+        <v-list-item href="/search.html" class="text-capitalize NavLinks">
+          <template v-slot:prepend>
+            <v-icon icon="mdi-magnify" class="text-tab_text" aria-hidden="true"></v-icon>
+          </template>
+          <v-list-item-title class="text-tab_text">{{ $t('search') }}</v-list-item-title>
+        </v-list-item>
+        <v-list-item v-for="l in availableLocales" :key="l['code']" :to="switchLocalePath(l['code'])" class="text-capitalize NavLinks" :aria-label="'HyperOS.fans - ' + $t('lang')">
+          <template v-slot:prepend>
+            <v-icon icon="mdi-translate" class="text-tab_text" aria-hidden="true"></v-icon>
+          </template>
+          <v-list-item-title v-text="$t('lang')" class="text-tab_text"></v-list-item-title>
+        </v-list-item>
+        <v-list-item class="NavLinks text-capitalize text-tab_text" role="button" tabindex="0" @click="toggleTheme" @keydown.enter.prevent="toggleTheme" @keydown.space.prevent="toggleTheme">
+          <template v-slot:prepend>
+            <v-icon icon="mdi-theme-light-dark" class="text-tab_text" aria-hidden="true"></v-icon>
           </template>
           <v-list-item-title class="text-tab_text">{{ $t('changetheme') }}</v-list-item-title>
         </v-list-item>
@@ -106,6 +110,7 @@ import { onMounted } from 'vue'
 import { useTheme } from 'vuetify'
 const { locale, locales } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
+const localePath = useLocalePath()
 const availableLocales = computed(() => {
   return (locales.value).filter(i => i.code !== locale.value)
 })

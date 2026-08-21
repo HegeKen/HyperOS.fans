@@ -24,21 +24,6 @@ export default defineNuxtConfig({
 		},
 	],
 
-	devServer: {
-		proxy: {
-			"/api/miui": {
-				target: "https://update.miui.com",
-				changeOrigin: true,
-				pathRewrite: { "^/api/miui": "" },
-			},
-			"/api/miui-intl": {
-				target: "https://update.intl.miui.com",
-				changeOrigin: true,
-				pathRewrite: { "^/api/miui-intl": "" },
-			},
-		},
-	},
-
 	runtimeConfig: {
 		public: {
 			miuiApiUrl: process.env.MIUI_API_URL || "https://update.miui.com",
@@ -75,7 +60,6 @@ export default defineNuxtConfig({
 				output: {
 					manualChunks: (id: string) => {
 						if (id.includes("node_modules/.pnpm/vuetify")) return "vuetify";
-						if (id.includes("node_modules/.pnpm/crypto-js")) return "crypto-js";
 						if (id.includes("node_modules/.pnpm/@mdi")) return "mdi-icons";
 					},
 				},

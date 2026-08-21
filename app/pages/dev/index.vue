@@ -1,17 +1,19 @@
 <template>
-  <title>{{ $t('devtitle') }} - HyperOS.fans</title>
+  <Title>{{ $t('devtitle') }} - HyperOS.fans</Title>
   <v-app>
-    <div id="top"></div>
+    <div id="top" tabindex="-1"></div>
     <Nav></Nav>
-    <v-card v-for="os in data['HyperOS']" elevation="2">
-      <v-card-item style="padding:0px;">
-        <v-container fluid>
-          <a v-for="dev in os['weeks']" :href="('/' + locale + '/dev/' + dev)" class="text-HyperBlue" style="margin-right: 5px;">
-            <v-chip style="margin-top:5px;margin-right:5px;">{{ $t('num') }}{{ dev }}{{ $t('week') }}</v-chip>
-          </a>
-        </v-container>
-      </v-card-item>
-    </v-card>
+    <main id="main-content" tabindex="-1">
+      <v-card v-for="(os, osIndex) in data['HyperOS']" :key="osIndex" elevation="2">
+        <v-card-item style="padding:0px;">
+          <v-container fluid>
+            <a v-for="(dev, devIndex) in os['weeks']" :key="devIndex" :href="('/' + locale + '/dev/' + dev)" class="text-HyperBlue" style="margin-right: 5px;">
+              <v-chip style="margin-top:5px;margin-right:5px;">{{ $t('num') }}{{ dev }}{{ $t('week') }}</v-chip>
+            </a>
+          </v-container>
+        </v-card-item>
+      </v-card>
+    </main>
     <Space></Space>
     <Footer></Footer>
   </v-app>

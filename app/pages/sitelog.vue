@@ -1,28 +1,30 @@
 <template>
-  <title>{{ $t('sitelog') }} - HyperOS.fans</title>
+  <Title>{{ $t('sitelog') }} - HyperOS.fans</Title>
   <v-app>
-    <div id="top"></div>
+    <div id="top" tabindex="-1"></div>
     <Nav></Nav>
-    <v-timeline align="start" size="large" side="end">
-      <v-timeline-item v-for="(elog) in sitelog['logs']" dot-color="#2655ff" fill-dot :icon="elog['icon']">
-        <v-card elevation="2">
-          <v-card-item>
-            <v-card-title class="text-HyperBlue">
-              {{ $t('sitev') }} {{ elog['siteVer'] }}
-            </v-card-title>
-          </v-card-item>
-          <v-card-text>
-            <div><b>{{ $t('time') }}</b> {{ elog['date'] }}</div>
-            <div><b>{{ $t('log') }}</b>
-              <ol style="margin-left:20px;">
-                <li v-for="(log) in elog['log']">{{ log[locale] }}</li>
-              </ol>
-            </div>
-          </v-card-text>
-        </v-card>
-        <Space></Space>
-      </v-timeline-item>
-    </v-timeline>
+    <main id="main-content" tabindex="-1">
+      <v-timeline align="start" size="large" side="end">
+        <v-timeline-item v-for="(elog, i) in sitelog['logs']" :key="i" dot-color="#2655ff" fill-dot :icon="elog['icon']">
+          <v-card elevation="2">
+            <v-card-item>
+              <v-card-title class="text-HyperBlue">
+                {{ $t('sitev') }} {{ elog['siteVer'] }}
+              </v-card-title>
+            </v-card-item>
+            <v-card-text>
+              <div><b>{{ $t('time') }}</b> {{ elog['date'] }}</div>
+              <div><b>{{ $t('log') }}</b>
+                <ol style="margin-left:20px;">
+                  <li v-for="(log, logIndex) in elog['log']" :key="logIndex">{{ log[locale] }}</li>
+                </ol>
+              </div>
+            </v-card-text>
+          </v-card>
+          <Space></Space>
+        </v-timeline-item>
+      </v-timeline>
+    </main>
     <Space></Space>
     <Footer></Footer>
   </v-app>

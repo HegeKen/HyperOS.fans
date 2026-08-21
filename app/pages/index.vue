@@ -1,91 +1,97 @@
 <template>
   <v-app>
-    <div id="top"></div>
+    <div id="top" tabindex="-1"></div>
     <span v-if="home['recent']['developing'] == 'no'">
-      <title>{{ $t('hometitle') }} - HyperOS.fans</title>
+      <Title>{{ $t('hometitle') }} - HyperOS.fans</Title>
       <ClientOnly>
         <Nav></Nav>
       </ClientOnly>
-      <v-card elevation="2">
-        <v-card-item>
-          <v-card-title class="text-HyperBlue">
-            {{ $t('sitev') }} {{ sitelog['logs'][0]['siteVer'] }}
-          </v-card-title>
-        </v-card-item>
-        <v-card-text>
-          <div><b>{{ $t('time') }}</b> {{ sitelog['logs'][0]['date'] }}</div>
-          <div><b>{{ $t('log') }}</b>
-            <ol style="margin-left:20px;">
-              <li v-for="(log) in sitelog['logs'][0]['log']">{{ log[locale] }}</li>
-            </ol>
-          </div>
-        </v-card-text>
-      </v-card>
-      <Space></Space>
-      <ClientOnly>
-        <v-card elevation="2" class="MIUI" href="https://roms.miuier.com">
+      <main id="main-content" tabindex="-1">
+        <v-card elevation="2">
           <v-card-item>
-            <v-card-title>
-              {{ $t('miuiroms') }}
+            <v-card-title class="text-HyperBlue">
+              {{ $t('sitev') }} {{ sitelog['logs'][0]['siteVer'] }}
             </v-card-title>
           </v-card-item>
           <v-card-text>
-            <div><b>{{ $t('href') }}</b> <a href="https://roms.miuier.com" class="MIUI">{{ $t('miuisite') }}</a> </div>
+            <div><b>{{ $t('time') }}</b> {{ sitelog['logs'][0]['date'] }}</div>
+            <div><b>{{ $t('log') }}</b>
+              <ol style="margin-left:20px;">
+                <li v-for="(log, logIndex) in sitelog['logs'][0]['log']" :key="logIndex">{{ log[locale] }}</li>
+              </ol>
+            </div>
           </v-card-text>
         </v-card>
-      </ClientOnly>
-      <Space></Space>
-      <!-- <v-card elevation="2">
-      <v-card-title class="text-HyperBlue">
-        {{ $t('dev') }}
-      </v-card-title>
-      <v-card-text>
-        <div><b>{{ $t('latedev') }}</b>
-          <NuxtLink :to="('/'+locale + '/dev/' + latest.week)" class="text-HyperBlue">{{ latest.title[locale] }}</NuxtLink>
-        </div>
-        <div>
-          <b v-show="latest.show == 'yes'">{{ $t('supported') }}</b>
-          <span v-for="({ device, name, rom }, index) in latest.roms" style="padding-left:10px;" v-show="latest.show == 'yes'">
-            <span v-if="index < latest.roms.length - 1" v-show="rom.recovery != ''">
-              <NuxtLink :to="('/' + locale + '/devices/' + device)" class="text-HyperBlue" style="text-indent: 20px;">{{ name[locale] }}</NuxtLink>&nbsp;;
+        <Space></Space>
+        <ClientOnly>
+          <v-card elevation="2" class="MIUI" href="https://roms.miuier.com">
+            <v-card-item>
+              <v-card-title>
+                {{ $t('miuiroms') }}
+              </v-card-title>
+            </v-card-item>
+            <v-card-text>
+              <div><b>{{ $t('href') }}</b> <a href="https://roms.miuier.com" class="MIUI">{{ $t('miuisite') }}</a> </div>
+            </v-card-text>
+          </v-card>
+        </ClientOnly>
+        <Space></Space>
+        <!-- <v-card elevation="2">
+        <v-card-title class="text-HyperBlue">
+          {{ $t('dev') }}
+        </v-card-title>
+        <v-card-text>
+          <div><b>{{ $t('latedev') }}</b>
+            <NuxtLink :to="('/'+locale + '/dev/' + latest.week)" class="text-HyperBlue">{{ latest.title[locale] }}</NuxtLink>
+          </div>
+          <div>
+            <b v-show="latest.show == 'yes'">{{ $t('supported') }}</b>
+            <span v-for="({ device, name, rom }, index) in latest.roms" style="padding-left:10px;" v-show="latest.show == 'yes'">
+              <span v-if="index < latest.roms.length - 1" v-show="rom.recovery != ''">
+                <NuxtLink :to="('/' + locale + '/devices/' + device)" class="text-HyperBlue" style="text-indent: 20px;">{{ name[locale] }}</NuxtLink>&nbsp;;
+              </span>
+              <span v-else v-show="rom.recovery != ''">
+                <NuxtLink :to="('/' + locale + '/devices/' + device)" class="text-HyperBlue" style="text-indent: 20px;">{{ name[locale] }}</NuxtLink>
+              </span>
             </span>
-            <span v-else v-show="rom.recovery != ''">
-              <NuxtLink :to="('/' + locale + '/devices/' + device)" class="text-HyperBlue" style="text-indent: 20px;">{{ name[locale] }}</NuxtLink>
-            </span>
-          </span>
-        </div>
-      </v-card-text>
-    </v-card>
-    <Space></Space> -->
-      <ClientOnly>
-        <v-card elevation="2" v-show="home['recent']['roms'] && Object.keys(home['recent']['roms']).length > 0">
-          <v-card-title class="text-HyperBlue">
-            {{ $t('update') }}
-          </v-card-title>
-          <v-card-text>
-            <div><b>{{ $t('uptime') }} </b> <span>{{ home['recent']['time'] }}</span>
-            </div>
-            <div><b>{{ $t('buildtime') }} </b> <span>{{ formattedBuildTime }}</span>
-            </div>
-            <div>
-              <div v-for="group in groupedRoms" :key="group.date">
-                <b>{{ group.date }}</b>
-                <ol style="padding-left:30px; margin-left:0; list-style-type: decimal-leading-zero;">
-                  <li v-for="entry in group.entries" :key="entry.code" style="padding-left:5px;">
-                    <a :href="('/' + locale + '/devices/' + entry.code)" class="text-HyperBlue">{{ entry.name[locale] }} ({{ entry.code }})</a> : {{ entry.versions.join('，') }}
-                  </li>
-                </ol>
+          </div>
+        </v-card-text>
+      </v-card>
+      <Space></Space> -->
+        <ClientOnly>
+          <v-card elevation="2" v-show="home['recent']['roms'] && Object.keys(home['recent']['roms']).length > 0">
+            <v-card-title class="text-HyperBlue">
+              {{ $t('update') }}
+            </v-card-title>
+            <v-card-text>
+              <div><b>{{ $t('uptime') }} </b> <span>{{ home['recent']['time'] }}</span>
               </div>
-            </div>
-          </v-card-text>
-        </v-card>
+              <div><b>{{ $t('buildtime') }} </b> <span>{{ formattedBuildTime }}</span>
+              </div>
+              <div>
+                <div v-for="group in groupedRoms" :key="group.date">
+                  <b>{{ group.date }}</b>
+                  <ol style="padding-left:30px; margin-left:0; list-style-type: decimal-leading-zero;">
+                    <li v-for="entry in group.entries" :key="entry.code" style="padding-left:5px;">
+                      <a :href="('/' + locale + '/devices/' + entry.code)" class="text-HyperBlue">{{ entry.name[locale] }} ({{ entry.code }})</a> : {{ entry.versions.join('，') }}
+                    </li>
+                  </ol>
+                </div>
+              </div>
+            </v-card-text>
+          </v-card>
+        </ClientOnly>
+      </main>
+      <ClientOnly>
         <Space></Space>
         <Footer></Footer>
       </ClientOnly>
     </span>
     <span v-else>
-      <title>{{ $t('dev_title') }} - HyperOS.fans</title>
-      <div class="developing">{{ $t('developing') }}</div>
+      <Title>{{ $t('dev_title') }} - HyperOS.fans</Title>
+      <main id="main-content" tabindex="-1">
+        <div class="developing">{{ $t('developing') }}</div>
+      </main>
     </span>
   </v-app>
 </template>

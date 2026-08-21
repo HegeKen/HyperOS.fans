@@ -5,25 +5,19 @@
   </div>
   <div v-else class="NavLinks">
     <br /><br /><br />
-    <v-bottom-navigation horizontal style="padding-bottom: 80px;">
-      <a v-for="(item) in items" :href="('/' + locale + '/' + item['path'])">
-        <v-btn>
-          <v-icon class="text-tab_text">{{ item['icon'] }}</v-icon>
-          <span class="text-capitalize text-tab_text">{{ item[locale] }}</span>
-        </v-btn>
-      </a>
-      <a href="/search.html">
-        <v-btn>
-          <v-icon class="text-tab_text">mdi-magnify</v-icon>
-          <span class="text-capitalize text-tab_text">{{ $t('search') }}</span>
-        </v-btn>
-      </a>
-      <a href="#top">
-        <v-btn>
-          <v-icon class="text-tab_text">mdi-arrow-up</v-icon>
-          <span class="text-capitalize text-tab_text">{{ $t('top') }}</span>
-        </v-btn>
-      </a>
+    <v-bottom-navigation horizontal style="padding-bottom: 80px;" :aria-label="$t('footer_nav')">
+      <v-btn v-for="(item) in items" :key="item.path" :href="'/' + locale + '/' + item['path']">
+        <v-icon class="text-tab_text" aria-hidden="true">{{ item['icon'] }}</v-icon>
+        <span class="text-capitalize text-tab_text">{{ item[locale] }}</span>
+      </v-btn>
+      <v-btn href="/search.html">
+        <v-icon class="text-tab_text" aria-hidden="true">mdi-magnify</v-icon>
+        <span class="text-capitalize text-tab_text">{{ $t('search') }}</span>
+      </v-btn>
+      <v-btn href="#top">
+        <v-icon class="text-tab_text" aria-hidden="true">mdi-arrow-up</v-icon>
+        <span class="text-capitalize text-tab_text">{{ $t('top') }}</span>
+      </v-btn>
     </v-bottom-navigation>
     <Space></Space>
     <Space></Space>

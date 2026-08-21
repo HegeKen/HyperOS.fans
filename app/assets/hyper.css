@@ -131,3 +131,80 @@ b {
 .text-HyperBlue {
 	color: #2655ff;
 }
+
+/* ============ Accessibility ============ */
+
+/* Visually-hidden text (for screen readers only) */
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* Skip-to-content link: hidden until keyboard focus */
+.skip-link {
+	position: absolute;
+	left: -9999px;
+	top: auto;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	z-index: 10000;
+}
+.skip-link:focus {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: auto;
+	height: auto;
+	padding: 12px 20px;
+	background: #2655ff;
+	color: #ffffff;
+	font-size: 16px;
+	text-decoration: none;
+	outline: 3px solid #ffffff;
+	outline-offset: -3px;
+}
+
+/* Visible, consistent keyboard focus indicator */
+:focus-visible {
+	outline: 2px solid #2655ff;
+	outline-offset: 2px;
+}
+
+/* Brand link inside the app bar */
+.brand-link {
+	color: inherit;
+	text-decoration: none;
+}
+
+/* Whole-card link in device list: block-level, inherits card colors */
+.device-card-link {
+	display: block;
+	color: inherit;
+	text-decoration: none;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+/* Dark theme: lighten links & brand accents for sufficient contrast on dark bg */
+.v-theme--dark a,
+.v-theme--dark .text-HyperBlue {
+	color: #8ea2ff;
+}
