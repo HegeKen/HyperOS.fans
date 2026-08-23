@@ -131,6 +131,25 @@ b {
 .text-HyperBlue {
 	color: #2655ff;
 }
+.hub-banner-link {
+	display: block;
+	text-decoration: none;
+	color: inherit;
+}
+.hub-banner {
+	cursor: pointer;
+	transition: box-shadow 0.2s, transform 0.2s;
+}
+.hub-banner:hover {
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+	transform: translateY(-1px);
+}
+.hub-banner-highlight {
+	color: #ff6900;
+}
+.hub-banner-sep {
+	opacity: 0.4;
+}
 
 /* ============ Accessibility ============ */
 

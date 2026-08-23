@@ -7,6 +7,18 @@
         <Nav></Nav>
       </ClientOnly>
       <main id="main-content" tabindex="-1">
+        <ClientOnly>
+          <a href="https://hub.miuier.com" target="_blank" rel="noopener noreferrer" class="hub-banner-link">
+            <v-alert type="info" variant="tonal" rounded="lg" class="hub-banner" border="start" border-color="amber-darken-2">
+              <div class="d-flex align-center flex-wrap">
+                <v-icon icon="mdi-open-in-new" size="20" class="mr-2" color="amber-darken-2"></v-icon>
+                <span class="text-subtitle-1 font-weight-bold mr-2 hub-banner-highlight">MiROMs HUB</span>
+                <span class="mr-2 hub-banner-sep">|</span>
+                <span>{{ $t('hubBanner') }}</span>
+              </div>
+            </v-alert>
+          </a>
+        </ClientOnly>
         <v-card elevation="2">
           <v-card-item>
             <v-card-title class="text-HyperBlue">
