@@ -71,6 +71,7 @@ export default defineI18nConfig(() => ({
 			release: "发布日期",
 			tips: "提速方法",
 			hubBanner: "新版 ROM 固件查询网站已上线 Beta，欢迎体验！",
+			hubBannerLink: "MiROMS HUB - ROM 固件查询",
 			fix403: "修复403提示",
 			method1: "方法一：",
 			"1step1": "找到hosts文件或者路由器的hosts编辑页面",
@@ -235,6 +236,7 @@ export default defineI18nConfig(() => ({
 			tips: "Speed up tips",
 			hubBanner:
 				"New ROM firmware lookup site is now in Beta, come and try it out!",
+			hubBannerLink: "MiROMS HUB - ROM Firmware Lookup",
 			fix403: "Fix 403",
 			method1: "Method 1 :",
 			"1step1":
