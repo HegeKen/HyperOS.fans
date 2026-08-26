@@ -94,6 +94,8 @@ export default defineNuxtConfig({
 
 		// Nitro 启动后预热各 locale sitemap（源为本地文件，预热开销极小），首次请求不再慢。
 		experimentalWarmUp: true,
+
+		zeroRuntime: true, // 预热后，sitemap 生成过程在服务端完全消失，客户端请求时直接返回缓存数据
 	},
 
 	compatibilityDate: "2025-05-08",
