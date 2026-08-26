@@ -25,8 +25,8 @@ importers:
         specifier: ^7.4.47
         version: 7.4.47
       '@nuxtjs/sitemap':
-        specifier: ^8.4.0
-        version: 8.4.0(037e4254b04777cce15b83daec76875c)
+        specifier: ^8.5.0
+        version: 8.5.0(037e4254b04777cce15b83daec76875c)
       crypto-js:
         specifier: ^4.2.0
         version: 4.2.0
@@ -868,8 +868,8 @@ packages:
     resolution: {integrity: sha512-20YXYOcc8cSh/pSpNgj+MHAn11qUbsFR1IBJh6qYtRPVhUUmgqJ1DyMu39MB+uEYYL/fsberL2ByMYrFaROslw==}
     engines: {node: '>=20.11.1'}
 
-  '@nuxtjs/sitemap@8.4.0':
-    resolution: {integrity: sha512-9XUGJDsV7UWPzXH1vlfWn0NaniJ+Lv2xFa/Bph6PgXbBCnIrfedy4su+/uiEKWx+KhWD+UwleE2greWVdAao8g==}
+  '@nuxtjs/sitemap@8.5.0':
+    resolution: {integrity: sha512-DfhUZzP29Wzr9ro3L2mBpYUocmLBKvGDAGThvLdHWKGR1kBFnbY5VBhJaZG4Jeuba5gVKCpDzH9PhKNW11d46Q==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       zod: '>=3'
@@ -5365,7 +5365,7 @@ snapshots:
       - vue
       - webpack
 
-  '@nuxtjs/sitemap@8.4.0(037e4254b04777cce15b83daec76875c)':
+  '@nuxtjs/sitemap@8.5.0(037e4254b04777cce15b83daec76875c)':
     dependencies:
       '@nuxt/kit': 4.5.2(magic-string@1.1.0)(magicast@0.5.4)(oxc-parser@0.141.0)(rolldown@1.2.5)(unplugin@3.3.0(esbuild@0.28.1)(rolldown@1.2.5)(rollup@4.62.2)(vite@8.2.2(@types/node@26.2.0)(esbuild@0.28.1)(jiti@2.7.0)(sass@1.103.1)(terser@5.49.0)(yaml@2.9.0)))
       consola: 3.4.2

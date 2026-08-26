@@ -75,6 +75,25 @@ export default defineNuxtConfig({
 
 	site: {
 		url: "https://hyperos.fans",
+		name: "HyperOS.fans",
+	},
+
+	sitemap: {
+		// 为自动扫描到的页面（如 /、/dev、/devices、/sitelog、/source、/tips/403）自动填充 lastmod
+		autoLastmod: true,
+
+		// 生产环境 SWR 缓存 1 小时（默认 10 分钟）。sitemap 数据来自本地 public/data，随部署更新，
+		// 调高 TTL 可显著降低源站与序列化压力。
+		cacheMaxAgeSeconds: 3600,
+
+		// 流式序列化：按 ~64KB 分块输出 XML，避免完整 XML 字符串驻留内存。
+		experimentalStreaming: true,
+
+		// 客户端支持时流式 gzip/deflate 压缩（不支持 CompressionStream 的运行时自动降级）。
+		experimentalCompression: true,
+
+		// Nitro 启动后预热各 locale sitemap（源为本地文件，预热开销极小），首次请求不再慢。
+		experimentalWarmUp: true,
 	},
 
 	compatibilityDate: "2025-05-08",
