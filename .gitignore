@@ -4,3 +4,5 @@ dist
 /.output
 .DS_Store
 .pnpm-store
+public/data/scripts/logs/launchd.err.log
+public/data/scripts/logs/launchd.out.log

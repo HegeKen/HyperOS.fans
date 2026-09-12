@@ -38,7 +38,7 @@ export default defineI18nConfig(() => ({
 			source: "源代码与数据源",
 			top: "返回顶部",
 			lang: "English",
-			hometitle: "小米澎湃OS3, 已经公开发布，欢迎使用。",
+			hometitle: "小米澎湃OS4, 现已开始内测，欢迎使用。",
 			devlist: "小米澎湃OS机型列表",
 			rompage: "澎湃OS官方刷机包下载",
 			getitdown: "下载",
@@ -46,6 +46,7 @@ export default defineI18nConfig(() => ({
 			disclaimerlong:
 				"本网站非小米集团旗下网站 . 我们与小米集团以及HyperOS开发团队没有任何联系",
 			disclaimer: "非小米旗下网站",
+			helilab: "合理实验室",
 			gotomiui: "，点击前往获取：",
 			miuier: " - MIUI官方ROM仓库",
 			miuisite: "MIUI官方ROM仓库",
@@ -205,7 +206,7 @@ export default defineI18nConfig(() => ({
 			lang: "中文",
 			no: "No",
 			hometitle:
-				"Xiaomi HyperOS3, has been released for testing! Welcome to use!",
+				"Xiaomi HyperOS4, has been released for testing! Welcome to use!",
 			devlist: "Device list for Xiaomi HyperOS",
 			rompage: "Xiaomi HyperOS Official ROMs for",
 			getitdown: "Download",
@@ -213,6 +214,7 @@ export default defineI18nConfig(() => ({
 			disclaimerlong:
 				"This Website is NOT A Xiaomi Website. We are not affiliated with Xiaomi Corp. or HyperOS Development Team in any way.",
 			disclaimer: "This is NOT a Xiaomi Website.",
+			helilab: "HELILAB",
 			gotomiui: ", go to the MIUI site: ",
 			miuier: " - MIUI Official ROMs",
 			miuisite: "MIUI Official ROMs",

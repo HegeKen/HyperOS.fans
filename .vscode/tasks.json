@@ -65,7 +65,7 @@
 			"label": "run-aspatch",
 			"type": "shell",
 			"command": "python3",
-			"args": ["${workspaceFolder}/public/data/scripts/test.py"],
+			"args": ["${workspaceFolder}/public/data/scripts/sync_roms_from_db.py"],
 			"group": "build",
 			"presentation": {
 				"reveal": "always",
