@@ -8,7 +8,7 @@
       </ClientOnly>
       <main id="main-content" tabindex="-1">
         <ClientOnly>
-          <v-card elevation="2" class="hub-banner-card" href="https://hub.miuier.com" target="_blank">
+          <v-card elevation="2" class="hub-banner-card" :href="hubUrl" target="_blank">
             <v-card-item>
               <v-card-title>
                 <span class="MIUI">MiROMs HUB</span>
@@ -37,14 +37,14 @@
         </v-card>
         <Space></Space>
         <ClientOnly>
-          <v-card elevation="2" class="MIUI" href="https://roms.miuier.com">
+          <v-card elevation="2" class="MIUI" :href="romsUrl">
             <v-card-item>
               <v-card-title>
                 {{ $t('miuiroms') }}
               </v-card-title>
             </v-card-item>
             <v-card-text>
-              <div><b>{{ $t('href') }}</b> <a href="https://roms.miuier.com" class="MIUI">{{ $t('miuisite') }}</a> </div>
+              <div><b>{{ $t('href') }}</b> <a :href="romsUrl" class="MIUI">{{ $t('miuisite') }}</a> </div>
             </v-card-text>
           </v-card>
         </ClientOnly>
@@ -130,8 +130,10 @@ if (domain == "https://www.hyperos.fans") {
   await navigateTo(url, { external: true })
 }
 const { locale, locales } = useI18n()
-const index = "https://data.hyperos.fans/index.json"
-const site = "https://data.hyperos.fans/sitelog.json"
+const index = "https://api.miuier.com/api/v2/index.json"
+const site = "https://api.miuier.com/api/v2/sitelog.json"
+const hubUrl = "https://hub.miuier.com"
+const romsUrl = "https://roms.miuier.com"
 const { data: home } = await useFetch(index)
 const { data: sitelog } = await useFetch(site)
 const theme = useTheme();

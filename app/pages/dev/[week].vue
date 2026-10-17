@@ -119,7 +119,7 @@ export default {
 import { useTheme } from 'vuetify'
 const route = useRoute()
 const { locale } = useI18n();
-const url = "https://data.hyperos.fans/dev/" + route.params.week.toLowerCase() + ".json"
+const url = "https://api.miuier.com/api/v2/dev/" + route.params.week.toLowerCase() + ".json"
 const { data } = await useFetch(url)
 const theme = useTheme();
 function toggleTheme() {

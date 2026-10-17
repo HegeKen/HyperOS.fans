@@ -15,7 +15,7 @@
 								<v-col v-for="devices in alldevices['devices']" :key="devices['code']">
 									<v-card class="mx-auto" max-width="600">
 										<NuxtLink :to="('/' + locale + '/devices/' + devices['code'])" class="device-card-link">
-											<v-img :src="'https://data.hyperos.fans/assets/images/' + devices['image']" :alt="devices['name'][locale]" class="align-end" height="200px" style="margin-top:10px;">
+											<v-img :src="imageBase + devices['image']" :alt="devices['name'][locale]" class="align-end" height="200px" style="margin-top:10px;">
 											</v-img>
 											<v-card-title class="text-v-card-title">{{ devices['name'][locale] }}</v-card-title>
 											<v-card-subtitle class="text-v-card-subtitle">{{ devices['code'] }}</v-card-subtitle>
@@ -56,7 +56,8 @@ export default {
 <script setup>
 import { useTheme } from 'vuetify'
 const { locale, locales } = useI18n();
-const url = "https://data.hyperos.fans/devices.json";
+const url = "https://api.miuier.com/api/v2/devices.json";
+const imageBase = "https://api.miuier.com/images/";
 const { data } = await useFetch(url);
 const theme = useTheme();
 function toggleTheme() {

@@ -18,7 +18,7 @@ useHead({
     {
       rel: "icon",
       type: "image/x-icon",
-      href: "https://data.hyperos.fans/favicon.ico",
+      href: "/favicon.ico",
     },
     {
       rel: "stylesheet",

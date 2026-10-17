@@ -43,7 +43,7 @@ export default {
 <script setup>
 import { useTheme } from 'vuetify'
 const { locale, locales } = useI18n()
-const site = "https://data.hyperos.fans/sitelog.json"
+const site = "https://api.miuier.com/api/v2/sitelog.json"
 const { data: sitelog } = await useFetch(site)
 const theme = useTheme();
 function toggleTheme() {

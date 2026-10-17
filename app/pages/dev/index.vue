@@ -32,7 +32,7 @@ export default {
 <script setup>
 import { useTheme } from 'vuetify'
 const { locale, locales } = useI18n()
-const url = "https://data.hyperos.fans/dev.json"
+const url = "https://api.miuier.com/api/v2/dev.json"
 const { data } = await useFetch(url)
 const theme = useTheme();
 function toggleTheme() {

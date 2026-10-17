@@ -30,7 +30,7 @@
 						<span><b>{{ $t('merged') }}</b>{{ data['notice'][locale] }} , <a :href="('/' + locale + '/devices/' + data['merged'])">{{ $t('checkit') }} {{ data['merged_with'][locale] }}</a></span>
 					</p>
 					<p style="padding-left:10px;"><b>{{ $t('miui') }}</b><span v-if="data['miui'] == 'yes'">{{ $t('yes') }} {{ $t('gotomiui') }}<a v-if="locale == 'zh'" :href="('https://roms.miuier.com/zh-cn/devices/' + data['device'])">{{ data['name'][locale] }}({{ data['device'] }}) {{ $t('miuier') }}</a><a v-else :href="('https://roms.miuier.com/en-us/devices/' + data['device'])">{{ data['name'][locale] }}({{ data['device'] }}) {{ $t('miuier') }}</a></span><span v-else>{{ $t('no') }}</span></p>
-					<p style="padding-left:10px;"><b>{{ $t('devdata') }}：</b><a :href="('https://data.hyperos.fans/devices/' + data['device'] + '.json')">{{ data['name'][locale] }}({{ data['device'] }}) HyperOS {{ $t('devdata') }}</a> <span v-if="data['miui'] == 'yes'"> | <a :href="('https://data.miuier.com//data/devices/' + data['device'] + '.json')">{{ data['name'][locale] }}({{ data['device'] }}) MIUI {{ $t('devdata') }}</a></span></p>
+					<p style="padding-left:10px;"><b>{{ $t('devdata') }}：</b><a :href="('https://api.miuier.com/api/v2/devices/' + data['device'] + '.json')">{{ data['name'][locale] }}({{ data['device'] }}) HyperOS {{ $t('devdata') }}</a> <span v-if="data['miui'] == 'yes'"> | <a :href="('https://data.miuier.com//data/devices/' + data['device'] + '.json')">{{ data['name'][locale] }}({{ data['device'] }}) MIUI {{ $t('devdata') }}</a></span></p>
 				</v-card-text>
 			</v-card>
 
@@ -380,7 +380,7 @@ export default {
 		// },
 		async fetchDeviceData(device) {
 			try {
-				const url = `https://www.hyperos.fans/data/devices/${device.toLowerCase()}.json`;
+				const url = `https://api.miuier.com/api/v2/devices/${device.toLowerCase()}.json`;
 				const response = await fetch(url);
 				if (response.ok) {
 					const text = await response.text();
@@ -488,7 +488,7 @@ export default {
 const route = useRoute();
 const { locale } = useI18n();
 const url =
-	"https://data.hyperos.fans/devices/" + route.params.codename.toLowerCase() + ".json";
+	"https://api.miuier.com/api/v2/devices/" + route.params.codename.toLowerCase() + ".json";
 
 // 使用 useAsyncData 确保数据在服务端和客户端保持一致
 const { data } = await useAsyncData('device-' + route.params.codename, () =>
