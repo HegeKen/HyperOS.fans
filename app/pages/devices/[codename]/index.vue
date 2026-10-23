@@ -41,7 +41,7 @@
 						{{ branche['name'][locale] }}
 					</v-expansion-panel-title>
 					<v-expansion-panel-text>
-						<p>{{ $t('brand') }}{{ branche['brand'] }}</p>
+						<p>{{ $t('brand') }}{{ formatBrand(branche['brand']) }}</p>
 						<p>{{ $t('codename') }}{{ branche['branchCode'] }}</p>
 						<p>{{ $t('devicename') }}{{ branche['device'][locale] }}</p>
 						<p>{{ $t('region') }}{{ $t(branche['region']) }}</p>
@@ -171,6 +171,11 @@ export default {
 	// 	}
 	// },
 	methods: {
+		formatBrand(brand) {
+			if (!brand) return 'N/A';
+			if (Array.isArray(brand)) return brand.filter(Boolean).join(' / ') || 'N/A';
+			return brand;
+		},
 		formatSize(size) {
 			if (!size) return 'N/A';
 			const num = parseInt(size);
