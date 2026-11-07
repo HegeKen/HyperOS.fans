@@ -30,7 +30,7 @@
 						<span><b>{{ $t('merged') }}</b>{{ data['notice'][locale] }} , <a :href="('/' + locale + '/devices/' + data['merged'])">{{ $t('checkit') }} {{ data['merged_with'][locale] }}</a></span>
 					</p>
 					<p style="padding-left:10px;"><b>{{ $t('miui') }}</b><span v-if="data['miui'] == 'yes'">{{ $t('yes') }} {{ $t('gotomiui') }}<a v-if="locale == 'zh'" :href="('https://roms.miuier.com/zh-cn/devices/' + data['device'])">{{ data['name'][locale] }}({{ data['device'] }}) {{ $t('miuier') }}</a><a v-else :href="('https://roms.miuier.com/en-us/devices/' + data['device'])">{{ data['name'][locale] }}({{ data['device'] }}) {{ $t('miuier') }}</a></span><span v-else>{{ $t('no') }}</span></p>
-					<p style="padding-left:10px;"><b>{{ $t('devdata') }}：</b><a :href="('https://api.miuier.com/api/v2/devices/' + data['device'] + '.json')">{{ data['name'][locale] }}({{ data['device'] }}) HyperOS {{ $t('devdata') }}</a> <span v-if="data['miui'] == 'yes'"> | <a :href="('https://data.miuier.com//data/devices/' + data['device'] + '.json')">{{ data['name'][locale] }}({{ data['device'] }}) MIUI {{ $t('devdata') }}</a></span></p>
+					<p style="padding-left:10px;"><b>{{ $t('devdata') }}：</b><a :href="('https://api.miuier.com/api/v2/devices/' + data['device'] + '.json')">{{ data['name'][locale] }}({{ data['device'] }}) HyperOS {{ $t('devdata') }}</a> <span v-if="data['miui'] == 'yes'"> | <a :href="('https://api.miuier.com/api/v1/devices/' + data['device'] + '.json')">{{ data['name'][locale] }}({{ data['device'] }}) MIUI {{ $t('devdata') }}</a></span></p>
 				</v-card-text>
 			</v-card>
 
